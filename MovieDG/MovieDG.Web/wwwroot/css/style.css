@@ -438,6 +438,7 @@ label {
             font-size: 14px;
         }
 
+
 .navbar-wrap > ul > li .submenu {
     position: absolute;
     z-index: 9;
@@ -446,14 +447,18 @@ label {
     -webkit-box-shadow: 0px 13px 25px -12px rgb(0 0 0 / 25%);
     -moz-box-shadow: 0px 13px 25px -12px rgba(0,0,0,0.25);
     box-shadow: 0px 13px 25px -12px rgb(0 0 0 / 25%);
-    display: block;
+    /*display: block;*/
+    /*display: flex;*/
+    flex-wrap: wrap;
+    font-size: 13px;
+    column-count: 4;
     left: 0;
     opacity: 0;
     padding: 18px 0;
     right: 0;
     top: 100%;
     visibility: hidden;
-    min-width: 230px;
+    min-width: 450px;
     border: 1px solid #283846;
     background: #1b252e;
     box-shadow: 0px 30px 70px 0px rgb(26 36 45 / 59%);
@@ -474,7 +479,7 @@ label {
     }
 
         .navbar-wrap > ul > li .submenu li a {
-            padding: 10px 20px 10px 25px;
+            padding: 13px 20px 10px 25px;
             display: block;
             font-weight: 500;
             color: #f0f0f0;

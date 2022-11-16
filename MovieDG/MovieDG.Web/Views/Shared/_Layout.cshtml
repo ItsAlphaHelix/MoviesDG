@@ -56,16 +56,26 @@
                                             <a href="#">Home</a>
                                         </li>
                                         <li>
-                                            <a href="#">Movies</a>
+                                            <a asp-controller="Movies" asp-action="All">Movies</a>
                                         </li>
                                         <li class="menu-item-has-children">
                                             <a href="#">Categoris</a>
                                             <ul class="submenu">
-                                                <li><a href="movie.html">Action</a></li>
-                                                <li><a href="movie-details.html">Fantasy</a></li>
+                                                @for (int i = 1; i <= 18; i++)
+                                                {
+                                                    <li><a href="movie.html">Action</a></li>
+                                                }
                                             </ul>
                                         </li>
-
+                                        <li class="menu-item-has-children">
+                                            <a href="#">Countries</a>
+                                            <ul class="submenu">
+                                                @for (int i = 1; i <= 18; i++)
+                                                {
+                                                    <li><a href="movie.html">Bulgaria</a></li>
+                                                }
+                                            </ul>
+                                        </li>
                                         <li><a href="contact.html">contacts</a></li>
                                     </ul>
                                 </div>
@@ -159,9 +169,9 @@
             @RenderBody()
         </main>
 
-    @*<partial name="_FooterPartial.cshtml" />*@
-
-	<script src="~/js/jquery-3.6.0.min.js" asp-append-version="true"></script>*
+    <partial name="_FooterPartial.cshtml"/>
+  
+	<script src="~/js/jquery-3.6.0.min.js" asp-append-version="true"></script>
     <script src="~/js/popper.min.js" asp-append-version="true"></script>
     <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/js/isotope.pkgd.min.js" asp-append-version="true"></script>
@@ -176,7 +186,6 @@
     <script src="~/js/aos.js" asp-append-version="true"></script>
     <script src="~/js/plugins.js" asp-append-version="true"></script>
     <script src="~/js/main.js" asp-append-version="true"></script>
-
 	@await RenderSectionAsync("Scripts", required: false)
     </body>
 </html>

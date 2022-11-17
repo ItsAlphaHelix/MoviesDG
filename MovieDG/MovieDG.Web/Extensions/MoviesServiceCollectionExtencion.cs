@@ -1,9 +1,9 @@
 ﻿namespace MoviesDG.Web.Extensions
 {
-    using MovieDG.Services;
-    using MovieDG.Services.Contracts;
+    using MovieDG.Core.Contracts;
+    using MovieDG.Core.Services;
+    using MoviesDG.Core.DataApi;
     using MoviesDG.Data.Repositories;
-    using MoviesDG.Services.DataApi;
 
     public static class MoviesServiceCollectionExtencion
     {
@@ -13,7 +13,9 @@
             services.AddScoped<ICollectService, CollectService>();
             services.AddScoped<IDataService, DataService>();
             services.AddScoped<IMovieService, MovieService>();
-
+            services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<ICountryService, CountryService>();
+            
             return services;
         }
     }

@@ -1,7 +1,7 @@
-﻿namespace MoviesDG.Services.DataApi
+﻿namespace MoviesDG.Core.DataApi
 {
     using Microsoft.Extensions.Configuration;
-    using MoviesDG.Services.DataApi.Models;
+    using MoviesDG.Core.DataApi.Models;
     using System.Net.Http.Json;
     using System.Text.Json;
     public class DataService : IDataService

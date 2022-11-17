@@ -1,4 +1,4 @@
-﻿namespace MoviesDG.Services.DataApi.Models
+﻿namespace MoviesDG.Core.DataApi.Models
 {
     public class ActorDTO
     {

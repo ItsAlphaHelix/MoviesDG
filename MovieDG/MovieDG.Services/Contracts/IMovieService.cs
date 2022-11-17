@@ -1,11 +1,10 @@
-﻿using MovieDG.Services.Models.Movies;
-
-namespace MovieDG.Services.Contracts
+﻿namespace MovieDG.Core.Contracts
 {
+    using MovieDG.Core.ViewModels.Movies;
     public interface IMovieService
     {
         Task<IEnumerable<MovieViewModel>> GetlAllMoviesAsync();
 
-        Task<MovieDetailsViewModel> GetMovieDetailAsync(int id);
+        Task<MovieDetailsViewModel> GetMovieDetailsAsync(int id);
     }
 }

@@ -66,7 +66,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MovieDG.Services\MovieDG.Services.csproj" />
+    <ProjectReference Include="..\MovieDG.Services\MovieDG.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

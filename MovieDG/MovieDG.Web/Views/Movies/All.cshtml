@@ -1,4 +1,5 @@
-﻿@using MovieDG.Services.Models.Movies
+﻿
+@using MovieDG.Core.ViewModels.Movies
 @model IEnumerable<MovieViewModel>
 
 @{
@@ -23,25 +24,29 @@
                 </div>
             </div>
         </div>
-        <div class="row tr-movie-active">
+        <div class="row movie-item-row">
             @foreach (var movie in Model)
             {
-                <div class="col-xl-3 col-lg-4 col-sm-6 grid-item grid-sizer cat-two">
-                    <div class="movie-item mb-60">
+                <div class="custom-col-">
+                    <div class="movie-item movie-item-two">
                         <div class="movie-poster">
-                            <a asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.Poster" alt=""></a>
+                            <img src="@movie.Poster" alt="">
+                            <ul class="overlay-btn">
+                                <li><a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a></li>
+                                <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
+                            </ul>
                         </div>
                         <div class="movie-content">
-                            <div class="top">
-                                <h5 class="title"><a href="movie-details.html">@movie.Title</a></h5>
-                                <span class="date">@movie.ReleaseDate.Year</span>
-                            </div>
-                            <div class="bottom">
+                            <h5 class="title"><a href="movie-details.html">@movie.Title</a></h5>
+                            <span class="rel">Adventure</span>
+                            <div class="movie-content-bottom">
                                 <ul>
-                                    <li><span class="quality">hd</span></li>
+                                    <li class="tag">
+                                        <a href="#">HD</a>
+                                        <a href="#">English</a>
+                                    </li>
                                     <li>
-                                        <span class="duration"><i class="far fa-clock"></i> @movie.Runtime min</span>
-                                        <span class="rating"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes</span>
+                                        <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
                                     </li>
                                 </ul>
                             </div>
@@ -49,6 +54,9 @@
                     </div>
                 </div>
             }
+        </div>
+        <div class="tr-movie-btn text-center mt-25">
+            <a href="#" class="btn">BROWSE ALL MOVIES</a>
         </div>
     </div>
 </section>

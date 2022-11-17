@@ -458,7 +458,7 @@ label {
     right: 0;
     top: 100%;
     visibility: hidden;
-    min-width: 450px;
+    min-width: 700px;
     border: 1px solid #283846;
     background: #1b252e;
     box-shadow: 0px 30px 70px 0px rgb(26 36 45 / 59%);
@@ -1183,7 +1183,22 @@ label {
                 .banner-meta ul li.category > a + a {
                     margin-left: 5px;
                 }
-
+.category > a ~ a::before{
+        content: ', ';
+    }
+.details-content p a {
+    color: #bcbcbc;
+}
+    .details-content a:hover {
+        color: #e4d804;
+    }
+    .details-content a ~ a::before {
+        content: ', ';
+    }
+b{
+    font-size: 18px;
+    color: dimgray;
+}
             .banner-meta ul li.release-time > span {
                 font-size: 14px;
                 font-weight: 500;
@@ -2146,6 +2161,7 @@ label {
 
     .movie-details-content p {
         margin-bottom: 0;
+        font-size: 15px;
     }
 
 .movie-details-prime ul {

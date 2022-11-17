@@ -1,4 +1,4 @@
-﻿namespace MovieDG.Services.Models.Movies
+﻿namespace MovieDG.Core.ViewModels.Movies
 {
     public class MovieViewModel
     {
@@ -8,9 +8,7 @@
 
         public string Poster { get; set; }
 
-        public DateTime ReleaseDate { get; set; }
-
-        public int Runtime { get; set; }
+        public string Trailer { get; set; }
 
         public double Popularity { get; set; }
 

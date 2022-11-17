@@ -1,6 +1,6 @@
-﻿namespace MoviesDG.Services.DataApi
+﻿namespace MoviesDG.Core.DataApi
 {
-    using MoviesDG.Services.DataApi.Models;
+    using MoviesDG.Core.DataApi.Models;
     public interface IDataService
     {
         Task<MovieDTO> GetMovieDataAsync(int movieId);

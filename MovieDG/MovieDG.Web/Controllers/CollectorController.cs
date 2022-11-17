@@ -1,9 +1,9 @@
 ﻿namespace MoviesDG.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using MoviesDG.Core.DataApi;
     using MoviesDG.Data.Models;
     using MoviesDG.Data.Repositories;
-    using MoviesDG.Services.DataApi;
     using MoviesDG.Web.Models;
 
     public class CollectorController : Controller

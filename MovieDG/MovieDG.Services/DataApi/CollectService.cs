@@ -1,4 +1,4 @@
-﻿namespace MoviesDG.Services.DataApi
+﻿namespace MoviesDG.Core.DataApi
 {
     using System;
     using System.Linq;

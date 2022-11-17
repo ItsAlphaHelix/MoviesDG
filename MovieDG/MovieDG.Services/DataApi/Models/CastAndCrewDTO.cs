@@ -1,5 +1,6 @@
-﻿namespace MoviesDG.Services.DataApi.Models
+﻿namespace MoviesDG.Core.DataApi.Models
 {
+    using MoviesDG.Core.DataApi.Models;
     using System.Collections.Generic;
     public class CastAndCrewDTO
     {

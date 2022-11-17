@@ -1,11 +1,11 @@
-﻿@using MovieDG.Services.Models.Movies
+﻿@using MovieDG.Core.ViewModels.Movies
 @model MovieDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<section class="movie-details-area" data-background="@Model.Banner">
+<section class="movie-details-area" data-background="/images/movie_details_bg.jpg">
     <div class="container">
         <div class="row align-items-center position-relative">
             <div class="col-xl-3 col-lg-4">
@@ -16,16 +16,23 @@
             </div>
             <div class="col-xl-6 col-lg-8">
                 <div class="movie-details-content">
-                    <h2>The Easy <span>Reach</span></h2>
+                    @{
+                        //Maybe have better way
+                        var firstPartTitle = Model.Title.Substring(0, Model.Title.Length / 2);
+                        var secondPartTitle = Model.Title.Substring(Model.Title.Length - firstPartTitle.Length);
+                    }
+                    <h2>@firstPartTitle<span>@secondPartTitle</span></h2>
                     <div class="banner-meta">
                         <ul>
                             <li class="quality">
-                                <span>Pg 18</span>
                                 <span>hd</span>
                             </li>
                             <li class="category">
-                                <a href="#">Romance,</a>
-                                <a href="#">Drama</a>
+                                @foreach (var genre in Model.Genres)
+                                {
+                                    <a href="#">&nbsp;@genre.Name</a>
+
+                                }
                             </li>
                             <li class="release-time">
                                 <span><i class="far fa-calendar-alt"></i> @Model.ReleaseDate.Year</span>
@@ -34,8 +41,27 @@
                         </ul>
                     </div>
                     <p>
-                       @Model.Overview
+                        <b>Description: &nbsp;</b> @Model.Overview
                     </p>
+                    <br />
+                    <br />
+                        <div class="details-content">
+                        <p>
+                            <b>Actors: &nbsp;</b>@foreach (var actor in Model.Actors)
+                            {
+                                <a href="#">&nbsp;@actor.Name (@actor.CharacterName)</a>
+                            }
+                            <br />
+                        </p>
+                        <br />
+                        <br />
+                        <p>
+                            <b>Countries: &nbsp;</b>@foreach (var country in Model.Countries)
+                            {
+                                <a href="#">&nbsp;@country.Name</a>
+                            }
+                        </p>
+                        </div>
                     <br />
                     <br />
                     <div class="movie-details-prime">        

@@ -1,8 +1,7 @@
 ﻿namespace MovieDG.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using MovieDG.Services.Contracts;
-    using MoviesDG.Web.Extensions;
+    using MovieDG.Core.Contracts;
 
     public class MoviesController : Controller
     {
@@ -22,7 +21,7 @@
 
         public async Task<IActionResult> Details(int id)
         { 
-            var movies = await this.movieService.GetMovieDetailAsync(id);
+            var movies = await this.movieService.GetMovieDetailsAsync(id);
 
             return View(movies);
         }

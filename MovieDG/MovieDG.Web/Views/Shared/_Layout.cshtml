@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@inject MovieDG.Core.Contracts.IGenreService GenresService;
+@inject MovieDG.Core.Contracts.ICountryService CountriesService;
+
+@{
+    var genres = GenresService.GetAllGenresAsync();
+    var countries = CountriesService.GetAllCountries();
+}
+
+<!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -46,14 +54,14 @@
                         <div class="menu-wrap">
                             <nav class="menu-nav show">
                                 <div class="logo">
-                                    <a href="index.html">
+                                    <a asp-controller="Home" asp-action="Index">
                                         <img src="~/images/logo.png" alt="Logo">
                                     </a>
                                 </div>
                                 <div class="navbar-wrap main-menu d-none d-lg-flex">
                                     <ul class="navigation">
                                         <li class="active">
-                                            <a href="#">Home</a>
+                                            <a asp-controller="Home" asp-action="Index">Home</a>
                                         </li>
                                         <li>
                                             <a asp-controller="Movies" asp-action="All">Movies</a>
@@ -61,18 +69,18 @@
                                         <li class="menu-item-has-children">
                                             <a href="#">Categoris</a>
                                             <ul class="submenu">
-                                                @for (int i = 1; i <= 18; i++)
+                                                @foreach (var genre in genres)
                                                 {
-                                                    <li><a href="movie.html">Action</a></li>
+                                                    <li><a href="movie.html">@genre.Name</a></li>
                                                 }
                                             </ul>
                                         </li>
                                         <li class="menu-item-has-children">
                                             <a href="#">Countries</a>
                                             <ul class="submenu">
-                                                @for (int i = 1; i <= 18; i++)
+                                                @foreach (var country in countries)
                                                 {
-                                                    <li><a href="movie.html">Bulgaria</a></li>
+                                                    <li><a href="movie.html">@country.Name</a></li>
                                                 }
                                             </ul>
                                         </li>

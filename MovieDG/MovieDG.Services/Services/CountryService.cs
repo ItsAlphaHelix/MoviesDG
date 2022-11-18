@@ -1,5 +1,6 @@
 ﻿namespace MovieDG.Core.Services
 {
+    using Microsoft.EntityFrameworkCore;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.ViewModels.Countries;
     using MoviesDG.Data.Models;
@@ -14,16 +15,16 @@
         {
             this.countriesRepository = countriesRepository;
         }
-        public IEnumerable<CountryViewModel> GetAllCountries()
+        public async Task<IEnumerable<CountryViewModel>> GetAllCountries()
         {
-            var countries = this.countriesRepository
+            var countries = await this.countriesRepository
                 .AllAsNoTracking()
                 .Select(x => new CountryViewModel()
                 {
                     Id = x.Id,
                     Name = x.Name
                 })
-                .ToList();
+                .ToListAsync();
 
             return countries;
         }

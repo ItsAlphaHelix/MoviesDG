@@ -2,8 +2,8 @@
 @inject MovieDG.Core.Contracts.ICountryService CountriesService;
 
 @{
-    var genres = GenresService.GetAllGenresAsync();
-    var countries = CountriesService.GetAllCountries();
+    var genres = await GenresService.GetAllGenresAsync();
+    var countries = await CountriesService.GetAllCountries();
 }
 
 <!DOCTYPE html>

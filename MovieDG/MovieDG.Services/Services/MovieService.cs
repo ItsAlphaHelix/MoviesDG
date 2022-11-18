@@ -12,16 +12,12 @@
     public class MovieService : IMovieService
     {
         private readonly IRepository<Movie> moviesRepository;
-        private readonly IGenreService genresService;
-        public MovieService(
-            IRepository<Movie> moviesRepository,
-            IGenreService genresService)
+        public MovieService(IRepository<Movie> moviesRepository)
         {
             this.moviesRepository = moviesRepository;
-            this.genresService = genresService;
         }
 
-        public async Task<IEnumerable<MovieViewModel>> GetlAllMoviesAsync()
+        public async Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync()
         {
             var movies = await moviesRepository
                 .AllAsNoTracking()
@@ -32,8 +28,7 @@
                     Poster = x.Poster,
                     Trailer = x.Trailer,
                     Popularity = x.Popularity,
-                    AverageVotes = x.AverageVotes,
-                    TotalVotes = x.TotalVotes
+                    AverageVotes = x.AverageVotes
                 })
                 .ToListAsync();
 
@@ -76,6 +71,95 @@
 
             return movie;
 
+        }
+
+        public async Task<IEnumerable<MovieViewModel>> GetTopRatedMoviesAsync()
+        {
+            var topRatedMovies = await this.moviesRepository
+                .AllAsNoTracking()
+                .OrderByDescending(x => x.AverageVotes)
+                .Select(x => new MovieViewModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Poster = x.Poster,
+                    Trailer = x.Trailer,
+                    Popularity = x.Popularity,
+                    AverageVotes = x.AverageVotes
+                })
+                .Take(10)
+                .ToListAsync();
+
+            return topRatedMovies;
+        }
+
+        public async Task<IEnumerable<MovieViewModel>> GetPopularityMoviesAsync()
+        {
+            var popularityMovies = await this.moviesRepository
+                .AllAsNoTracking()
+                .OrderByDescending(x => x.Popularity)
+                .Select(x => new MovieViewModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Poster = x.Poster,
+                    Trailer = x.Trailer,
+                    Popularity = x.Popularity,
+                    AverageVotes = x.AverageVotes
+                })
+                .Take(10)
+                .ToListAsync();
+
+            return popularityMovies;
+        }
+
+        public async Task<IEnumerable<MovieViewModel>> GetRecentMoviesAsync()
+        {
+            var recentMovies = await this.moviesRepository
+                 .AllAsNoTracking()
+                 .OrderByDescending(x => x.ReleaseDate)
+                 .Select(x => new MovieViewModel()
+                 {
+                     Id = x.Id,
+                     Title = x.Title,
+                     Poster = x.Poster,
+                     Trailer = x.Trailer,
+                     Popularity = x.Popularity,
+                     AverageVotes = x.AverageVotes,
+                     Runtime = x.Runtime,
+                     ReleaseDate = x.ReleaseDate
+                 })
+                 .Take(10)
+                 .ToListAsync();
+
+            return recentMovies;
+        }
+
+        public async Task<BannerMovieViewModel> GetLatestMovie()
+        {
+            var latestMovie = await this.moviesRepository
+                 .AllAsNoTracking()
+                 .OrderByDescending(x => x.ReleaseDate)
+                 .Select(x => new BannerMovieViewModel()
+                 {
+                     Title = x.Title,
+                     Trailer = x.Trailer,
+                     Banner = x.Banner,
+                     Runtime = x.Runtime,
+                     ReleaseDate = x.ReleaseDate,
+                     Genres = x.MovieGenres.Select(x => new GenreViewModel()
+                     {
+                         Name = x.Genre.Type
+                     }),
+                 })
+                 .FirstOrDefaultAsync();
+
+            if (latestMovie == null)
+            {
+                throw new NullReferenceException("The movie can not be null");
+            }
+
+            return latestMovie;
         }
     }
 }

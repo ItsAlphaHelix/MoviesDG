@@ -14,16 +14,16 @@
         {
             this.genresRepository = genresRepository;
         }
-        public IEnumerable<GenreViewModel> GetAllGenresAsync()
+        public async Task<IEnumerable<GenreViewModel>> GetAllGenresAsync()
         {
-            var genres = this.genresRepository
+            var genres = await this.genresRepository
                 .AllAsNoTracking()
                 .Select(x => new GenreViewModel()
                 {
                     Id = x.Id,
                     Name = x.Type
                 })
-                .ToList();
+                .ToListAsync();
 
             return genres;
         }

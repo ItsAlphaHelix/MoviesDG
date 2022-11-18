@@ -3,6 +3,6 @@
 using MovieDG.Core.ViewModels.Countries;
     public interface ICountryService
     {
-        IEnumerable<CountryViewModel> GetAllCountries();
+        Task<IEnumerable<CountryViewModel>> GetAllCountries();
     }
 }

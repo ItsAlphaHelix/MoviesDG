@@ -356,9 +356,9 @@ $('.popup-video').magnificPopup({
 /*=============================================
 	=    		Isotope	Active  	      =
 =============================================*/
-$('.tr-movie-active').imagesLoaded(function () {
+	$('.movie-item-row').imagesLoaded(function () {
 	// init Isotope
-	var $grid = $('.tr-movie-active').isotope({
+		var $grid = $('.movie-item-row').isotope({
 		itemSelector: '.grid-item',
 		percentPosition: true,
 		masonry: {

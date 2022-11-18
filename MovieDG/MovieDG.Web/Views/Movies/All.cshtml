@@ -1,9 +1,13 @@
-﻿
-@using MovieDG.Core.ViewModels.Movies
+﻿@using MovieDG.Core.ViewModels.Movies
+@inject MovieDG.Core.Contracts.IMovieService MoviesService;
+
 @model IEnumerable<MovieViewModel>
 
 @{
     this.ViewData["Title"] = "Movies";
+    var topRatedMovies = await MoviesService.GetTopRatedMoviesAsync();
+    var popularityMovies = await MoviesService.GetPopularityMoviesAsync();
+    var recentMovies = await MoviesService.GetRecentMoviesAsync();
 }
 
 <section class="top-rated-movie tr-movie-bg" data-background="/images/tr_movies_bg.jpg">
@@ -18,16 +22,19 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="tr-movie-menu-active text-center">
-                    <button class="active" data-filter="*">Top Rating</button>
-                    <button class="" data-filter=".cat-one">Popularity</button>
-                    <button class="" data-filter=".cat-two">Recent</button>
+                    <button class="" data-filter=".top-rating">Top Rating</button>
+                    <button class="" data-filter=".popularity">Popularity</button>
+                    <button class="" data-filter=".recent">Recent</button>
                 </div>
             </div>
         </div>
         <div class="row movie-item-row">
+
+            <!-- All movies-->
+
             @foreach (var movie in Model)
             {
-                <div class="custom-col-">
+                <div class="custom-col- grid-item grid-sizer">
                     <div class="movie-item movie-item-two">
                         <div class="movie-poster">
                             <img src="@movie.Poster" alt="">
@@ -37,7 +44,7 @@
                             </ul>
                         </div>
                         <div class="movie-content">
-                            <h5 class="title"><a href="movie-details.html">@movie.Title</a></h5>
+                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
                             <span class="rel">Adventure</span>
                             <div class="movie-content-bottom">
                                 <ul>
@@ -54,9 +61,105 @@
                     </div>
                 </div>
             }
-        </div>
+
+            <!-- Top rated movies-->
+
+            @foreach (var movie in topRatedMovies)
+            {
+        <div class="custom-col- grid-item grid-sizer top-rating">
+                <div class="movie-item movie-item-two">
+                        <div class="movie-poster">
+                            <img src="@movie.Poster" alt="">
+                            <ul class="overlay-btn">
+                                <li><a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a></li>
+                                <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
+                            </ul>
+                        </div>
+                        <div class="movie-content">
+                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                            <span class="rel">Adventure</span>
+                            <div class="movie-content-bottom">
+                                <ul>
+                                    <li class="tag">
+                                        <a href="#">HD</a>
+                                        <a href="#">English</a>
+                                    </li>
+                                    <li>
+                                        <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- Popularity movies-->
+
+            @foreach (var movie in popularityMovies)
+            {
+                <div class="custom-col- grid-item grid-sizer popularity">
+                    <div class="movie-item movie-item-two">
+                        <div class="movie-poster">
+                            <img src="@movie.Poster" alt="">
+                            <ul class="overlay-btn">
+                                <li><a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a></li>
+                                <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
+                            </ul>
+                        </div>
+                        <div class="movie-content">
+                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                            <span class="rel">Adventure</span>
+                            <div class="movie-content-bottom">
+                                <ul>
+                                    <li class="tag">
+                                        <a href="#">HD</a>
+                                        <a href="#">English</a>
+                                    </li>
+                                    <li>
+                                        <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- Recent movies-->
+
+            @foreach (var movie in recentMovies)
+            {
+                <div class="custom-col- grid-item grid-sizer recent">
+                    <div class="movie-item movie-item-two">
+                        <div class="movie-poster">
+                            <img src="@movie.Poster" alt="">
+                            <ul class="overlay-btn">
+                                <li><a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a></li>
+                                <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
+                            </ul>
+                        </div>
+                        <div class="movie-content">
+                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                            <span class="rel">Adventure</span>
+                            <div class="movie-content-bottom">
+                                <ul>
+                                    <li class="tag">
+                                        <a href="#">HD</a>
+                                        <a href="#">English</a>
+                                    </li>
+                                    <li>
+                                        <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
         <div class="tr-movie-btn text-center mt-25">
             <a href="#" class="btn">BROWSE ALL MOVIES</a>
         </div>
-    </div>
+   </div>
 </section>

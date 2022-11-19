@@ -12,10 +12,6 @@ namespace MovieDG.Core.ViewModels.Movies
 
         public string Trailer { get; set; }
 
-        public int Runtime { get; set; }
-
-        public DateTime ReleaseDate { get; set; }
-
         public double Popularity { get; set; }
 
         public double AverageVotes { get; set; }

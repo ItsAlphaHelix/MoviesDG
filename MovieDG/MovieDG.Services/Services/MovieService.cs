@@ -126,8 +126,6 @@
                      Trailer = x.Trailer,
                      Popularity = x.Popularity,
                      AverageVotes = x.AverageVotes,
-                     Runtime = x.Runtime,
-                     ReleaseDate = x.ReleaseDate
                  })
                  .Take(10)
                  .ToListAsync();
@@ -135,12 +133,12 @@
             return recentMovies;
         }
 
-        public async Task<BannerMovieViewModel> GetLatestMovie()
+        public async Task<BannerHomeMovieViewModel> GetLatestMovie()
         {
             var latestMovie = await this.moviesRepository
                  .AllAsNoTracking()
                  .OrderByDescending(x => x.ReleaseDate)
-                 .Select(x => new BannerMovieViewModel()
+                 .Select(x => new BannerHomeMovieViewModel()
                  {
                      Title = x.Title,
                      Trailer = x.Trailer,

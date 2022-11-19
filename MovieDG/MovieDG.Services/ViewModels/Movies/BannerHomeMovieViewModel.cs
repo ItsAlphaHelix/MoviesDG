@@ -2,7 +2,7 @@
 
 namespace MovieDG.Core.ViewModels.Movies
 {
-    public class BannerMovieViewModel
+    public class BannerHomeMovieViewModel
     {
         public string Title { get; set; }
 

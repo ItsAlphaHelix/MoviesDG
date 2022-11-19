@@ -3,7 +3,7 @@
 
 @{
     var genres = await GenresService.GetAllGenresAsync();
-    var countries = await CountriesService.GetAllCountries();
+    var countries = await CountriesService.GetAllCountriesAsync();
 }
 
 <!DOCTYPE html>
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="header-action d-none d-md-block">
                                     <ul>
-                                        <li class="header-search"><a href="#" data-toggle="modal" data-target="#search-modal"><i class="fas fa-search"></i></a></li>
+                                        <li class="header-search"><a asp-action="MoviesByTitle" data-toggle="modal" data-target="#search-modal"><i class="fas fa-search"></i></a></li>
                                         <li class="header-lang">
                                             <form action="#">
                                                 <div class="icon"><i class="flaticon-globe"></i></div>
@@ -135,8 +135,8 @@
                         <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form>
-                                        <input type="text" placeholder="Search here...">
+                                    <form asp-controller="Search" asp-action="MoviesByTitle">
+                                        <input name="Title" type="search" placeholder="Search here..." required>
                                         <button><i class="fas fa-search"></i></button>
                                     </form>
                                 </div>

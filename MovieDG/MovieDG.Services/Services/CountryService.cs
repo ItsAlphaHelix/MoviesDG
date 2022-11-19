@@ -15,7 +15,7 @@
         {
             this.countriesRepository = countriesRepository;
         }
-        public async Task<IEnumerable<CountryViewModel>> GetAllCountries()
+        public async Task<IEnumerable<CountryViewModel>> GetAllCountriesAsync()
         {
             var countries = await this.countriesRepository
                 .AllAsNoTracking()

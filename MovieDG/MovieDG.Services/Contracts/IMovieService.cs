@@ -13,6 +13,6 @@
 
         Task<IEnumerable<MovieViewModel>> GetRecentMoviesAsync();
 
-        Task<BannerMovieViewModel> GetLatestMovie();
+        Task<BannerHomeMovieViewModel> GetLatestMovie();
     }
 }

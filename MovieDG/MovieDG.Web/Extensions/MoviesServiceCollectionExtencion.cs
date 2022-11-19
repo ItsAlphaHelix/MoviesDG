@@ -15,6 +15,7 @@
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<ISearchService, SearchService>();
             
             return services;
         }

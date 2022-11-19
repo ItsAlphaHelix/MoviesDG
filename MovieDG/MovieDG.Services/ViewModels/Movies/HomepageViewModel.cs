@@ -2,7 +2,7 @@
 {
     public class HomepageViewModel
     {
-        public BannerMovieViewModel LatestMovie { get; set; }
+        public BannerHomeMovieViewModel LatestMovie { get; set; }
 
         public IEnumerable<MovieViewModel> NewMovies { get; set; }
     }

@@ -3457,3 +3457,8 @@ b{
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
+/* Movies Title */
+.section-title span {
+    color: #e4d804;
+}

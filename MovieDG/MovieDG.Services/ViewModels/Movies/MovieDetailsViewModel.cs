@@ -9,6 +9,9 @@
 
         public string Languages { get; set; }
 
+        public int Runtime { get; set; }
+
+        public DateTime ReleaseDate { get; set; }
         public IEnumerable<GenreViewModel> Genres { get; set; }
 
         public IEnumerable<ActorViewModel> Actors { get; set; }

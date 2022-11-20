@@ -49,7 +49,7 @@
                         <p>
                             <b>Actors: &nbsp;</b>@foreach (var actor in Model.Actors)
                             {
-                                <a href="#">&nbsp;@actor.Name (@actor.CharacterName)</a>
+                                <a asp-controller="Actors" asp-action="Name" asp-route-name="@actor.Name">&nbsp;@actor.Name (@actor.CharacterName)</a>
                             }
                             <br />
                         </p>
@@ -58,7 +58,7 @@
                         <p>
                             <b>Countries: &nbsp;</b>@foreach (var country in Model.Countries)
                             {
-                                <a href="#">&nbsp;@country.Name</a>
+                                <a asp-controller="Countries" asp-action="Name" asp-route-name="@country.Name">&nbsp;@country.Name</a>
                             }
                         </p>
                         </div>

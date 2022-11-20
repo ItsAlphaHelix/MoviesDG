@@ -21,12 +21,12 @@
 
         public async Task<IActionResult> IndexAsync()
         {
-            var latesMovie = await this.moviesService.GetLatestMovie();
+            var latestMovie = await this.moviesService.GetLatestMovieAsync();
             var newMovies = await this.moviesService.GetRecentMoviesAsync();
 
             var viewModel = new HomepageViewModel()
             {
-                LatestMovie = latesMovie,
+                LatestMovie = latestMovie,
                 NewMovies = newMovies
             };
 

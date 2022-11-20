@@ -133,7 +133,7 @@
             return recentMovies;
         }
 
-        public async Task<BannerHomeMovieViewModel> GetLatestMovie()
+        public async Task<BannerHomeMovieViewModel> GetLatestMovieAsync()
         {
             var latestMovie = await this.moviesRepository
                  .AllAsNoTracking()
@@ -158,6 +158,63 @@
             }
 
             return latestMovie;
+        }
+
+        public async Task<IEnumerable<MovieViewModel>> GetMoviesByGenreAsync(string name)
+        {
+            var movies = await this.moviesRepository
+                .AllAsNoTracking()
+                .Where(x => x.MovieGenres.Any(x => x.Genre.Type == name))
+                .OrderByDescending(x => x.ReleaseDate.Year)
+                .Select(x => new MovieViewModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Poster = x.Poster,
+                    Trailer = x.Trailer,
+                    AverageVotes = x.AverageVotes
+                })
+                .ToListAsync();
+
+            return movies;
+        }
+
+        public async Task<IEnumerable<MovieViewModel>> GetMoviesByCountryAsync(string name)
+        {
+            var movies = await this.moviesRepository
+                .AllAsNoTracking()
+                .Where(x => x.MovieCountries.Any(x => x.Country.Name == name))
+                .OrderByDescending(x => x.ReleaseDate.Year)
+                .Select(x => new MovieViewModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Poster = x.Poster,
+                    Trailer = x.Trailer,
+                    AverageVotes = x.AverageVotes
+                })
+                .ToListAsync();
+
+            return movies;
+        }
+
+        public async Task<IEnumerable<MovieViewModel>> GetMoviesByActorAsync(string name)
+        {
+            var movies = await this.moviesRepository
+                .AllAsNoTracking()
+                .Where(x => x.MovieActors.Any(x => x.Actor.Name == name))
+                .OrderByDescending(x => x.ReleaseDate.Year)
+                .Select(x => new MovieViewModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Poster = x.Poster,
+                    Trailer = x.Trailer,
+                    AverageVotes = x.AverageVotes
+                })
+                .ToListAsync();
+
+            return movies;
         }
     }
 }

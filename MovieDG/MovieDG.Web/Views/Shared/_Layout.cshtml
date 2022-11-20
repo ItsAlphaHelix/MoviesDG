@@ -71,7 +71,7 @@
                                             <ul class="submenu">
                                                 @foreach (var genre in genres)
                                                 {
-                                                    <li><a href="movie.html">@genre.Name</a></li>
+                                                    <li><a asp-controller="Genres" asp-action="Type" asp-route-name="@genre.Name">@genre.Name</a></li>
                                                 }
                                             </ul>
                                         </li>
@@ -80,7 +80,7 @@
                                             <ul class="submenu">
                                                 @foreach (var country in countries)
                                                 {
-                                                    <li><a href="movie.html">@country.Name</a></li>
+                                                    <li><a asp-controller="Countries" asp-action="Name" asp-route-name="@country.Name">@country.Name</a></li>
                                                 }
                                             </ul>
                                         </li>

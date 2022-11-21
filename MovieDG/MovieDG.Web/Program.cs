@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 using MoviesDG.Data;
-using MoviesDG.Data.Repositories;
 using MoviesDG.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

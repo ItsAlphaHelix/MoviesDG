@@ -26,6 +26,7 @@
 	<link rel="stylesheet" href="~/css/default.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css"/>
     <link rel="shortcut icon" href="~/favicon.png" type="favicon/png" asp-append-version="true" />
 
 </head>
@@ -101,7 +102,8 @@
                                                 </select>
                                             </form>
                                         </li>
-                                        <li class="header-btn"><a href="#" class="btn">Sign In</a></li>
+                                        @*<li class="header-btn"><a asp-area="Identity" asp-page="/Account/Login" class="btn">Sign In</a></li>*@
+                                        <partial name="_LoginPartial" />
                                     </ul>
                                 </div>
                             </nav>
@@ -148,6 +150,7 @@
                 </div>
             </div>
         </div>
+
     </header>
 
 	@*<header>

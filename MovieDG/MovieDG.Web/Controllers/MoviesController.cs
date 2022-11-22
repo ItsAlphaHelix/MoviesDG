@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using MovieDG.Core.Contracts;
+    using MovieDG.Core.ViewModels.Movies;
 
     public class MoviesController : Controller
     {
@@ -22,13 +23,6 @@
         public async Task<IActionResult> Details(int id)
         { 
             var movies = await this.movieService.GetMovieDetailsAsync(id);
-
-            return View(movies);
-        }
-
-        public async Task<IActionResult> TopRatedMovies()
-        {
-            var movies = await this.movieService.GetTopRatedMoviesAsync();
 
             return View(movies);
         }

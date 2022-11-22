@@ -70,8 +70,4 @@
     <ProjectReference Include="..\MovieDG.Services\MovieDG.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-  </ItemGroup>
-
 </Project>

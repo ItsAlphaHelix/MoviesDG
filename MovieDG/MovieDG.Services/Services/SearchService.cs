@@ -19,9 +19,12 @@
         {
             if (!string.IsNullOrWhiteSpace(title))
             {
+
+                var searchTerm = $"%{title.ToLower()}%";
+
                 var searchMovies = await this.moviesRepository
                     .AllAsNoTracking()
-                    .Where(x => x.Title.ToLower().Contains(title.ToLower()))
+                    .Where(x => EF.Functions.Like(x.Title.ToLower(), searchTerm))
                     .Select(x => new MovieViewModel()
                     {
                         Id = x.Id,

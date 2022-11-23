@@ -1,5 +1,6 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MovieDG.Data.Data.Models;
+using MovieDG.Web.Providers;
 using MoviesDG.Data;
 using MoviesDG.Web.Extensions;
 
@@ -11,8 +12,10 @@ builder.Services.AddDbContext<MovieDGDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
     .AddEntityFrameworkStores<MovieDGDbContext>();
+
+builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 builder.Services.AddApplicationServices();
 

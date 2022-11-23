@@ -1,5 +1,9 @@
-﻿@using MovieDG.Core.ViewModels.Movies
+﻿@using Microsoft.AspNetCore.Identity
+@using MovieDG.Core.ViewModels.Movies
+@using MovieDG.Data.Data.Models
+
 @inject MovieDG.Core.Contracts.IMovieService MoviesService;
+@inject SignInManager<ApplicationUser> SignInManager
 
 @model IEnumerable<MovieViewModel>
 

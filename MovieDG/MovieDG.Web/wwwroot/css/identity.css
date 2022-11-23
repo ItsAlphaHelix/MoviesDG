@@ -64,11 +64,28 @@
         text-decoration: none;
     }
 
-        .login-dark form .forgot:hover,
-        .login-dark form .forgot:active {
-            opacity: 1;
-            text-decoration: none;
-        }
+    .login-dark form .havent {
+        display: block;
+        text-align: center;
+        font-size: 12px;
+        color: #6f7a85;
+        opacity: 0.9;
+        text-decoration: none;
+    }
+
+    .login-dark form .forgot:hover,
+    .login-dark form .forgot:active {
+        opacity: 1;
+        color: #2B96CC;
+        text-decoration: none;
+    }
+
+    .login-dark form .havent:hover,
+    .login-dark form .havent:active {
+        opacity: 1;
+        color: #2B96CC;
+        text-decoration: none;
+    }
 
     .login-dark form .btn-primary:active {
         transform: translateY(1px);

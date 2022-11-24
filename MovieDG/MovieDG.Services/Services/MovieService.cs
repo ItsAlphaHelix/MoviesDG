@@ -6,15 +6,21 @@
     using MovieDG.Core.ViewModels.Countries;
     using MovieDG.Core.ViewModels.Genres;
     using MovieDG.Core.ViewModels.Movies;
+    using MovieDG.Data.Data.Models;
     using MoviesDG.Data.Models;
     using MoviesDG.Data.Repositories;
 
     public class MovieService : IMovieService
     {
         private readonly IRepository<Movie> moviesRepository;
-        public MovieService(IRepository<Movie> moviesRepository)
+        private readonly IRepository<ApplicationUser> userRepository;
+        public MovieService(
+            IRepository<Movie> moviesRepository,
+            IRepository<ApplicationUser> userRepository
+            )
         {
             this.moviesRepository = moviesRepository;
+            this.userRepository = userRepository;
         }
 
         public async Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync()
@@ -42,6 +48,7 @@
                 .Where(x => x.Id == id)
                 .Select(x => new MovieDetailsViewModel()
                 {
+                    Id = x.Id,
                     Title = x.Title,
                     Poster = x.Poster,
                     Runtime = x.Runtime,
@@ -215,6 +222,71 @@
                 .ToListAsync();
 
             return movies;
+        }
+
+        public async Task AddMovieToCollectionAsync(int movieId, string userId)
+        {
+            var user = await userRepository
+               .All()
+               .Where(u => u.Id == userId)
+               .Include(u => u.UsersMovies)
+               .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                throw new ArgumentException("Invalid user ID");
+            }
+
+            var movie = await moviesRepository
+                        .AllAsNoTracking()
+                        .FirstOrDefaultAsync(u => u.Id == movieId);
+
+            if (movie == null)
+            {
+                throw new ArgumentException("Invalid Movie ID");
+            }
+
+            if (!user.UsersMovies.Any(m => m.MovieId == movieId))
+            {
+                user.UsersMovies.Add(new UserMovie()
+                {
+                    MovieId = movie.Id,
+                    UserId = user.Id,
+                    Movie = movie,
+                    User = user
+                });
+
+                await userRepository.SaveChangesAsync();
+            }
+        }
+        public async Task<IEnumerable<MovieViewModel>> GetAllMyMoviesAsync(string userId)
+        {
+            var user = await userRepository
+                .AllAsNoTracking()
+                .Where(u => u.Id == userId)
+                .Include(u => u.UsersMovies)
+                .ThenInclude(x => x.Movie)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                throw new ArgumentException("Invalid user ID");
+            }
+
+            var userMovies = user.UsersMovies
+                .Where(x => x.IsActive == true)
+                .Select(x => new MovieViewModel()
+                {
+                    Id = x.MovieId,
+                    Title = x.Movie.Title,
+                    Poster = x.Movie.Poster,
+                    Trailer = x.Movie.Trailer,
+                    Popularity = x.Movie.Popularity,
+                    AverageVotes = x.Movie.AverageVotes
+                })
+                .ToList();
+
+            return userMovies;
         }
     }
 }

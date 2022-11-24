@@ -8,6 +8,8 @@ namespace MovieDG.Data.Data.Models
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
+
+            this.UsersMovies = new HashSet<UserMovie>();
         }
 
         [Required]
@@ -15,5 +17,7 @@ namespace MovieDG.Data.Data.Models
 
         [Required]
         public string City { get; set; }
+
+        public ICollection<UserMovie> UsersMovies { get; set; }
     }
 }

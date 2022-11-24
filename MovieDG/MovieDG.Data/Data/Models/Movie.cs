@@ -14,6 +14,8 @@
             this.MovieLanguages = new HashSet<MovieLanguage>();
 
             this.MovieCountries = new HashSet<MovieCountry>();
+
+            this.UsersMovies = new HashSet<UserMovie>();
         }
 
         [Key]
@@ -57,5 +59,7 @@
         public virtual ICollection<MovieLanguage> MovieLanguages { get; set; } 
 
         public virtual ICollection<MovieCountry> MovieCountries { get; set; }
+
+        public virtual ICollection<UserMovie> UsersMovies { get; set; }
     }
 }

@@ -20,5 +20,9 @@
         Task<IEnumerable<MovieViewModel>> GetMoviesByCountryAsync(string name);
 
         Task<IEnumerable<MovieViewModel>> GetMoviesByActorAsync(string name);
+
+        Task AddMovieToCollectionAsync(int movieId, string userId);
+
+        Task<IEnumerable<MovieViewModel>> GetAllMyMoviesAsync(string userId);
     }
 }

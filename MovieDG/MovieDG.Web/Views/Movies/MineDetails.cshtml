@@ -12,11 +12,11 @@
         <div class="row align-items-center position-relative">
             <div class="col-xl-3 col-lg-4">
                 <div class="movie-poster">
-                    <img src="@Model.Poster" alt="">    
+                    <img src="@Model.Poster" alt="">
                 </div>
-                <form asp-route-movieId="@Model.Id" asp-controller="Movies" asp-action="AddToCollection" method="post">
-                    <input type="submit" value="Add Movie" class="btn" />
-                </form>
+                 <form asp-route-movieId="@Model.Id" asp-controller="Movies" asp-action="RemoveFromCollection" method="post">
+                     <input type="submit" value="Remove Movie" class="btn" />
+                 </form>
             </div>
             <div class="col-xl-6 col-lg-8">
                 <div class="movie-details-content">
@@ -49,7 +49,7 @@
                     </p>
                     <br />
                     <br />
-                        <div class="details-content">
+                    <div class="details-content">
                         <p>
                             <b>Actors: &nbsp;</b>@foreach (var actor in Model.Actors)
                             {
@@ -65,7 +65,7 @@
                                 <a asp-controller="Countries" asp-action="Name" asp-route-name="@country.Name">&nbsp;@country.Name</a>
                             }
                         </p>
-                        </div>
+                    </div>
                     <br />
                     <br />
                     <div class="movie-details-prime">

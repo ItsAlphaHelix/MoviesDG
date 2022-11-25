@@ -1,6 +1,7 @@
 ﻿namespace MovieDG.Core.Contracts
 {
     using MovieDG.Core.ViewModels.Movies;
+
     public interface IMovieService
     {
         Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync();
@@ -24,5 +25,9 @@
         Task AddMovieToCollectionAsync(int movieId, string userId);
 
         Task<IEnumerable<MovieViewModel>> GetAllMyMoviesAsync(string userId);
+
+        Task RemoveMovieFromCollectionAsync(int movieId, string userId);
+
+        Task RemoveAllMoviesFromCollectionAsync(int movieId, string userId);
     }
 }

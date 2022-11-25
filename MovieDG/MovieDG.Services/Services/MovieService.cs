@@ -238,9 +238,8 @@
             }
 
             var movie = await moviesRepository
-                        .AllAsNoTracking()
+                        .All()
                         .FirstOrDefaultAsync(u => u.Id == movieId);
-
             if (movie == null)
             {
                 throw new ArgumentException("Invalid Movie ID");
@@ -255,9 +254,15 @@
                     Movie = movie,
                     User = user
                 });
-
-                await userRepository.SaveChangesAsync();
             }
+            else
+            {
+                var userMovie = movie.UsersMovies.FirstOrDefault(x => x.MovieId == movieId);
+
+                userMovie.IsActive = true;
+            }
+
+            await userRepository.SaveChangesAsync();
         }
         public async Task<IEnumerable<MovieViewModel>> GetAllMyMoviesAsync(string userId)
         {
@@ -287,6 +292,50 @@
                 .ToList();
 
             return userMovies;
+        }
+
+        public async Task RemoveMovieFromCollectionAsync(int movieId, string userId)
+        {
+            var user = await userRepository
+              .All()
+              .Where(u => u.Id == userId)
+              .Include(u => u.UsersMovies)
+              .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                throw new ArgumentException("Invalid user ID");
+            }
+
+            var movie = user.UsersMovies.FirstOrDefault(m => m.MovieId == movieId);
+
+            if (movie != null)
+            {
+                movie.IsActive = false;
+
+                await this.userRepository.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveAllMoviesFromCollectionAsync(int movieId, string userId)
+        {
+            var user = await userRepository
+              .All()
+              .Where(u => u.Id == userId)
+              .Include(u => u.UsersMovies)
+              .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                throw new ArgumentException("Invalid user ID");
+            }
+
+            foreach (var userMovie in user.UsersMovies)
+            {
+                userMovie.IsActive = false;
+            }
+
+            await this.userRepository.SaveChangesAsync();
         }
     }
 }

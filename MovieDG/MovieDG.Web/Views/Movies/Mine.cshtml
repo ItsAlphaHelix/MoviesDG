@@ -7,6 +7,9 @@
 
 <section class="top-rated-movie tr-movie-bg" data-background="/images/tr_movies_bg.jpg">
     <div class="container">
+        <form asp-controller="Movies" asp-action="RemoveAllFromCollection" method="post">
+            <input onclick="isConfirm();" type="submit" value="Remove All Movies" class="btn" />
+         </form>
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="section-title text-center mb-50">
@@ -15,7 +18,6 @@
             </div>
         </div>
         <div class="row movie-item-row">
-
             <!-- All movies-->
             @foreach (var movie in Model)
             {
@@ -25,11 +27,11 @@
                             <img src="@movie.Poster" alt="">
                             <ul class="overlay-btn">
                                 <li><a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a></li>
-                                <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
+                                <li><a asp-action="MineDetails" asp-route-id="@movie.Id" class="btn">Details</a></li>
                             </ul>
                         </div>
                         <div class="movie-content">
-                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                            <h5 class="title"><a asp-action="MineDetails" asp-route-id="@movie.Id">@movie.Title</a></h5>
                             <div class="movie-content-bottom">
                                 <ul>
                                     <li class="tag">

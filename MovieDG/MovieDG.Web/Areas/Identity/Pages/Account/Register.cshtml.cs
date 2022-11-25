@@ -43,15 +43,15 @@
         public class InputModel
         {
             [Required]
-            [RegularExpression(@"[A-Z]{1}[A-z]+", ErrorMessage = "Username must start with a capital letter.")]
+            [RegularExpression(@"[A-Z]{1}[\w]+", ErrorMessage = "Username must start with a capital letter.")]
             public string Username { get; set; }
 
             [Required]
-            [RegularExpression(@"[A-Z]{1}[A-z]+", ErrorMessage = "Country must start with a capital letter.")]
+            [RegularExpression(@"[A-Z]{1}[\w]+", ErrorMessage = "Country must start with a capital letter.")]
             public string Country { get; set; }
 
             [Required]
-            [RegularExpression(@"[A-Z]{1}[A-z]+", ErrorMessage = "City must start with a capital letter.")]
+            [RegularExpression(@"[A-Z]{1}[\w]+", ErrorMessage = "City must start with a capital letter.")]
             public string City { get; set; }
 
             [Required]

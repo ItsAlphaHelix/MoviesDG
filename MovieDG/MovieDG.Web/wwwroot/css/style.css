@@ -44,6 +44,7 @@ body {
     font-size: 14px;
     color: #bcbcbc;
 }
+
 .img {
     max-width: 100%;
     transition: all 0.3s ease-out 0s;
@@ -296,6 +297,7 @@ label {
     white-space: nowrap;
     max-width: 200px;
 }
+
 
     .btn > i {
         margin-right: 7px;

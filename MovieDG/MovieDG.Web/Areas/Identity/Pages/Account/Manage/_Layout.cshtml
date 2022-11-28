@@ -1,0 +1,35 @@
+﻿@{
+    //if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    //{
+    //    Layout = (string)parentLayout;
+    //}
+    //else
+    //{
+    //    Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    //}
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/identity.css" />
+
+<div class="login-dark">
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+        <h1>Manage your account</h1>
+        <h2>Change your account settings</h2>
+        <div class="form-group">
+            <partial name="_ManageNav" />
+        </div>
+        <div>
+            @RenderBody()
+        </div>
+</div>
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

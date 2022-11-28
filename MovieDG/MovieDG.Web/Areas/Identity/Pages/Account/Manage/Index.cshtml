@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+@*<h3>@ViewData["Title"]</h3>*@
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<form method="post">
+    <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <input asp-for="Input.Username" type="text" class="form-control" placeholder="Username" />
+        <span asp-validation-for="Input.Username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="Input.Country" type="text" class="form-control" placeholder="Country" />
+        <span asp-validation-for="Input.Country" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input asp-for="Input.City" type="text" class="form-control" placeholder="City" />
+        <span asp-validation-for="Input.City" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary btn-block" type="submit">Save</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

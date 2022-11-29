@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
     using MovieDG.Data.Data.Models;
-    using MoviesDG.Data;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;

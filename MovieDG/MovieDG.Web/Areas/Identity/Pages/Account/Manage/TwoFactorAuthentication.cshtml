@@ -1,4 +1,4 @@
-﻿@page
+﻿    @page
 @using Microsoft.AspNetCore.Http.Features
 @model TwoFactorAuthenticationModel
 @{
@@ -8,10 +8,6 @@
 
 <partial name="_StatusMessage" for="StatusMessage" />
 <h3>@ViewData["Title"]</h3>
-@{
-    var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
-    @if (consentFeature?.CanTrack ?? true)
-    {
         @if (Model.Is2faEnabled)
         {
             if (Model.RecoveryCodesLeft == 0)
@@ -46,25 +42,21 @@
             <a asp-page="./GenerateRecoveryCodes" class="btn btn-primary">Reset recovery codes</a>
         }
 
-        <h4>Authenticator app</h4>
-        @if (!Model.HasAuthenticator)
+        @if (!Model.Is2faEnabled)
         {
-            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Add authenticator app</a>
-        }
-        else
-        {
-            <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Set up authenticator app</a>
-            <a id="reset-authenticator" asp-page="./ResetAuthenticator" class="btn btn-primary">Reset authenticator app</a>
-        }
+            <h4>Authenticator app</h4>
+            @if (!Model.HasAuthenticator)
+            {
+                <a asp-page="./EnableAuthenticator" class="btn btn-primary btn-block">Add authenticator app</a>
+            }
+            else
+            {
+                <div class="form-group">
+                <a asp-page="./EnableAuthenticator" class="btn btn-primary btn-block">Set up authenticator app</a>
+                <a asp-page="./ResetAuthenticator" class="btn btn-primary btn-block">Reset authenticator app</a>
+                </div>
+            }
     }
-    else
-    {
-        <div class="alert alert-danger">
-            <strong>Privacy and cookie policy have not been accepted.</strong>
-            <p>You must accept the policy before you can enable two factor authentication.</p>
-        </div>
-    }
-}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

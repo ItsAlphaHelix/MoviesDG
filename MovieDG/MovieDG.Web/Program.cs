@@ -19,8 +19,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.Get
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IEmailSender>(x => new SendGridEmailSender(builder.Configuration.GetSection("SendGrid:ApiKey").Value));
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 

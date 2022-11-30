@@ -2,26 +2,15 @@
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" type="text/css" href="~/css/identity.css" />
-
 <div class="login-dark">
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-        <h1>Manage your account</h1>
-        <h2>Change your account settings</h2>
-        <div class="form-group">
-            <partial name="_ManageNav" />
-        </div>
+        <partial name="_ManageNav" />
+    <h1 style="text-align: center; color: white">Manage your account</h1>
+    <h2 style="text-align: center; color: white">Change your account settings</h2>
         <div>
             @RenderBody()
         </div>
 </div>
 
-
-@section Scripts {
+@section Scripts{
     @RenderSection("Scripts", required: false)
 }

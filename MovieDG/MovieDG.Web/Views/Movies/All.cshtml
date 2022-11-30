@@ -43,7 +43,16 @@
                         <div class="movie-poster">
                             <img src="@movie.Poster" alt="">
                             <ul class="overlay-btn">
-                                <li><a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a></li>
+                                <li>
+                                    @if (this.User?.Identity?.IsAuthenticated == true)
+                                    {
+                                        <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
+                                    }
+                                </li>
                                 <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
                             </ul>
                         </div>
@@ -73,7 +82,16 @@
                         <div class="movie-poster">
                             <img src="@movie.Poster" alt="">
                             <ul class="overlay-btn">
-                                <li><a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a></li>
+                                <li>
+                                    @if (this.User?.Identity?.IsAuthenticated == true)
+                                    {
+                                        <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
+                                    }
+                                </li>
                                 <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
                             </ul>
                         </div>
@@ -103,7 +121,16 @@
                         <div class="movie-poster">
                             <img src="@movie.Poster" alt="">
                             <ul class="overlay-btn">
-                                <li><a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a></li>
+                                <li>
+                                    @if (this.User?.Identity?.IsAuthenticated == true)
+                                    {
+                                        <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
+                                    }
+                                </li>
                                 <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
                             </ul>
                         </div>
@@ -133,7 +160,16 @@
                         <div class="movie-poster">
                             <img src="@movie.Poster" alt="">
                             <ul class="overlay-btn">
-                                <li><a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a></li>
+                                <li>
+                                    @if (this.User?.Identity?.IsAuthenticated == true)
+                                    {
+                                        <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
+                                    }
+                                </li>
                                 <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
                             </ul>
                         </div>

@@ -5,10 +5,11 @@
     ViewData["Title"] = "Log in";
 }
 
-<link rel="stylesheet" type="text/css" href="~/css/identity.css" />
-
 <div class="login-dark">
     <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <li class="navbar navbar-dark bg-dark">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+        </li>
         <h2 class="sr-only">@ViewData["Title"]</h2>
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
         <div asp-validation-summary="All" class="text-danger"></div>

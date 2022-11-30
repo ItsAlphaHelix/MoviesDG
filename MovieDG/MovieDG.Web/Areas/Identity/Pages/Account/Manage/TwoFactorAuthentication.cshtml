@@ -1,13 +1,14 @@
-﻿    @page
-@using Microsoft.AspNetCore.Http.Features
+﻿@page
 @model TwoFactorAuthenticationModel
+
 @{
     ViewData["Title"] = "Two-factor authentication (2FA)";
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
+<br />
+<h3 style="text-align: center;">@ViewData["Title"]</h3>
         @if (Model.Is2faEnabled)
         {
             if (Model.RecoveryCodesLeft == 0)
@@ -44,20 +45,22 @@
 
         @if (!Model.Is2faEnabled)
         {
-            <h4>Authenticator app</h4>
+            <br />
+            <h4 style="text-align: center">Authenticator app</h4>
             @if (!Model.HasAuthenticator)
             {
                 <a asp-page="./EnableAuthenticator" class="btn btn-primary btn-block">Add authenticator app</a>
             }
             else
             {
-                <div class="form-group">
-                <a asp-page="./EnableAuthenticator" class="btn btn-primary btn-block">Set up authenticator app</a>
-                <a asp-page="./ResetAuthenticator" class="btn btn-primary btn-block">Reset authenticator app</a>
+                <br />
+                <br />
+                <br />
+                <div style="text-align: center;">
+                    <a asp-page="./EnableAuthenticator" class="btn">Scan QR code</a>
+                    <a asp-page="./ResetAuthenticator" class="btn">Reset QR Code</a>
                 </div>
             }
     }
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+

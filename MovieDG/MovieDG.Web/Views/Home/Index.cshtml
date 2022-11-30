@@ -34,7 +34,14 @@
                             </li>
                         </ul>
                     </div>
-                    <a href="https://www.youtube.com/watch?v=@Model.LatestMovie.Trailer" class="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
+                    @if (this.User?.Identity?.IsAuthenticated == true)
+                    {
+                        <a href="https://www.youtube.com/watch?v=@Model.LatestMovie.Trailer" class="banner-btn btn popup-video wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Login" class="btn wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.8s"><i class="fas fa-play"></i> Watch Now</a>
+                    }
                 </div>
             </div>
         </div>

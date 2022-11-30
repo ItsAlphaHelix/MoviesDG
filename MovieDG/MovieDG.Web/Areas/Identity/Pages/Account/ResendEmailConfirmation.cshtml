@@ -5,13 +5,13 @@
     ViewData["Title"] = "Resend email confirmation?";
 }
 
-<link rel="stylesheet" type="text/css" href="~/css/identity.css" />
 
 <div class="login-dark">
     <form method="post">
+        <li class="navbar navbar-dark bg-dark">
+            <a asp-controller="Home" asp-action="Index">Home</a>
+        </li>
         <h2 class="sr-only">@ViewData["Title"]</h2>
-        <h4>Enter your email.</h4>
-
         <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
         <div class="form-group">
             <input asp-for="Input.Email" class="form-control" placeholder="Email" />

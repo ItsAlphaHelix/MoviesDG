@@ -1,4 +1,23 @@
-﻿<footer>
+﻿@{
+    var list = new List<string>()
+    {
+        "Log in",
+        "Register",
+        "Forgot your password?",
+        "Resend email",
+        "Profile",
+        "Manage Email",
+        "Change password",
+        "Two-factor authentication (2FA)",
+        "Personal Data",
+        "Configure authenticator app",
+        "Reset authenticator key"
+    };
+}
+
+@if (!list.Contains(this.ViewData["Title"]))
+{
+<footer>
     <div class="footer-top-wrap">
         <div class="container">
             <div class="footer-menu-wrap">
@@ -64,3 +83,4 @@
         </div>
     </div>
 </footer>
+}

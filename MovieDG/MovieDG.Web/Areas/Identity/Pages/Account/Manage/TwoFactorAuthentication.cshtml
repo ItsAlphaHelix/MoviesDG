@@ -8,59 +8,59 @@
 
 <partial name="_StatusMessage" for="StatusMessage" />
 <br />
-<h3 style="text-align: center;">@ViewData["Title"]</h3>
-        @if (Model.Is2faEnabled)
+        <div style="text-align: center;">
+    @if (Model.Is2faEnabled)
+    {
+        if (Model.RecoveryCodesLeft == 0)
         {
-            if (Model.RecoveryCodesLeft == 0)
-            {
-                <div class="alert alert-danger">
-                    <strong>You have no recovery codes left.</strong>
-                    <p>You must <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a> before you can log in with a recovery code.</p>
-                </div>
-            }
-            else if (Model.RecoveryCodesLeft == 1)
-            {
-                <div class="alert alert-danger">
-                    <strong>You have 1 recovery code left.</strong>
-                    <p>You can <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
-                </div>
-            }
-            else if (Model.RecoveryCodesLeft <= 3)
-            {
-                <div class="alert alert-warning">
-                    <strong>You have @Model.RecoveryCodesLeft recovery codes left.</strong>
-                    <p>You should <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
-                </div>
-            }
-
-            if (Model.IsMachineRemembered)
-            {
-                <form method="post" style="display: inline-block">
-                    <button type="submit" class="btn btn-primary">Forget this browser</button>
-                </form>
-            }
-            <a asp-page="./Disable2fa" class="btn btn-primary">Disable 2FA</a>
-            <a asp-page="./GenerateRecoveryCodes" class="btn btn-primary">Reset recovery codes</a>
+            <div class="alert alert-danger">
+                <strong>You have no recovery codes left.</strong>
+                <p>You must <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a> before you can log in with a recovery code.</p>
+            </div>
+        }
+        else if (Model.RecoveryCodesLeft == 1)
+        {
+            <div class="alert alert-danger">
+                <strong>You have 1 recovery code left.</strong>
+                <p>You can <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
+            </div>
+        }
+        else if (Model.RecoveryCodesLeft <= 3)
+        {
+            <div class="alert alert-warning">
+                <strong>You have @Model.RecoveryCodesLeft recovery codes left.</strong>
+                <p>You should <a asp-page="./GenerateRecoveryCodes">generate a new set of recovery codes</a>.</p>
+            </div>
         }
 
-        @if (!Model.Is2faEnabled)
+        if (Model.IsMachineRemembered)
+        {
+            <form method="post" style="display: inline-block">
+                <button type="submit" class="btn btn-primary">Forget this browser</button>
+            </form>
+        }
+        <div style="text-align: center;">
+            <a asp-page="./Disable2fa" class="btn">Disable 2FA</a>
+        </div>
+    }
+
+    @if (!Model.Is2faEnabled)
+    {
+        <br />
+        <h4 style="text-align: center">Authenticator app</h4>
+        @if (!Model.HasAuthenticator)
+        {
+            <a asp-page="./EnableAuthenticator" class="btn">Add authenticator app</a>
+        }
+        else
         {
             <br />
-            <h4 style="text-align: center">Authenticator app</h4>
-            @if (!Model.HasAuthenticator)
-            {
-                <a asp-page="./EnableAuthenticator" class="btn btn-primary btn-block">Add authenticator app</a>
-            }
-            else
-            {
-                <br />
-                <br />
-                <br />
-                <div style="text-align: center;">
-                    <a asp-page="./EnableAuthenticator" class="btn">Scan QR code</a>
-                    <a asp-page="./ResetAuthenticator" class="btn">Reset QR Code</a>
-                </div>
-            }
+            <br />
+            <br />
+            <a asp-page="./EnableAuthenticator" class="btn">Scan QR code</a>
+            <a asp-page="./ResetAuthenticator" class="btn">Reset QR Code</a>
+        }
     }
+        </div>
 
 

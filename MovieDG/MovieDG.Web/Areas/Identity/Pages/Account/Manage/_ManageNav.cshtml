@@ -4,14 +4,18 @@
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
-<nav class="navbar navbar-dark">
-    <div><a class="@ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></div>
-    <div><a class="@ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a></div>
-    <div><a class="@ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Password</a></div>
-    @if (hasExternalLogins)
-    {
-        <div id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></div>
-    }
-    <div><a class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></div>
-    <div><a class="@ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></div>
-</nav>
+
+<div class="navbar-wrap main-menu d-none d-lg-flex">
+    <ul class="navigation">
+        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a class="@ManageNavPages.IndexNavClass(ViewContext)" asp-page="./Index">Chnage Profile</a></li>
+        <li><a class="@ManageNavPages.EmailNavClass(ViewContext)" asp-page="./Email">Change Email</a></li>
+        <li><a class="@ManageNavPages.ChangePasswordNavClass(ViewContext)" asp-page="./ChangePassword">Change Password</a></li>
+        @if (hasExternalLogins)
+        {
+            <li><a class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">External logins</a></li>
+        }
+            <li><a class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" asp-page="./TwoFactorAuthentication">Activate better security</a></li>
+            <li><a class="@ManageNavPages.PersonalDataNavClass(ViewContext)" asp-page="./PersonalData">Personal data</a></li>
+    </ul>
+</div>

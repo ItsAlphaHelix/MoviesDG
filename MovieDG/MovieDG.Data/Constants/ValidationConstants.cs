@@ -16,10 +16,6 @@
 
         public const int IMDBLinkMaxLength = 150;
 
-        public const int MaxCommentLength = 700;
-
-        public const int MinCommentLength = 4;
-
         public const int MaxContactName = 30;
 
         public const int MinContactName = 4;

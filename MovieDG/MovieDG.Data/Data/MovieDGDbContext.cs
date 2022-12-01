@@ -16,12 +16,6 @@
 
         public DbSet<Genre> Genres { get; set; }
 
-        //TODO: Add this entitiy after creating ApplicationUser entitiy!
-
-        //public DbSet<Comment> Comments { get; set; }
-
-        //public DbSet<MovieComment> MovieComments { get; set; }
-
         public DbSet<Contact> Contacts { get; set; }
 
         public DbSet<Language> Languages { get; set; }

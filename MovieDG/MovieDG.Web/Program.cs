@@ -3,6 +3,7 @@ using MovieDG.Data.Data.Models;
 using MovieDG.Web.Providers;
 using MoviesDG.Data;
 using MoviesDG.Web.Extensions;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

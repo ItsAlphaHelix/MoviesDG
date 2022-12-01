@@ -17,6 +17,7 @@
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ISearchService, SearchService>();
+            services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IEmailSender>(x => new SendGridEmailSender(configuration.GetSection("SendGrid:ApiKey").Value));
 
             return services;

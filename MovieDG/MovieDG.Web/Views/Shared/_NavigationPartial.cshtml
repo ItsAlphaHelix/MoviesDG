@@ -17,7 +17,11 @@
         "Two-factor authentication (2FA)",
         "Personal Data",
         "Configure authenticator app",
-        "Reset authenticator key"
+        "Reset authenticator key",
+        "Two-factor authentication",
+        "Recovery code verification",
+        "Locked out",
+        "Disable two-factor authentication (2FA)"
     };
 }
 
@@ -64,7 +68,7 @@
                                     <li>
                                         <a asp-controller="Movies" asp-action="Mine">My Movies</a>
                                     </li>
-                                    <li><a href="contact.html">Contacts</a></li>
+                                    <li><a asp-controller="Contact" asp-action="ContactUs">Contacts</a></li>
                                 </ul>
                             </div>
                             <div class="header-action d-none d-md-block">

@@ -1,0 +1,82 @@
+﻿@using MovieDG.Core.ViewModels.Contact
+
+@model ContactInputViewModel
+
+@{
+    this.ViewData["Title"] = "Contact";
+}
+
+<section class="breadcrumb-area breadcrumb-bg" data-background="/images/contact-banner.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-content">
+                    <h2 class="title">Contact Us</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb-area-end -->
+<!-- contact-area -->
+<section class="contact-area contact-bg" data-background="/images/contact_bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
+                <div class="contact-form-wrap">
+                    <div class="widget-title mb-50">
+                        <h5 class="title">Contact Form</h5>
+                    </div>
+                    <div class="contact-form">
+                        <form asp-action="ContactUs">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input asp-for="@Model.Name" type="text" placeholder="You Name *">
+                                    <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <input asp-for="@Model.Email" type="email" placeholder="You  Email *">
+                                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <input asp-for="@Model.Subject" type="text" placeholder="Subject *">
+                            <textarea asp-for="@Model.Message" name="message" placeholder="Type Your Message..."></textarea>
+                            <span asp-validation-for="@Model.Message" class="text-danger"></span>
+                            <button class="btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5">
+                <div class="widget-title mb-50">
+                    <h5 class="title">Information</h5>
+                </div>
+                <div class="contact-info-wrap">
+                    <p><span>Find solutions :</span> to common problems, or get help from a support agent industry's standard .</p>
+                    <div class="contact-info-list">
+                        <ul>
+                            <li>
+                                <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                                <p><span>Address :</span> Bulgaria, Sliven, 8800</p>
+                            </li>
+                            <li>
+                                <div class="icon"><i class="fas fa-phone-alt"></i></div>
+                                <p><span>Phone :</span> +359 897 393 901</p>
+                            </li>
+                            <li>
+                                <div class="icon"><i class="fas fa-envelope"></i></div>
+                                <p><span>Email :</span> mitak4000@gmail.com</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

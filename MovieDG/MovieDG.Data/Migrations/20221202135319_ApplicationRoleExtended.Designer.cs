@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesDG.Data;
 
@@ -11,9 +12,10 @@ using MoviesDG.Data;
 namespace MoviesDG.Data.Migrations
 {
     [DbContext(typeof(MovieDGDbContext))]
-    partial class MovieDGDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221202135319_ApplicationRoleExtended")]
+    partial class ApplicationRoleExtended
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,7 +264,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("MoviesCountries", (string)null);
+                    b.ToTable("MoviesCountries");
                 });
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.MovieGenre", b =>
@@ -277,7 +279,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("MoviesGenres", (string)null);
+                    b.ToTable("MoviesGenres");
                 });
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.MovieLanguage", b =>
@@ -292,7 +294,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.ToTable("MoviesLanguages", (string)null);
+                    b.ToTable("MoviesLanguages");
                 });
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.UserMovie", b =>
@@ -310,7 +312,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("UserMovies", (string)null);
+                    b.ToTable("UserMovies");
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Data.Models.Contact", b =>
@@ -339,7 +341,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts", (string)null);
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.Actor", b =>
@@ -357,7 +359,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actors", (string)null);
+                    b.ToTable("Actors");
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.Country", b =>
@@ -375,7 +377,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.Genre", b =>
@@ -393,7 +395,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres", (string)null);
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.Language", b =>
@@ -411,7 +413,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages", (string)null);
+                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.Movie", b =>
@@ -469,7 +471,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies", (string)null);
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.MovieActor", b =>
@@ -489,7 +491,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("ActorId");
 
-                    b.ToTable("MoviesActors", (string)null);
+                    b.ToTable("MoviesActors");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

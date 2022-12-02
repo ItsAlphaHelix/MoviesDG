@@ -1,28 +1,31 @@
 ﻿
 namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.Threading.Tasks;
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
     using MovieDG.Data.Data.Models;
+    using System.ComponentModel.DataAnnotations;
+    using System.Threading.Tasks;
     public class ChangePasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ILogger<ChangePasswordModel> logger;
+        private readonly INotyfService toastNotification;
 
         public ChangePasswordModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<ChangePasswordModel> logger)
+            ILogger<ChangePasswordModel> logger,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
+            this.toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -92,7 +95,7 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
 
             await this.signInManager.RefreshSignInAsync(user);
             this.logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            this.toastNotification.Success("Your password has been changed.");
 
             return RedirectToPage();
         }

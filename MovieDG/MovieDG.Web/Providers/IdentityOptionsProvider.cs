@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace MovieDG.Web.Providers
+﻿namespace MovieDG.Web.Providers
 {
+    using Microsoft.AspNetCore.Identity;
     public static class IdentityOptionsProvider
     {
         public static void GetIdentityOptions(IdentityOptions options)

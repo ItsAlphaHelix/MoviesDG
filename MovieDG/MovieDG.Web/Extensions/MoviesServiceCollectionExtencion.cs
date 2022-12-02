@@ -1,5 +1,6 @@
 ﻿namespace MoviesDG.Web.Extensions
 {
+    using AspNetCoreHero.ToastNotification;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.Services;
     using MoviesDG.Core.DataApi;
@@ -19,6 +20,18 @@
             services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IEmailSender>(x => new SendGridEmailSender(configuration.GetSection("SendGrid:ApiKey").Value));
+
+            return services;
+        }
+
+        public static IServiceCollection AddNotyFService(this IServiceCollection services)
+        {
+            services.AddNotyf(configuration =>
+            {
+                configuration.DurationInSeconds = 5;
+                configuration.IsDismissable = true;
+                configuration.Position = NotyfPosition.TopRight;
+            });
 
             return services;
         }

@@ -5,7 +5,7 @@
     using MovieDG.Data.Data.Models;
     using MoviesDG.Data.Data.Models;
     using MoviesDG.Data.Models;
-    public class MovieDGDbContext : IdentityDbContext<ApplicationUser>
+    public class MovieDGDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public MovieDGDbContext(DbContextOptions<MovieDGDbContext> options)
             : base(options)

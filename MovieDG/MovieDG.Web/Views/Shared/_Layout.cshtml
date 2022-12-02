@@ -68,6 +68,7 @@
     <script src="~/js/main.js" asp-append-version="true"></script>
     <script src="~/js/qrcode.js" asp-append-version="true"></script>
 
-	@await RenderSectionAsync("Scripts", required: false)
-    </body>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await Component.InvokeAsync("Notyf")
+</body>
 </html>

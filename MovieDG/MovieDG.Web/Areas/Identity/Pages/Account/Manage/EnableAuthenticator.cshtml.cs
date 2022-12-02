@@ -1,5 +1,6 @@
 ﻿namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
 {
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;

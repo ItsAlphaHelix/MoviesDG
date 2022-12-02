@@ -21,7 +21,8 @@
         "Two-factor authentication",
         "Recovery code verification",
         "Locked out",
-        "Disable two-factor authentication (2FA)"
+        "Disable two-factor authentication (2FA)",
+        "Resend email confirmation?"
     };
 }
 
@@ -69,6 +70,8 @@
                                         <a asp-controller="Movies" asp-action="Mine">My Movies</a>
                                     </li>
                                     <li><a asp-controller="Contact" asp-action="ContactUs">Contacts</a></li>
+
+                                    <li><a asp-area="Administration" asp-page="/Administration/Dashboard/Index">Dashboard</a></li>
                                 </ul>
                             </div>
                             <div class="header-action d-none d-md-block">

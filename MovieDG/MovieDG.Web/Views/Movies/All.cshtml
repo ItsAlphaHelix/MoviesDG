@@ -14,184 +14,180 @@
     var recentMovies = await MoviesService.GetRecentMoviesAsync();
 }
 
-<section class="top-rated-movie tr-movie-bg" data-background="/images/tr_movies_bg.jpg">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="section-title text-center mb-50">
-                    <h2 class="title">All Movies</h2>
+    <section class="top-rated-movie tr-movie-bg" data-background="/images/tr_movies_bg.jpg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="section-title text-center mb-50">
+                        <h2 class="title">All Movies</h2>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="tr-movie-menu-active text-center">
-                    <button class="" data-filter=".top-rating">Top Rating</button>
-                    <button class="" data-filter=".popularity">Popularity</button>
-                    <button class="" data-filter=".recent">Recent</button>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="tr-movie-menu-active text-center">
+                        <button class="" data-filter=".top-rating">Top Rating</button>
+                        <button class="" data-filter=".popularity">Popularity</button>
+                        <button class="" data-filter=".recent">Recent</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row movie-item-row">
+            <div class="row movie-item-row">
 
-            <!-- All movies-->
-
-            @foreach (var movie in Model)
-            {
-                <div class="custom-col- grid-item grid-sizer">
-                    <div class="movie-item movie-item-two">
-                        <div class="movie-poster">
-                            <img src="@movie.Poster" alt="">
-                            <ul class="overlay-btn">
-                                <li>
-                                    @if (this.User?.Identity?.IsAuthenticated == true)
-                                    {
-                                        <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
-                                    }
-                                </li>
-                                <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
-                            </ul>
-                        </div>
-                        <div class="movie-content">
-                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
-                            <div class="movie-content-bottom">
-                                <ul>
-                                    <li class="tag">
-                                        <a href="#">HD</a>
-                                    </li>
+                <!-- All movies-->
+                @foreach (var movie in Model)
+                {
+                    <div class="custom-col- grid-item grid-sizer">
+                        <div class="movie-item movie-item-two">
+                            <div class="movie-poster">
+                                <img src="@movie.Poster" alt="">
+                                <ul class="overlay-btn">
                                     <li>
-                                        <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                        @if (this.User?.Identity?.IsAuthenticated == true)
+                                        {
+                                            <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
+                                        }
                                     </li>
+                                    <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
                                 </ul>
+                            </div>
+                            <div class="movie-content">
+                                <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                                <div class="movie-content-bottom">
+                                    <ul>
+                                        <li class="tag">
+                                            <a href="#">HD</a>
+                                        </li>
+                                        <li>
+                                            <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
 
-            <!-- Top rated movies-->
-
-            @foreach (var movie in topRatedMovies)
-            {
-        <div class="custom-col- grid-item grid-sizer top-rating">
-                <div class="movie-item movie-item-two">
-                        <div class="movie-poster">
-                            <img src="@movie.Poster" alt="">
-                            <ul class="overlay-btn">
-                                <li>
-                                    @if (this.User?.Identity?.IsAuthenticated == true)
-                                    {
-                                        <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
-                                    }
-                                </li>
-                                <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
-                            </ul>
-                        </div>
-                        <div class="movie-content">
-                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
-                            <div class="movie-content-bottom">
-                                <ul>
-                                    <li class="tag">
-                                        <a href="#">HD</a>
-                                    </li>
+                <!-- Top rated movies-->
+                @foreach (var movie in topRatedMovies)
+                {
+                    <div class="custom-col- grid-item grid-sizer top-rating">
+                        <div class="movie-item movie-item-two">
+                            <div class="movie-poster">
+                                <img src="@movie.Poster" alt="">
+                                <ul class="overlay-btn">
                                     <li>
-                                        <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                        @if (this.User?.Identity?.IsAuthenticated == true)
+                                        {
+                                            <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
+                                        }
                                     </li>
+                                    <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
                                 </ul>
+                            </div>
+                            <div class="movie-content">
+                                <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                                <div class="movie-content-bottom">
+                                    <ul>
+                                        <li class="tag">
+                                            <a href="#">HD</a>
+                                        </li>
+                                        <li>
+                                            <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
 
-            <!-- Popularity movies-->
-
-            @foreach (var movie in popularityMovies)
-            {
-                <div class="custom-col- grid-item grid-sizer popularity">
-                    <div class="movie-item movie-item-two">
-                        <div class="movie-poster">
-                            <img src="@movie.Poster" alt="">
-                            <ul class="overlay-btn">
-                                <li>
-                                    @if (this.User?.Identity?.IsAuthenticated == true)
-                                    {
-                                        <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
-                                    }
-                                </li>
-                                <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
-                            </ul>
-                        </div>
-                        <div class="movie-content">
-                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
-                            <div class="movie-content-bottom">
-                                <ul>
-                                    <li class="tag">
-                                        <a href="#">HD</a>
-                                    </li>
+                <!-- Popularity movies-->
+                @foreach (var movie in popularityMovies)
+                {
+                    <div class="custom-col- grid-item grid-sizer popularity">
+                        <div class="movie-item movie-item-two">
+                            <div class="movie-poster">
+                                <img src="@movie.Poster" alt="">
+                                <ul class="overlay-btn">
                                     <li>
-                                        <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                        @if (this.User?.Identity?.IsAuthenticated == true)
+                                        {
+                                            <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
+                                        }
                                     </li>
+                                    <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
                                 </ul>
+                            </div>
+                            <div class="movie-content">
+                                <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                                <div class="movie-content-bottom">
+                                    <ul>
+                                        <li class="tag">
+                                            <a href="#">HD</a>
+                                        </li>
+                                        <li>
+                                            <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
 
-            <!-- Recent movies-->
-
-            @foreach (var movie in recentMovies)
-            {
-                <div class="custom-col- grid-item grid-sizer recent">
-                    <div class="movie-item movie-item-two">
-                        <div class="movie-poster">
-                            <img src="@movie.Poster" alt="">
-                            <ul class="overlay-btn">
-                                <li>
-                                    @if (this.User?.Identity?.IsAuthenticated == true)
-                                    {
-                                        <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
-                                    }
-                                    else
-                                    {
-                                        <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
-                                    }
-                                </li>
-                                <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
-                            </ul>
-                        </div>
-                        <div class="movie-content">
-                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
-                            <div class="movie-content-bottom">
-                                <ul>
-                                    <li class="tag">
-                                        <a href="#">HD</a>
-                                    </li>
+                <!-- Recent movies-->
+                @foreach (var movie in recentMovies)
+                {
+                    <div class="custom-col- grid-item grid-sizer recent">
+                        <div class="movie-item movie-item-two">
+                            <div class="movie-poster">
+                                <img src="@movie.Poster" alt="">
+                                <ul class="overlay-btn">
                                     <li>
-                                        <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                        @if (this.User?.Identity?.IsAuthenticated == true)
+                                        {
+                                            <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
+                                        }
                                     </li>
+                                    <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
                                 </ul>
+                            </div>
+                            <div class="movie-content">
+                                <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                                <div class="movie-content-bottom">
+                                    <ul>
+                                        <li class="tag">
+                                            <a href="#">HD</a>
+                                        </li>
+                                        <li>
+                                            <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
             </div>
-        <div class="tr-movie-btn text-center mt-25">
-            <a href="#" class="btn">BROWSE ALL MOVIES</a>
+            <div class="tr-movie-btn text-center mt-25">
+                <a href="#" class="btn">BROWSE ALL MOVIES</a>
+            </div>
         </div>
-   </div>
-</section>
+    </section>

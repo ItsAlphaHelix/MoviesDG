@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,13 +15,15 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-
+        private readonly INotyfService toastNotification;
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.toastNotification = toastNotification;
         }
         public string Username { get; set; }
 
@@ -106,7 +109,7 @@
             }
 
             await this.signInManager.RefreshSignInAsync(user);
-            this.StatusMessage = "Your profile has been updated";
+            this.toastNotification.Success("Your profile has been updated.");
             return RedirectToPage();
         }
     }

@@ -46,11 +46,9 @@
 
     @if (!Model.Is2faEnabled)
     {
-        <br />
-        <h4 style="text-align: center">Authenticator app</h4>
         @if (!Model.HasAuthenticator)
         {
-            <a asp-page="./EnableAuthenticator" class="btn">Add authenticator app</a>
+            <a asp-page="./EnableAuthenticator" class="btn">Add auth app</a>
         }
         else
         {

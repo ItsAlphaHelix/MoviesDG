@@ -1,9 +1,32 @@
-﻿
+﻿@{
+	this.ViewData["Title"] = "Administration";
 
-<div class="navbar-wrap main-menu d-none d-lg-flex">
-	<ul class="navigation">
-		<li><a>Create Movie</a></li>
-		<li><a>Users Comments</a></li>
-		<li><a>Fill Data</a></li>
-	</ul>
+	DateTime timeOfDayGreeting = DateTime.Now;
+	string currentTime;
+
+	if (timeOfDayGreeting.Hour >= 5 && timeOfDayGreeting.Hour < 12)
+	{
+		currentTime = "Good Morning";
+	}
+	else if (timeOfDayGreeting.Hour >= 12 && timeOfDayGreeting.Hour < 16)
+	{
+		currentTime = "Good afternoon!";
+	}
+	else
+	{
+		currentTime = "Good night!";
+	}
+
+}
+
+<link rel="stylesheet" href="/css/admin.css"/>
+
+<div class="admin-container">
+	<partial name="../Shared/_AdminNav.cshtml" />
+	<br />
+	<br />
+	<br />
+	<div style="text-align: center" class="movie-details-content">
+		<h2>@currentTime, <span>Boss! &nbsp; :)</span></h2>
+	</div>
 </div>

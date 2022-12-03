@@ -1,0 +1,21 @@
+﻿container.mt-5
+.row
+.col-md-5.d-flex.align-items-center
+h1 Sliding labels for Bootstrap forms
+.col-md-6.offset-md-1
+form.mt-4.mt-md-0
+
+.form-group
+label(for="name")
+| Name
+input.form-control(type='text')
+
+.form-group
+label(for="surname")
+| Surname
+input.form-control(type='text')
+
+.form-group
+label(for="email")
+| E-mail
+input.form-control(type='email')

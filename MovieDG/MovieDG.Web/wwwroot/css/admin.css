@@ -1,0 +1,6 @@
+﻿.admin-container {
+    height: 1000px;
+    background-image: url("/images/tr_movies_bg.jpg");
+    background-size: cover;
+    position: relative;
+}

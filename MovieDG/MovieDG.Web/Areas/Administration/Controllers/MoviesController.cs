@@ -4,7 +4,7 @@ namespace MovieDG.Web.Areas.Administration.Controllers
 {
     public class MoviesController : AdministrationController
     {
-        public IActionResult Index()
+        public IActionResult Create()
         {
             return View();
         }

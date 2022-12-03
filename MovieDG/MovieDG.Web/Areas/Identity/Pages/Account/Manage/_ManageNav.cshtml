@@ -7,8 +7,8 @@
 
 <div class="navbar-wrap main-menu d-none d-lg-flex">
     <ul class="navigation">
-        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a class="@ManageNavPages.IndexNavClass(ViewContext)" asp-page="./Index">Chnage Profile</a></li>
+        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+        <li><a class="@ManageNavPages.IndexNavClass(ViewContext)" asp-page="./Index">Change Profile</a></li>
         <li><a class="@ManageNavPages.EmailNavClass(ViewContext)" asp-page="./Email">Change Email</a></li>
         <li><a class="@ManageNavPages.ChangePasswordNavClass(ViewContext)" asp-page="./ChangePassword">Change Password</a></li>
         @if (hasExternalLogins)

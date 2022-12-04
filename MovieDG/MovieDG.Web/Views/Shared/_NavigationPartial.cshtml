@@ -76,7 +76,7 @@
                                     <li><a asp-controller="Contact" asp-action="ContactUs">Contacts</a></li>
                                     @if(this.User.IsInRole(AdminRoleName))
                                     {
-                                        <li><a asp-area="Administration" asp-page="/Administration/Dashboard/Index">Dashboard</a></li>
+                                        <li><a asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
                                     }    
                                 </ul>
                             </div>

@@ -1,0 +1,38 @@
+﻿@using MovieDG.Core.ViewModels.Contact
+
+@model ContactViewModel
+
+@{
+    this.ViewData["Title"] = "Details";
+}
+
+<link rel="stylesheet" href="/css/admin.css" />
+
+<div class="admin-container">
+    <partial name="../Shared/_AdminNav.cshtml" />
+    <h2 style="text-align: center" class="title">@this.ViewData["Title"]</h2>
+    <br />
+    <br />
+    <br />
+
+        <div class="col-xl-8 col-lg-7 ml-auto mr-auto">
+            <div class="contact-form-wrap">
+            <div class="contact-form">
+                <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto">
+                        <input asp-for="Name" type="text" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <input asp-for="Email" type="email" disabled>
+                    </div>
+                </div>
+                <input asp-for="Subject" type="text" disabled>
+                <textarea asp-for="Message" name="message" disabled></textarea>
+                <form method="post">
+                    <btn class="btn">Delete Question</btn>
+                    <a asp-controller="Contact" asp-action="Reply" class="btn">Reply</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

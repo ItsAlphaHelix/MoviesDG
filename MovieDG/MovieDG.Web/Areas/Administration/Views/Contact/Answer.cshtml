@@ -1,9 +1,9 @@
 ﻿@using MovieDG.Core.ViewModels.Contact
 
-@model IEnumerable<ContactViewModel>
+@model ReplyMessageViewModel
 
 @{
-    this.ViewData["Title"] = "All Submisions";
+	this.ViewData["Title"] = "Answer Message";
 }
 
 <link rel="stylesheet" href="/css/admin.css" />
@@ -15,19 +15,15 @@
     <br />
     <br />
 
-        @foreach (var contact in Model)
-        {
         <div class="col-xl-8 col-lg-7 ml-auto mr-auto">
             <div class="contact-form-wrap">
                 <div class="contact-form">
                     <div class="row">
                         <div class="col-md-6 ml-auto mr-auto">
-                            <input asp-for="@contact.Email" type="text" disabled>
-                            <a asp-action="Details" asp-route-id="@contact.Id" class="btn">See Question</a>
+                            <input asp-for="@Model.ReplyMessage" type="text" disabled>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        }
 </div>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesDG.Data;
 
@@ -11,9 +12,10 @@ using MoviesDG.Data;
 namespace MoviesDG.Data.Migrations
 {
     [DbContext(typeof(MovieDGDbContext))]
-    partial class MovieDGDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221205190619_changedColumnNameReplyCommentToReplyMessage")]
+    partial class changedColumnNameReplyCommentToReplyMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,6 +147,29 @@ namespace MoviesDG.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("MovieDG.Data.Data.Models.AdminAnswer", b =>
+                {
+                    b.Property<string>("AdminId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReplyMessage")
+                        .IsRequired()
+                        .HasMaxLength(700)
+                        .HasColumnType("nvarchar(700)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("AdminId");
+
+                    b.ToTable("AdminAnswers");
                 });
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.ApplicationRole", b =>
@@ -555,6 +580,17 @@ namespace MoviesDG.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MovieDG.Data.Data.Models.AdminAnswer", b =>
+                {
+                    b.HasOne("MovieDG.Data.Data.Models.ApplicationUser", "Admin")
+                        .WithMany("Answers")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+                });
+
             modelBuilder.Entity("MovieDG.Data.Data.Models.MovieCountry", b =>
                 {
                     b.HasOne("MoviesDG.Data.Models.Country", "Country")
@@ -652,6 +688,8 @@ namespace MoviesDG.Data.Migrations
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("Answers");
+
                     b.Navigation("Claims");
 
                     b.Navigation("Logins");

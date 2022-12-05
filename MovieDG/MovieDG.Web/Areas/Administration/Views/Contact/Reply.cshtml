@@ -1,0 +1,35 @@
+﻿@using MovieDG.Core.ViewModels.Contact
+
+@model ReplyMessageViewModel
+
+@{
+	this.ViewData["Title"] = "Reply Message";
+}
+
+<link rel="stylesheet" href="/css/admin.css" />
+
+<div class="admin-container">
+    <partial name="../Shared/_AdminNav.cshtml" />
+    <h2 style="text-align: center" class="title">@this.ViewData["Title"]</h2>
+    <br />
+    <br />
+    <br />
+
+        <div class="col-xl-8 col-lg-7 ml-auto mr-auto">
+            <div class="contact-form-wrap">
+            <div class="contact-form">
+                <form method="post" asp-action="Reply">
+                <div class="row">
+                    <div class="col-md-6 ml-auto mr-auto">
+                        <input asp-for="@Model.Username" placeholder="Your Name..." type="text">
+                        <span asp-validation-for="@Model.Username" class="text-danger"></span>
+                    </div>
+                </div>
+                <textarea asp-for="@Model.ReplyMessage" placeholder="Reply message..."></textarea>
+                <span asp-validation-for="@Model.ReplyMessage" class="text-danger"></span>
+                    <button class="btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

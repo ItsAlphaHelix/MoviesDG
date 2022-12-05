@@ -33,6 +33,7 @@
         public DbSet<MovieCountry> MoviesCountries { get; set; }
 
         public DbSet<UserMovie> UserMovies { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<MovieActor>()

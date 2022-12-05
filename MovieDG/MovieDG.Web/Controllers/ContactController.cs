@@ -33,7 +33,7 @@
                 return this.View(contactModel);
             }
 
-            await this.contactsService.GetUserCommentAsync(contactModel);
+            await this.contactsService.GetUserSubmisionsAsync(contactModel);
 
             this.toastNotification.Success("You successfully send message! Please wait for response.");
             return RedirectToAction(nameof(ContactUs));

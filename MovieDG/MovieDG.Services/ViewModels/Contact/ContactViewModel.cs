@@ -1,5 +1,6 @@
 ﻿namespace MovieDG.Core.ViewModels.Contact
 {
+    using System.ComponentModel.DataAnnotations;
     public class ContactViewModel
     {
         public int Id { get; set; }

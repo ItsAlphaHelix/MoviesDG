@@ -20,6 +20,10 @@
 
         public const int MinContactName = 4;
 
+        public const int MaxAdminName = 30;
+
+        public const int MinAdminName = 4;
+
         public const int MaxSubjectLength = 40;
 
         public const int MinSubjectLength = 5;
@@ -29,5 +33,9 @@
         public const int MinMessageLength = 7;
 
         public const int TrailerMaxLength = 250;
+
+        public const int MaxUserName = 40;
+
+        public const int MinUserName = 3;
     }
 }

@@ -11,6 +11,8 @@ namespace MovieDG.Core.Contracts
 
         Task<ContactViewModel> GetSubmisionByIdAsync(int id);
 
-        Task ReplyMessageToUser(ReplyMessageViewModel replyModel);
+        Task ReplyMessageToUserAsync(ReplyMessageViewModel replyModel);
+
+        Task DeleteQuestionAsync(int id);
     }
 }

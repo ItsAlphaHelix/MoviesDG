@@ -8,8 +8,6 @@
     using MoviesDG.Core.Messaging;
     using MoviesDG.Data.Data.Models;
     using MoviesDG.Data.Repositories;
-    using System.Security.Claims;
-    using static MovieDG.Common.GlobalConstants;
     public class ContactService : IContactService
     {
         private readonly IRepository<Contact> contactsRepository;
@@ -72,15 +70,36 @@
 
             if (submision == null)
             {
-                throw new NullReferenceException("Submision can not be null!");
+                throw new NullReferenceException("The submision can not be null!");
             }
 
             return submision;
         }
 
-        public async Task ReplyMessageToUser(ReplyMessageViewModel replyModel)
+        public async Task ReplyMessageToUserAsync(ReplyMessageViewModel replyModel)
         {
-            
+            await this.emailSender.SendEmailAsync
+            (
+                replyModel.AdminEmail,
+                replyModel.Name,
+                replyModel.ToUserEmail,
+                replyModel.Subject,
+                replyModel.Message
+            );
+        }
+
+        public async Task DeleteQuestionAsync(int id)
+        {
+            var question = await this.contactsRepository.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+            if (question == null)
+            {
+                throw new NullReferenceException("The question can not be null");
+            }
+
+            this.contactsRepository.Delete(question);
+
+            await this.contactsRepository.SaveChangesAsync();
         }
     }
 }

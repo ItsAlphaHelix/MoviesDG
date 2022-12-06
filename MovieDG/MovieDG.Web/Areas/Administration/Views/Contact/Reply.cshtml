@@ -21,12 +21,24 @@
                 <form method="post" asp-action="Reply">
                 <div class="row">
                     <div class="col-md-6 ml-auto mr-auto">
-                        <input asp-for="@Model.Username" placeholder="Your Name..." type="text">
-                        <span asp-validation-for="@Model.Username" class="text-danger"></span>
+                        <input asp-for="@Model.Name" type="text">
+                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
                     </div>
+                    <div class="col-md-6 ml-auto mr-auto">
+                            <input asp-for="@Model.AdminEmail" type="text">
+                            <span asp-validation-for="@Model.AdminEmail" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 ml-auto mr-auto">
+                            <input asp-for="@Model.ToUserEmail" type="text">
+                        <span asp-validation-for="@Model.ToUserEmail" class="text-danger"></span>
+                    </div>
+                     <div class="col-md-6 ml-auto mr-auto">
+                         <input asp-for="@Model.Subject" type="text">
+                            <span asp-validation-for="@Model.Subject" class="text-danger"></span>
+                     </div>
                 </div>
-                <textarea asp-for="@Model.ReplyMessage" placeholder="Reply message..."></textarea>
-                <span asp-validation-for="@Model.ReplyMessage" class="text-danger"></span>
+                <textarea asp-for="@Model.Message" placeholder="Reply Message..."></textarea>
+                <span asp-validation-for="@Model.Message" class="text-danger"></span>
                     <button class="btn">Submit</button>
                 </form>
             </div>

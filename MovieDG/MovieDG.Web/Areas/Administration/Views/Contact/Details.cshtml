@@ -20,19 +20,45 @@
             <div class="contact-form">
                 <div class="row">
                     <div class="col-md-6 ml-auto mr-auto">
-                        <input asp-for="Name" type="text" disabled>
+                        <input asp-for="@Model.Name" type="text" disabled>
                     </div>
                     <div class="col-md-6">
-                        <input asp-for="Email" type="email" disabled>
+                        <input asp-for="@Model.Email" type="email" disabled>
                     </div>
                 </div>
-                <input asp-for="Subject" type="text" disabled>
-                <textarea asp-for="Message" name="message" disabled></textarea>
-                <form method="post">
-                    <btn class="btn">Delete Question</btn>
-                    <a asp-controller="Contact" asp-action="Reply" class="btn">Reply</a>
+                <input asp-for="@Model.Subject" type="text" disabled>
+                <textarea asp-for="@Model.Message" name="message" disabled></textarea>
+                <form method="post" asp-action="Delete" asp-route-id="@Model.Id">
+                    <button class="btn delete">Delete Question></button>
+                    <a asp-controller="Contact" asp-action="Reply" asp-route-id="@Model.Id" class="btn">Reply</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $(".delete").click(function (e) {
+                e.preventDefault();
+                swal({
+                    title: "Are you sure?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $("form").submit();
+                            swal("The question has been deleted", {
+                                icon: "success",
+                            });
+                            e.delete();
+                        }
+                    });
+            });
+        });
+
+    </script>
+}

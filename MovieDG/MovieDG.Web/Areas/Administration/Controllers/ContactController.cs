@@ -1,35 +1,61 @@
 ﻿namespace MovieDG.Web.Areas.Administration.Controllers
 {
     using AspNetCore;
+    using AspNetCoreHero.ToastNotification.Abstractions;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using MovieDG.Common;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.ViewModels.Contact;
+    using MovieDG.Data.Data.Models;
 
     public class ContactController : AdministrationController
     {
-        private readonly IContactService contactsService;
-
-        public ContactController(IContactService contactsService)
+        private readonly IContactService contactService;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly INotyfService toastNotification;
+        public ContactController(
+            IContactService contactService,
+            UserManager<ApplicationUser> userManager,
+            INotyfService toastNotification)
         {
-            this.contactsService = contactsService;
+            this.contactService = contactService;
+            this.userManager = userManager;
+            this.toastNotification = toastNotification;
         }
+
+        [HttpGet]
         public async Task<IActionResult> Submisions()
         {
-            var questions = await this.contactsService.GetSubmisionsAsync();
+            var questions = await this.contactService.GetSubmisionsAsync();
 
             return View(questions);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var questions = await this.contactsService.GetSubmisionByIdAsync(id);
+            var questions = await this.contactService.GetSubmisionByIdAsync(id);
 
             return View(questions);
         }
 
-        public IActionResult Reply()
+        [HttpGet]
+        public async Task<IActionResult> Reply(int id)
         {
-            return View();
+            var question = await this.contactService.GetSubmisionByIdAsync(id);
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var replyModel = new ReplyMessageViewModel()
+            {
+                Id = question.Id,
+                Name = $"From: {GlobalConstants.SystemName} - {user.UserName}",
+                AdminEmail = user.Email,
+                ToUserEmail = question.Email,
+                Subject = $"Subject: {question.Subject}"
+            };
+
+            return View(replyModel);
         }
 
         [HttpPost]
@@ -40,14 +66,21 @@
                 return this.View(replyModel);
             }
 
-            await this.contactsService.ReplyMessageToUser(replyModel);
+            await this.contactService.ReplyMessageToUserAsync(replyModel);
+
+            this.toastNotification.Success("Successfully sended answer to user!");
 
             return RedirectToAction(nameof(Reply));
         }
 
-        public IActionResult Answer()
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            await this.contactService.DeleteQuestionAsync(id);
+
+            this.toastNotification.Success("Successfully deleted question!");
+
+            return this.RedirectToAction(nameof(this.Submisions));
         }
     }
 }

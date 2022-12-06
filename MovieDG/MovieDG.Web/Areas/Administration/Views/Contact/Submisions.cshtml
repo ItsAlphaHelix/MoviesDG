@@ -10,7 +10,14 @@
 
 <div class="admin-container">
     <partial name="../Shared/_AdminNav.cshtml" />
-    <h2 style="text-align: center" class="title">@this.ViewData["Title"]</h2>
+    @if (@Model.Any())
+    {
+        <h2 style="text-align: center" class="title">@this.ViewData["Title"]</h2>
+    }
+    else
+    {
+        <h2 style="text-align: center" class="title">No Submisions Yet!</h2>
+    }
     <br />
     <br />
     <br />

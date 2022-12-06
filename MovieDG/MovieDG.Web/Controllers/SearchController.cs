@@ -18,8 +18,7 @@
 
             if (!movies.Any())
             {
-                //TODO find good exception html page;
-                return BadRequest();
+                return this.RedirectToAction(nameof(this.NoResults));
             }
 
             this.ViewData["CurrentSearchResult"] = title;
@@ -30,6 +29,11 @@
             };
 
             return View(viewModel);
+        }
+
+        public IActionResult NoResults()
+        {
+            return this.View();
         }
     }
 }

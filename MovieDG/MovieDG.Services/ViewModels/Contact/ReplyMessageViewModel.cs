@@ -5,15 +5,26 @@
     using static MovieDG.Core.ErrorMessages;
     public class ReplyMessageViewModel
     {
-        [Required]
-        public string AdminId { get; set; } = null!;
+        public int Id { get; set; }
 
         [Required]
-        [StringLength(MaxContactName, MinimumLength = MinContactName, ErrorMessage = NameError)]
-        public string Username { get; set; } = null!;
+        [StringLength(MaxAdminName, MinimumLength = MinAdminName, ErrorMessage = NameError)]
+        public string Name { get; set; } = null!;
+
+        [Required]
+        [EmailAddress]
+        public string AdminEmail { get; set; } = null!;
+
+        [Required]
+        [EmailAddress]
+        public string ToUserEmail { get; set; } = null!;
+
+        [Required]
+        [StringLength(MaxSubjectLength, MinimumLength = MinSubjectLength, ErrorMessage = SubjectContactError)]
+        public string Subject { get; set; } = null!;
 
         [Required]
         [StringLength(MaxMessageLength, MinimumLength = MinMessageLength, ErrorMessage = MessageError)]
-        public string ReplyMessage { get; set; } = null!;
+        public string Message { get; set; } = null!;
     }
 }

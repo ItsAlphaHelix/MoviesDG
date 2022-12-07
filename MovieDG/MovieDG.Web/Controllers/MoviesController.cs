@@ -22,7 +22,6 @@
 
             return View(movies);
         }
-
         public async Task<IActionResult> Details(int id)
         {
             var movies = await this.movieService.GetMovieDetailsAsync(id);

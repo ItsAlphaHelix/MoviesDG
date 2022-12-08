@@ -14,14 +14,11 @@
                 <div class="movie-poster">
                     <img src="@Model.Poster" alt="">    
                 </div>
-                <form asp-route-movieId="@Model.Id" asp-controller="Movies" asp-action="AddToCollection" method="post">
-                    <input type="submit" value="Add Movie" class="btn" />
-                </form>
+                
             </div>
             <div class="col-xl-6 col-lg-8">
                 <div class="movie-details-content">
                     @{
-                        //Maybe have better way
                         var firstPartTitle = Model.Title.Substring(0, Model.Title.Length / 2);
                         var secondPartTitle = Model.Title.Substring(Model.Title.Length - firstPartTitle.Length);
                     }
@@ -69,7 +66,11 @@
                     <br />
                     <br />
                     <div class="movie-details-prime">
-                        <a href="https://www.youtube.com/watch?v=@Model.Trailer" class="btn popup-video"><i class="fas fa-play"></i> Watch Now</a>
+                        <form asp-route-movieId="@Model.Id" asp-controller="Movies" asp-action="AddToCollection" method="post">
+                            <a href="https://www.youtube.com/watch?v=@Model.Trailer" class="btn popup-video"><i class="fas fa-play"></i> Watch Now</a>
+                            <input type="submit" value="Add Movie" class="btn" />
+                            <a asp-controller="Home" asp-action="Index" class="btn">Back To Home</a>
+                        </form>
                     </div>
                 </div>
             </div>

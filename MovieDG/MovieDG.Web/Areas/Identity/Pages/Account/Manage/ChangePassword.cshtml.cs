@@ -83,6 +83,13 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{this.userManager.GetUserId(User)}'.");
             }
 
+            if (Input.OldPassword == Input.NewPassword)
+            {
+                ModelState.AddModelError(string.Empty, "The new password cannot be the same as the old!");
+
+                return Page();
+            }
+
             var changePasswordResult = await this.userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
             if (!changePasswordResult.Succeeded)
             {

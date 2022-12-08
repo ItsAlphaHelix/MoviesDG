@@ -5,6 +5,7 @@
     using System.Text;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,13 +18,16 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IEmailSender emailSender;
+        private readonly INotyfService toastNotification;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
             this.emailSender = emailSender;
+            this.toastNotification = toastNotification;
         }
 
         public string Username { get; set; }
@@ -51,10 +55,10 @@
             var email = await this.userManager.GetEmailAsync(user);
             this.Email = email;
 
-            //this.Input = new InputModel
-            //{
-            //    NewEmail = email,
-            //};
+            this.Input = new InputModel
+            {
+                NewEmail = email,
+            };
 
             this.IsEmailConfirmed = await this.userManager.IsEmailConfirmedAsync(user);
         }
@@ -105,11 +109,12 @@
                     "Confirm your email",
                     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                this.StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                this.toastNotification.Success("Confirmation link to change email sent. Please check your email.");
+
                 return this.RedirectToPage();
             }
 
-            this.StatusMessage = "Your email is unchanged.";
+            this.toastNotification.Error("Your email is unchanged.");
             return this.RedirectToPage();
         }
 
@@ -143,7 +148,7 @@
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            this.StatusMessage = "Verification email sent. Please check your email.";
+            this.toastNotification.Success("Verification email sent. Please check your email.");
             return this.RedirectToPage();
         }
     }

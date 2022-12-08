@@ -32,7 +32,8 @@
         "Reply Message",
         "Delete Personal Data",
         "No Results",
-        "Access denied"
+        "Access denied",
+        "Confirm email change"
     };
 }
 
@@ -47,7 +48,7 @@
                         <nav class="menu-nav show">
                             <div class="logo">
                                 <a asp-controller="Home" asp-action="Index">
-                                    <img src="~/images/logo.png" alt="Logo">
+                                    <img src="~/images/logo.png" alt="Logo" asp-append-version="true">
                                 </a>
                             </div>
                             <div class="navbar-wrap main-menu d-none d-lg-flex">

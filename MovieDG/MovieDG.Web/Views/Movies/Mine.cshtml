@@ -7,9 +7,6 @@
 
 <section class="top-rated-movie tr-movie-bg" data-background="/images/tr_movies_bg.jpg">
     <div class="container">
-        <form asp-controller="Movies" asp-action="RemoveAllFromCollection" method="post">
-            <input type="submit" value="Remove All Movies" class="btn" />
-         </form>
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="section-title text-center mb-50">
@@ -54,8 +51,8 @@
                 </div>
             }
         </div>
-        <div class="tr-movie-btn text-center mt-25">
-            <a href="#" class="btn">BROWSE ALL MOVIES</a>
-        </div>
+        <form style="text-align: center" asp-controller="Movies" asp-action="RemoveAllFromCollection" method="post">
+            <input type="submit" value="Remove All Movies" class="btn" />
+        </form>
     </div>
 </section>

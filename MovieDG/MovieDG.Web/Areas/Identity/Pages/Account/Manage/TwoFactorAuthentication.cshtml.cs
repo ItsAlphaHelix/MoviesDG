@@ -12,15 +12,18 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ILogger<TwoFactorAuthenticationModel> logger;
+        private readonly INotyfService toastNotification;
 
         public TwoFactorAuthenticationModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<TwoFactorAuthenticationModel> logger)
+            ILogger<TwoFactorAuthenticationModel> logger,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
+            this.toastNotification = toastNotification;
         }
 
         public bool HasAuthenticator { get; set; }
@@ -60,7 +63,7 @@
             }
 
             await this.signInManager.ForgetTwoFactorClientAsync();
-            this.StatusMessage = "The current browser has been forgotten. When you login again from this browser you will be prompted for your 2fa code.";
+            this.toastNotification.Success("The current browser has been forgotten. When you login again from this browser you will be prompted for your 2fa code.");
             return this.RedirectToPage();
         }
     }

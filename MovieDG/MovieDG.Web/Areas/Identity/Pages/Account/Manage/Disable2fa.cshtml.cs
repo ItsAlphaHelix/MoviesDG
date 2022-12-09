@@ -1,5 +1,6 @@
 ﻿namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
 {
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,13 +9,16 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<Disable2faModel> logger;
+        private readonly INotyfService toastNotification;
 
         public Disable2faModel(
             UserManager<ApplicationUser> userManager,
-            ILogger<Disable2faModel> logger)
+            ILogger<Disable2faModel> logger,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
             this.logger = logger;
+            this.toastNotification = toastNotification;
         }
 
         [TempData]
@@ -51,7 +55,7 @@
             }
 
             this.logger.LogInformation("User with ID '{UserId}' has disabled 2fa.", this.userManager.GetUserId(this.User));
-            this.StatusMessage = "2fa has been disabled. You can reenable 2fa when you setup an authenticator app";
+            this.toastNotification.Success("2fa has been disabled. You can reenable 2fa when you setup an authenticator app");
             return this.RedirectToPage("./TwoFactorAuthentication");
         }
     }

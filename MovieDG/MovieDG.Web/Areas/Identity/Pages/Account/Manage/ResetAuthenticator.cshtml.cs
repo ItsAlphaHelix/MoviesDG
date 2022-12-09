@@ -1,5 +1,6 @@
 ﻿namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
 {
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,15 +10,18 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ILogger<ResetAuthenticatorModel> logger;
+        private readonly INotyfService toastNotification;
 
         public ResetAuthenticatorModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<ResetAuthenticatorModel> logger)
+            ILogger<ResetAuthenticatorModel> logger,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
+            this.toastNotification = toastNotification;
         }
 
         [TempData]
@@ -47,7 +51,7 @@
             this.logger.LogInformation("User with ID '{UserId}' has reset their authentication app key.", user.Id);
 
             await this.signInManager.RefreshSignInAsync(user);
-            this.StatusMessage = "Your authenticator app key has been reset, you will need to configure your authenticator app using the new key.";
+            this.toastNotification.Success("Your authenticator app key has been reset, you will need to configure your authenticator app using the new key.");
 
             return this.RedirectToPage("./EnableAuthenticator");
         }

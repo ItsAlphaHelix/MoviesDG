@@ -18,15 +18,18 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<EnableAuthenticatorModel> logger;
         private readonly UrlEncoder urlEncoder;
+        private readonly INotyfService toastNotification;
 
         public EnableAuthenticatorModel(
             UserManager<ApplicationUser> userManager,
             ILogger<EnableAuthenticatorModel> logger,
-            UrlEncoder urlEncoder)
+            UrlEncoder urlEncoder,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
             this.logger = logger;
             this.urlEncoder = urlEncoder;
+            this.toastNotification = toastNotification;
         }
 
         public string SharedKey { get; set; }
@@ -95,7 +98,7 @@
             var userId = await this.userManager.GetUserIdAsync(user);
             this.logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
 
-            this.StatusMessage = "Your authenticator app has been verified.";
+            this.toastNotification.Success("Your authenticator app has been verified.");
 
             if (await this.userManager.CountRecoveryCodesAsync(user) == 0)
             {

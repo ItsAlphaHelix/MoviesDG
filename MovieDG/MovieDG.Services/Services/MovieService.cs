@@ -73,7 +73,7 @@
 
             if (movie == null)
             {
-                throw new NullReferenceException("The movie can not be null");
+                throw new ArgumentNullException("The movie can not be null");
             }
 
             return movie;
@@ -161,7 +161,7 @@
 
             if (latestMovie == null)
             {
-                throw new NullReferenceException("The movie can not be null");
+                throw new ArgumentNullException("The movie can not be null");
             }
 
             return latestMovie;

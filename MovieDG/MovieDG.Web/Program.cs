@@ -1,13 +1,12 @@
+using AspNetCoreHero.ToastNotification.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieDG.Data.Data.Models;
+using MovieDG.Web.Middlewares;
 using MovieDG.Web.Providers;
 using MoviesDG.Data;
 using MoviesDG.Web.Extensions;
-using Microsoft.AspNetCore.Identity;
 using NToastNotify;
-using AspNetCoreHero.ToastNotification.Extensions;
-using MovieDG.Core.Seeding;
-using MovieDG.Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +26,13 @@ builder.Services.AddRazorPages().AddNToastNotifyToastr(new ToastrOptions
     TimeOut = 5000
 });
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(
+    options =>
+    {
+        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    }
+).AddRazorRuntimeCompilation();
+
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddNotyFService();
 

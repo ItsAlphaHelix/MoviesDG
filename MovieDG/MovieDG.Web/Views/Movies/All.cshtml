@@ -9,6 +9,7 @@
 
 @{
     this.ViewData["Title"] = "Movies";
+
     var topRatedMovies = await MoviesService.GetTopRatedMoviesAsync();
     var popularityMovies = await MoviesService.GetPopularityMoviesAsync();
     var recentMovies = await MoviesService.GetRecentMoviesAsync();
@@ -33,7 +34,7 @@
                 </div>
             </div>
             <div class="row movie-item-row">
-
+                
                 <!-- All movies-->
                 @foreach (var movie in Model)
                 {

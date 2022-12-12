@@ -1483,7 +1483,7 @@ b{
         position: absolute;
         left: 0;
         bottom: 0;
-        background-image: url(../img/images/title_shape.png);
+        background-image: url(/images/title_shape.png);
         width: 98px;
         height: 7px;
     }

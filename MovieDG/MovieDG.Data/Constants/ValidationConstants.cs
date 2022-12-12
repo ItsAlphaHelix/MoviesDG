@@ -6,6 +6,8 @@
 
         public const int MaxCountryName = 30;
 
+        public const int MinCountryName = 5;
+
         public const int MaxGenreType = 30;
 
         public const int MaxLanguageName = 30;

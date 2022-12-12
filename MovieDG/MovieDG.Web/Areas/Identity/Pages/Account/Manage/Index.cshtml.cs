@@ -1,15 +1,13 @@
 ﻿namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.Text.Encodings.Web;
-    using System.Threading.Tasks;
     using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using MovieDG.Data.Data.Models;
-    using MoviesDG.Data.Models;
+    using MoviesDG.Data.Constants;
+    using System.ComponentModel.DataAnnotations;
+    using System.Threading.Tasks;
 
     public class IndexModel : PageModel
     {
@@ -25,6 +23,7 @@
             this.signInManager = signInManager;
             this.toastNotification = toastNotification;
         }
+
         public string Username { get; set; }
 
         [TempData]
@@ -35,10 +34,19 @@
 
         public class InputModel
         {
-            public string Username { get; set;}
+            private const int MaxLengthCity = 30;
+            private const int MinLengthCity = 5;
 
-            public string Country { get; set; }
+            [Required]
+            [StringLength(ValidationConstants.MaxUserName, MinimumLength = ValidationConstants.MinUserName)]
+            public string Username { get; set; }
 
+            [Required]
+            [StringLength(ValidationConstants.MaxCountryName, MinimumLength = ValidationConstants.MinCountryName)]
+            public string Country { get; set; } 
+
+            [Required]
+            [StringLength(MaxLengthCity, MinimumLength = MinLengthCity)]
             public string City { get; set; }
         }
 

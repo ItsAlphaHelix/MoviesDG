@@ -36,20 +36,26 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            private const int MaxLengthNewPassword = 100;
+            private const int MinLengthNewPassword = 6;
+
+            private const string NewPasswordErrorMessageMaxAndMinLength = "The {0} must be at least {2} and at max {1} characters long.";
+            private const string NewPasswordConfirmationError = "The new password and confirmation password do not match.";
+
             [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Current password")]
             public string OldPassword { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(MaxLengthNewPassword, ErrorMessage = NewPasswordErrorMessageMaxAndMinLength, MinimumLength = MinLengthNewPassword)]
             [DataType(DataType.Password)]
             [Display(Name = "New password")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Compare("NewPassword", ErrorMessage = NewPasswordConfirmationError)]
             public string ConfirmPassword { get; set; }
         }
 

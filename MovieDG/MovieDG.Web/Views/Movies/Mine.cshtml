@@ -51,8 +51,11 @@
                 </div>
             }
         </div>
-        <form style="text-align: center" asp-controller="Movies" asp-action="RemoveAllFromCollection" method="post">
-            <input type="submit" value="Remove All Movies" class="btn" />
-        </form>
+        @if (Model.Any())
+        {
+            <form style="text-align: center" asp-controller="Movies" asp-action="RemoveAllFromCollection" method="post">
+                <input type="submit" value="Remove All Movies" class="btn" />
+            </form>
+        }
     </div>
 </section>

@@ -73,7 +73,7 @@
 
             if (movie == null)
             {
-                throw new ArgumentNullException("The movie can not be null");
+                throw new ArgumentNullException($"The ${movie} can not be null");
             }
 
             return movie;
@@ -132,7 +132,7 @@
                      Poster = x.Poster,
                      Trailer = x.Trailer,
                      Popularity = x.Popularity,
-                     AverageVotes = x.AverageVotes,
+                     AverageVotes = x.AverageVotes
                  })
                  .Take(10)
                  .ToListAsync();
@@ -161,7 +161,7 @@
 
             if (latestMovie == null)
             {
-                throw new ArgumentNullException("The movie can not be null");
+                throw new ArgumentNullException($"The ${latestMovie} can not be null");
             }
 
             return latestMovie;

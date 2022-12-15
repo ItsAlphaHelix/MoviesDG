@@ -31,26 +31,37 @@
         }
 
         [Test]
-        public async Task GetMovieDetailsTest()
+        [TestCase(5)]
+        [TestCase(20)]
+        [TestCase(2)]
+        public async Task GetMovieDetailsByIDTest(int id)
         {
             EfRepository<Movie> repository = Mocking();
             await SeedDb(repository);
 
-            var firstMovie = await movieService.GetMovieDetailsAsync(5);
-            var secondMovie = await movieService.GetMovieDetailsAsync(20);
-            var ThirdMovie = await movieService.GetMovieDetailsAsync(2);
+            var movie = await movieService.GetMovieDetailsAsync(id);
 
             Assert.Multiple(() =>
             {
-                Assert.That(firstMovie.Id, Is.EqualTo(5));
-                Assert.That(secondMovie.Id, Is.EqualTo(20));
-                Assert.That(ThirdMovie.Id, Is.EqualTo(2));
+                Assert.That(movie, Is.Not.Null);
+
+                Assert.That(movie.Id, Is.EqualTo(id));
             });
         }
 
 
         [Test]
-        public async Task GetTop10RatedMoviesTest()
+        [TestCase(11)]
+        [TestCase(10)]
+        [TestCase(9)]
+        [TestCase(8)]
+        [TestCase(7)]
+        [TestCase(6)]
+        [TestCase(5)]
+        [TestCase(4)]
+        [TestCase(3)]
+        [TestCase(2.9)]
+        public async Task GetTop10RatedMoviesTest(double averageVotes)
         {
             EfRepository<Movie> repository = Mocking();
             await SeedDb(repository);
@@ -60,22 +71,23 @@
 
             Assert.Multiple(() =>
             {
-                Assert.That(movies.Any(x => x.AverageVotes == 11));
-                Assert.That(movies.Any(x => x.AverageVotes == 10));
-                Assert.That(movies.Any(x => x.AverageVotes == 9));
-                Assert.That(movies.Any(x => x.AverageVotes == 8));
-                Assert.That(movies.Any(x => x.AverageVotes == 7));
-                Assert.That(movies.Any(x => x.AverageVotes == 6));
-                Assert.That(movies.Any(x => x.AverageVotes == 5));
-                Assert.That(movies.Any(x => x.AverageVotes == 4));
-                Assert.That(movies.Any(x => x.AverageVotes == 3));
-                Assert.That(movies.Any(x => x.AverageVotes == 2.9));
+                Assert.That(movies.Any(x => x.AverageVotes == averageVotes));
                 Assert.That(movies.Count(), Is.EqualTo(10));
             });
         }
 
         [Test]
-        public async Task Get10PopularityMoviesTest()
+        [TestCase(100001)]
+        [TestCase(100000)]
+        [TestCase(90000)]
+        [TestCase(80000)]
+        [TestCase(70000)]
+        [TestCase(60000)]
+        [TestCase(50000)]
+        [TestCase(40000)]
+        [TestCase(30000)]
+        [TestCase(29999)]
+        public async Task Get10PopularityMoviesTest(int popularity)
         {
             EfRepository<Movie> repository = Mocking();
             await SeedDb(repository);
@@ -84,16 +96,7 @@
 
             Assert.Multiple(() =>
             {
-                Assert.That(movies.Any(x => x.Popularity == 100001));
-                Assert.That(movies.Any(x => x.Popularity == 100000));
-                Assert.That(movies.Any(x => x.Popularity == 90000));
-                Assert.That(movies.Any(x => x.Popularity == 80000));
-                Assert.That(movies.Any(x => x.Popularity == 70000));
-                Assert.That(movies.Any(x => x.Popularity == 60000));
-                Assert.That(movies.Any(x => x.Popularity == 50000));
-                Assert.That(movies.Any(x => x.Popularity == 40000));
-                Assert.That(movies.Any(x => x.Popularity == 30000));
-                Assert.That(movies.Any(x => x.Popularity == 29999));
+                Assert.That(movies.Any(x => x.Popularity == popularity));
                 Assert.That(movies.Count(), Is.EqualTo(10));
             });
         }
@@ -104,10 +107,28 @@
             EfRepository<Movie> repository = Mocking();
             await SeedDb(repository);
 
+            var expected = repository.AllAsNoTracking().OrderByDescending(x => x.ReleaseDate).Take(10).Count();
             var movies = await movieService.GetRecentMoviesAsync();
-
-            Assert.That(movies.Count(), Is.EqualTo(10));
+          
+            Assert.That(movies.Count(), Is.EqualTo(expected));
             
+        }
+
+        [Test]
+       public async Task GetLatestMovieTest()
+        {
+            EfRepository<Movie> repository = Mocking();
+            await SeedDb(repository);
+
+            var movie = await movieService.GetLatestMovieAsync();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(movie, Is.Not.Null);
+                Assert.That(movie.ReleaseDate.Year, Is.EqualTo(2022));
+                Assert.That(movie.ReleaseDate.Month, Is.EqualTo(12));
+                Assert.That(movie.ReleaseDate.Day, Is.EqualTo(29));
+            });
         }
 
         private EfRepository<Movie> Mocking()
@@ -132,6 +153,7 @@
                 Trailer = "",
                 AverageVotes = 10,
                 Popularity = 100001,
+                ReleaseDate = new DateTime(2022, 12, 29)
             });
             await repository.AddAsync(new Movie()
             {
@@ -144,6 +166,7 @@
                 Trailer = "",
                 AverageVotes = 9,
                 Popularity = 100000,
+                ReleaseDate = new DateTime(2022, 12, 28)
             });
             await repository.AddAsync(new Movie()
             {
@@ -156,6 +179,7 @@
                 Trailer = "",
                 AverageVotes = 8,
                 Popularity = 90000,
+                ReleaseDate = new DateTime(2022, 12, 27)
             });
             await repository.AddAsync(new Movie()
             {
@@ -168,6 +192,7 @@
                 Trailer = "",
                 AverageVotes = 7,
                 Popularity = 80000,
+                ReleaseDate = new DateTime(2022, 12, 26)
             });
             await repository.AddAsync(new Movie()
             {
@@ -179,7 +204,8 @@
                 Title = "",
                 Trailer = "",
                 AverageVotes = 5,
-                Popularity = 70000
+                Popularity = 70000,
+                ReleaseDate = new DateTime(2022, 12, 25)
             });
             await repository.AddAsync(new Movie()
             {
@@ -191,7 +217,8 @@
                 Title = "",
                 Trailer = "",
                 AverageVotes = 4,
-                Popularity = 60000
+                Popularity = 60000,
+                ReleaseDate = new DateTime(2022, 12, 24)
             });
             await repository.AddAsync(new Movie()
             {
@@ -203,7 +230,8 @@
                 Title = "",
                 Trailer = "",
                 AverageVotes = 3,
-                Popularity = 50000
+                Popularity = 50000,
+                ReleaseDate = new DateTime(2022, 12, 23)
             });
             await repository.AddAsync(new Movie()
             {
@@ -215,7 +243,8 @@
                 Title = "",
                 Trailer = "",
                 AverageVotes = 2,
-                Popularity = 40000
+                Popularity = 40000,
+                ReleaseDate = new DateTime(2022, 12, 22)
             });
             await repository.AddAsync(new Movie()
             {
@@ -227,7 +256,8 @@
                 Title = "",
                 Trailer = "",
                 AverageVotes = 2.9,
-                Popularity = 30000
+                Popularity = 30000,
+                ReleaseDate = new DateTime(2022, 12, 21)
             });
             await repository.AddAsync(new Movie()
             {
@@ -240,6 +270,7 @@
                 Trailer = "",
                 AverageVotes = 1,
                 Popularity = 20000,
+                ReleaseDate = new DateTime(2022, 12, 20)
             });
             await repository.AddAsync(new Movie()
             {
@@ -251,7 +282,8 @@
                 Title = "",
                 Trailer = "",
                 AverageVotes = 6,
-                Popularity = 29999
+                Popularity = 29999,
+                ReleaseDate = new DateTime(2022, 12, 19)
             });
             await repository.AddAsync(new Movie()
             {
@@ -263,7 +295,8 @@
                 Title = "",
                 Trailer = "",
                 AverageVotes = 11,
-                Popularity = 9999
+                Popularity = 9999,
+                ReleaseDate = new DateTime(2022, 12, 18)
             });
 
             await repository.SaveChangesAsync();

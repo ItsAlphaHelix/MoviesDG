@@ -33,9 +33,10 @@
                 return this.View(contactModel);
             }
 
-            await this.contactsService.GetUserSubmisionsAsync(contactModel);
+            await this.contactsService.GetUserSubmisionAsync(contactModel);
 
-            this.toastNotification.Success("You successfully send message! Please wait for response.");
+            this.toastNotification.Success("Your message has been sent. Be patient you will receive a reply within 1 day.");
+
             return RedirectToAction(nameof(ContactUs));
         }
     }

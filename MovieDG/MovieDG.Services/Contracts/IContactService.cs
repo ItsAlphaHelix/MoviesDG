@@ -5,7 +5,7 @@ namespace MovieDG.Core.Contracts
 {
     public interface IContactService
     {
-        Task GetUserSubmisionsAsync(ContactInputViewModel model);
+        Task GetUserSubmisionAsync(ContactInputViewModel model);
 
         Task<IEnumerable<ContactViewModel>> GetSubmisionsAsync();
 

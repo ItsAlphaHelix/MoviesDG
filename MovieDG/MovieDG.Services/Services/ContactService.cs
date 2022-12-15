@@ -15,14 +15,13 @@
 
         public ContactService(
             IRepository<Contact> contactsRepository,
-            UserManager<ApplicationUser> userManager,
             IEmailSender emailSender)
         {
             this.contactsRepository = contactsRepository;
             this.emailSender = emailSender;
         }
 
-        public async Task GetUserSubmisionsAsync(ContactInputViewModel model)
+        public async Task GetUserSubmisionAsync(ContactInputViewModel model)
         {
             var submision = new Contact()
             {

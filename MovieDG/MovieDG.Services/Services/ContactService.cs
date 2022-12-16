@@ -89,14 +89,14 @@
 
         public async Task DeleteQuestionAsync(int id)
         {
-            var question = await this.contactsRepository.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var contact = await this.contactsRepository.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 
-            if (question == null)
+            if (contact == null)
             {
-                throw new NullReferenceException("The question can not be null");
+                throw new NullReferenceException("The contact can not be null");
             }
 
-            this.contactsRepository.Delete(question);
+            this.contactsRepository.Delete(contact);
 
             await this.contactsRepository.SaveChangesAsync();
         }

@@ -1,6 +1,5 @@
 ﻿namespace MovieDG.Tests
 {
-    using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
     using Moq;
     using MovieDG.Core.Contracts;
@@ -17,27 +16,12 @@
         private IContactService contactService;
         private EfRepository<Contact> contactRepository;
         private MovieDGDbContext dbContext;
-        private Contact contact;
 
         [SetUp]
         public void SetUp()
         {
             SetupInMemoryDataBase();
-            this.contactService = new ContactService(this.contactRepository, null);
-        }
-
-        private void SetupInMemoryDataBase()
-        {
-            var contextOptions = new DbContextOptionsBuilder<MovieDGDbContext>()
-                              .UseInMemoryDatabase("MoviesDG")
-                              .Options;
-
-            dbContext = new MovieDGDbContext(contextOptions);
-
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
-
-            this.contactRepository = new EfRepository<Contact>(dbContext);
+            contactService = new ContactService(contactRepository, null);
         }
 
         [Test]
@@ -66,17 +50,31 @@
 
             var submisions = contactService.GetSubmisionsAsync();
 
-            Assert.That(submisions.Result.Count(), Is.EqualTo(1));
+            Assert.That(submisions.Result.Any());
         }
 
         [Test]
-        public async Task GetSubmisionByIdTest()
+        [TestCase(1)]
+        [TestCase(2)]
+        public async Task GetSubmisionByIdTest(int id)
         {
             await SeedData();
-            var submision = await contactService.GetSubmisionByIdAsync(1);
 
-            Assert.IsNotNull(submision);
-            Assert.That(submision.Id, Is.EqualTo(1));
+            await contactRepository.AddAsync(new Contact()
+            {
+                Id = 2,
+                Name = "Petar",
+                Email = "petar@gamilc.om",
+                Subject = "Hello",
+                Message = "Hello Hello???",
+            });
+
+            await contactRepository.SaveChangesAsync();
+
+            var submision = await contactService.GetSubmisionByIdAsync(id);
+
+            Assert.That(submision, Is.Not.Null);
+            Assert.That(submision.Id, Is.EqualTo(id));
         }
 
         [Test]
@@ -97,43 +95,60 @@
             await service.ReplyMessageToUserAsync(answer);
         }
 
-        //[Test]
-        //public async Task DeleteQuestionTest()
-        //{
-        //    var contextOptions = new DbContextOptionsBuilder<MovieDGDbContext>()
-        //                      .UseInMemoryDatabase("MoviesDG")
-        //                      .Options;
+        [Test]
+        public async Task DeleteQuestionTest()
+        {
+            var contextOptions = new DbContextOptionsBuilder<MovieDGDbContext>()
+                              .UseInMemoryDatabase("MoviesDG")
+                              .Options;
 
-        //    dbContext = new MovieDGDbContext(contextOptions);
+            dbContext = new MovieDGDbContext(contextOptions);
 
-        //    dbContext.Database.EnsureDeleted();
-        //    dbContext.Database.EnsureCreated();
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
 
-        //    using var repo = new EfRepository<Contact>(dbContext);
-        //    var service = new ContactService(repo, null);
+            //using for call Dispose method explicitly;
+            using var repo = new EfRepository<Contact>(dbContext);
+            var service = new ContactService(repo, null);
 
-        //    var contactQuestion = new Contact()
-        //    {
-        //        Id = 2,
-        //        Name = "Ivan",
-        //        Email = "Ivan@gmail.com",
-        //        Subject = "Test",
-        //        Message = "How can i create good test?"
-        //    };
+            var contactQuestion = new Contact()
+            {
+                Name = "Ivan",
+                Email = "ivan@gmail.com",
+                Subject = "Test",
+                Message = "How can i create good test?"
+            };
 
-        //    await dbContext.Contacts.AddAsync(contactQuestion);
-        //    await contactRepository.SaveChangesAsync();
+            await dbContext.Contacts.AddAsync(contactQuestion);
+            await dbContext.SaveChangesAsync();
 
-        //    var sub = await dbContext.Contacts.FindAsync(contactQuestion.Id);
-        //    await service.DeleteQuestionAsync(sub.Id);
+            var contactQuestionForDelete = await dbContext.Contacts.FindAsync(contactQuestion.Id);
 
-        //    var result = service.GetSubmisionByIdAsync(sub.Id);
+            dbContext.Entry(contactQuestionForDelete).State = EntityState.Detached;
+            await service.DeleteQuestionAsync(contactQuestion.Id);
 
-        //    Assert.AreEqual(null, result);
-        //}
+            var result = service.GetSubmisionsAsync();
+
+            Assert.That(result.Result.Count(), Is.EqualTo(0));
+        }
+
+        private void SetupInMemoryDataBase()
+        {
+            var contextOptions = new DbContextOptionsBuilder<MovieDGDbContext>()
+                              .UseInMemoryDatabase("MoviesDG")
+                              .Options;
+
+            dbContext = new MovieDGDbContext(contextOptions);
+
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
+
+            contactRepository = new EfRepository<Contact>(dbContext);
+        }
+
         private async Task SeedData()
         {
-            var contact1  = new Contact
+            var contact  = new Contact
             {
                 Id = 1,
                 Name = "Dimityr",
@@ -142,7 +157,7 @@
                 Message = "How to make good test?"
             };
 
-            await this.contactRepository.AddAsync(contact1);
+            await this.contactRepository.AddAsync(contact);
 
             await this.contactRepository.SaveChangesAsync();
         }

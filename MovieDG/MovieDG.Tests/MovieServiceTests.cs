@@ -6,6 +6,7 @@
     using MovieDG.Core.Services;
     using MovieDG.Data.Data.Models;
     using MoviesDG.Data;
+    using MoviesDG.Data.Data.Models;
     using MoviesDG.Data.Models;
     using MoviesDG.Data.Repositories;
     using NUnit.Framework;
@@ -13,136 +14,103 @@
     [TestFixture]
     public class MovieServiceTests
     {
-        IRepository<ApplicationUser> userRepository;
+        private EfRepository<Movie> movieRepository;
         private IMovieService movieService;
         private MovieDGDbContext dbContext;
 
         [SetUp]
         public void SetUp()
         {
-            var contextOptions = new DbContextOptionsBuilder<MovieDGDbContext>()
-                .UseInMemoryDatabase("MoviesDG")
-                .Options;
-
-            dbContext = new MovieDGDbContext(contextOptions);
-
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
+            SetupInMemoryDatabase();
+            movieService = new MovieService(movieRepository, null);
         }
 
         [Test]
         [TestCase(5)]
         [TestCase(20)]
-        [TestCase(2)]
+        [TestCase(2)] //This is well test.
         public async Task GetMovieDetailsByIDTest(int id)
         {
-            EfRepository<Movie> repository = Mocking();
-            await SeedDb(repository);
+            await SeedData(movieRepository);
 
             var movie = await movieService.GetMovieDetailsAsync(id);
 
             Assert.Multiple(() =>
             {
                 Assert.That(movie, Is.Not.Null);
-
                 Assert.That(movie.Id, Is.EqualTo(id));
             });
         }
 
 
         [Test]
-        [TestCase(11)]
-        [TestCase(10)]
-        [TestCase(9)]
-        [TestCase(8)]
-        [TestCase(7)]
-        [TestCase(6)]
-        [TestCase(5)]
-        [TestCase(4)]
-        [TestCase(3)]
-        [TestCase(2.9)]
-        public async Task GetTop10RatedMoviesTest(double averageVotes)
+        public async Task GetTop10RatedMoviesTest()
         {
-            EfRepository<Movie> repository = Mocking();
-            await SeedDb(repository);
+            await SeedData(movieRepository);
 
             var movies = await movieService.GetTopRatedMoviesAsync();
+            var expectedResult = movieRepository.AllAsNoTracking().OrderByDescending(x => x.AverageVotes).Take(10);
 
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(movies.Any(x => x.AverageVotes == averageVotes));
-                Assert.That(movies.Count(), Is.EqualTo(10));
-            });
+            Assert.That(movies.Count(), Is.EqualTo(expectedResult.Count()));
         }
 
         [Test]
-        [TestCase(100001)]
-        [TestCase(100000)]
-        [TestCase(90000)]
-        [TestCase(80000)]
-        [TestCase(70000)]
-        [TestCase(60000)]
-        [TestCase(50000)]
-        [TestCase(40000)]
-        [TestCase(30000)]
-        [TestCase(29999)]
-        public async Task Get10PopularityMoviesTest(int popularity)
+
+        public async Task Get10PopularityMoviesTest()
         {
-            EfRepository<Movie> repository = Mocking();
-            await SeedDb(repository);
+            await SeedData(movieRepository);
 
             var movies = await movieService.GetPopularityMoviesAsync();
 
-            Assert.Multiple(() =>
-            {
-                Assert.That(movies.Any(x => x.Popularity == popularity));
-                Assert.That(movies.Count(), Is.EqualTo(10));
-            });
+            Assert.That(movies.Count(), Is.EqualTo(10));
         }
 
         [Test]
         public async Task Get10RecentMoviesTest()
         {
-            EfRepository<Movie> repository = Mocking();
-            await SeedDb(repository);
+            await SeedData(movieRepository);
 
-            var expected = repository.AllAsNoTracking().OrderByDescending(x => x.ReleaseDate).Take(10).Count();
             var movies = await movieService.GetRecentMoviesAsync();
-          
-            Assert.That(movies.Count(), Is.EqualTo(expected));
-            
+
+            Assert.That(movies.Count(), Is.EqualTo(10));
+
         }
 
         [Test]
-       public async Task GetLatestMovieTest()
+        public async Task GetLatestMovieTest()
         {
-            EfRepository<Movie> repository = Mocking();
-            await SeedDb(repository);
+            await SeedData(movieRepository);
 
             var movie = await movieService.GetLatestMovieAsync();
 
+            Assert.That(movie, Is.Not.Null);
+
             Assert.Multiple(() =>
             {
-                Assert.That(movie, Is.Not.Null);
                 Assert.That(movie.ReleaseDate.Year, Is.EqualTo(2022));
                 Assert.That(movie.ReleaseDate.Month, Is.EqualTo(12));
                 Assert.That(movie.ReleaseDate.Day, Is.EqualTo(29));
             });
         }
 
-        private EfRepository<Movie> Mocking()
+        private void SetupInMemoryDatabase()
         {
-            var userMock = new Mock<IRepository<ApplicationUser>>();
-            userRepository = userMock.Object;
-            var repository = new EfRepository<Movie>(dbContext);
-            movieService = new MovieService(repository, userRepository);
-            return repository;
+            var contextOptions = new DbContextOptionsBuilder<MovieDGDbContext>()
+                              .UseInMemoryDatabase("MoviesDG")
+                              .Options;
+
+            dbContext = new MovieDGDbContext(contextOptions);
+
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
+
+            movieRepository = new EfRepository<Movie>(dbContext);
+
         }
 
-        private static async Task SeedDb(EfRepository<Movie> repository)
+        private static async Task SeedData(EfRepository<Movie> movieRepository)
         {
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 1000,
                 Banner = "",
@@ -155,7 +123,7 @@
                 Popularity = 100001,
                 ReleaseDate = new DateTime(2022, 12, 29)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 5,
                 Banner = "",
@@ -168,7 +136,7 @@
                 Popularity = 100000,
                 ReleaseDate = new DateTime(2022, 12, 28)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 20,
                 Banner = "",
@@ -181,7 +149,7 @@
                 Popularity = 90000,
                 ReleaseDate = new DateTime(2022, 12, 27)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 2,
                 Banner = "",
@@ -194,7 +162,7 @@
                 Popularity = 80000,
                 ReleaseDate = new DateTime(2022, 12, 26)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 15,
                 Banner = "",
@@ -207,7 +175,7 @@
                 Popularity = 70000,
                 ReleaseDate = new DateTime(2022, 12, 25)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 90,
                 Banner = "",
@@ -220,7 +188,7 @@
                 Popularity = 60000,
                 ReleaseDate = new DateTime(2022, 12, 24)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 100,
                 Banner = "",
@@ -233,7 +201,7 @@
                 Popularity = 50000,
                 ReleaseDate = new DateTime(2022, 12, 23)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 3,
                 Banner = "",
@@ -246,7 +214,7 @@
                 Popularity = 40000,
                 ReleaseDate = new DateTime(2022, 12, 22)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 19,
                 Banner = "",
@@ -259,7 +227,7 @@
                 Popularity = 30000,
                 ReleaseDate = new DateTime(2022, 12, 21)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 25,
                 Banner = "",
@@ -272,7 +240,7 @@
                 Popularity = 20000,
                 ReleaseDate = new DateTime(2022, 12, 20)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 21,
                 Banner = "",
@@ -285,7 +253,7 @@
                 Popularity = 29999,
                 ReleaseDate = new DateTime(2022, 12, 19)
             });
-            await repository.AddAsync(new Movie()
+            await movieRepository.AddAsync(new Movie()
             {
                 Id = 11,
                 Banner = "",
@@ -294,12 +262,12 @@
                 Poster = "",
                 Title = "",
                 Trailer = "",
-                AverageVotes = 11,
+                AverageVotes = 9.8,
                 Popularity = 9999,
                 ReleaseDate = new DateTime(2022, 12, 18)
             });
 
-            await repository.SaveChangesAsync();
+            await movieRepository.SaveChangesAsync();
         }
 
         [TearDown]

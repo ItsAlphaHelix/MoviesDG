@@ -38,14 +38,16 @@
 
         public async Task<IActionResult> AddToCollection(int movieId)
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userId = GetUserID();
+
             await movieService.AddMovieToCollectionAsync(movieId, userId);
 
             return RedirectToAction(nameof(Mine));
         }
         public async Task<IActionResult> Mine()
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userId = GetUserID();
+
             var model = await movieService.GetAllMyMoviesAsync(userId);
 
             return View(model);
@@ -53,7 +55,8 @@
 
         public async Task<IActionResult> RemoveFromCollection(int movieId)
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userId = GetUserID();
+
             await movieService.RemoveMovieFromCollectionAsync(movieId, userId);
 
             return RedirectToAction(nameof(Mine));
@@ -61,10 +64,14 @@
 
         public async Task<IActionResult> RemoveAllFromCollection(int movieId)
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userId = GetUserID();
+
             await movieService.RemoveAllMoviesFromCollectionAsync(movieId, userId);
 
             return RedirectToAction(nameof(Mine));
         }
+
+        private string GetUserID()
+            => User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
     }
 }

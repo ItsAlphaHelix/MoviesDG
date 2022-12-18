@@ -15,6 +15,7 @@
     public class MovieServiceTests
     {
         private EfRepository<Movie> movieRepository;
+        private EfRepository<ApplicationUser> userRepository;
         private IMovieService movieService;
         private MovieDGDbContext dbContext;
 
@@ -22,7 +23,7 @@
         public void SetUp()
         {
             SetupInMemoryDatabase();
-            movieService = new MovieService(movieRepository, null);
+            movieService = new MovieService(movieRepository, userRepository);
         }
 
         [Test]
@@ -93,6 +94,184 @@
             });
         }
 
+        [Test]
+        public async Task AddMovieToUserCollectionTest()
+        {
+            await userRepository.AddAsync(new ApplicationUser()
+            {
+                UserName = "Test",
+                Email = "test@gmail.com",
+                Country = "Testomania",
+                City = "Testo"
+            });
+
+            await userRepository.SaveChangesAsync();
+
+            await movieRepository.AddAsync(new Movie()
+            {
+                Banner = "",
+                IMDBLink = "",
+                Overview = "",
+                Poster = "",
+                Title = "",
+                Trailer = "",
+                AverageVotes = 10,
+                Popularity = 100001,
+                ReleaseDate = new DateTime(2021, 12, 29)
+            });
+
+            await movieRepository.SaveChangesAsync();
+
+            var movie = movieRepository.AllAsNoTracking().ToListAsync();
+            var user = userRepository.AllAsNoTracking().ToListAsync();
+
+            int movieID = movie.Result.FirstOrDefault().Id;
+            string userID = user.Result.FirstOrDefault().Id;
+
+            await movieService.AddMovieToCollectionAsync(movieID, userID);
+
+            var afterAdding = await movieRepository.AllAsNoTracking().Include(x => x.UsersMovies).FirstOrDefaultAsync();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(movie, Is.Not.Null);
+                Assert.That(user, Is.Not.Null);
+                Assert.That(afterAdding.UsersMovies.Count(), Is.EqualTo(1));
+            });
+        }
+
+        [Test]
+        public async Task GetAllUserMoviesTest() 
+        {
+            await userRepository.AddAsync(new ApplicationUser()
+            {
+                UserName = "Test",
+                Email = "test@gmail.com",
+                Country = "Testomania",
+                City = "Testo"
+            });
+
+            await userRepository.SaveChangesAsync();
+
+            await movieRepository.AddAsync(new Movie()
+            {
+                Banner = "",
+                IMDBLink = "",
+                Overview = "",
+                Poster = "",
+                Title = "",
+                Trailer = "",
+                AverageVotes = 10,
+                Popularity = 100001,
+                ReleaseDate = new DateTime(2021, 12, 29)
+            });
+
+            await movieRepository.SaveChangesAsync();
+
+            var movie = movieRepository.AllAsNoTracking().ToListAsync();
+            var user = userRepository.AllAsNoTracking().ToListAsync();
+
+            int movieID = movie.Result.FirstOrDefault().Id;
+            string userID = user.Result.FirstOrDefault().Id;
+
+            await movieService.AddMovieToCollectionAsync(movieID, userID);
+
+            var movies = movieService.GetAllMyMoviesAsync(userID);
+
+            Assert.That(movies.Result.Count(), Is.EqualTo(1));
+        }
+
+        [Test]
+        public async Task RemoveMovieFromCollectionTest()
+        {
+            await userRepository.AddAsync(new ApplicationUser()
+            {
+                UserName = "Test",
+                Email = "test@gmail.com",
+                Country = "Testomania",
+                City = "Testo"
+            });
+
+            await userRepository.SaveChangesAsync();
+
+            await movieRepository.AddAsync(new Movie()
+            {
+                Banner = "",
+                IMDBLink = "",
+                Overview = "",
+                Poster = "",
+                Title = "",
+                Trailer = "",
+                AverageVotes = 10,
+                Popularity = 100001,
+                ReleaseDate = new DateTime(2021, 12, 29),
+            });
+
+            await movieRepository.SaveChangesAsync();
+
+            var movie = movieRepository.AllAsNoTracking().ToListAsync();
+            var user = userRepository.AllAsNoTracking().ToListAsync();
+
+            int movieID = movie.Result.FirstOrDefault().Id;
+            string userID = user.Result.FirstOrDefault().Id;
+
+            await movieService.AddMovieToCollectionAsync(movieID, userID);
+
+            var movieForRemove = movieService.RemoveMovieFromCollectionAsync(movieID, userID).ToString();
+
+            Assert.That(movieForRemove.Any());
+        }
+
+        [Test]
+        public async Task RemoveAllMovieFromUserCollection()
+        {
+            await userRepository.AddAsync(new ApplicationUser()
+            {
+                UserName = "Test",
+                Email = "test@gmail.com",
+                Country = "Testomania",
+                City = "Testo"
+            });
+
+            await userRepository.SaveChangesAsync();
+
+            await movieRepository.AddAsync(new Movie()
+            {
+                Banner = "",
+                IMDBLink = "",
+                Overview = "",
+                Poster = "",
+                Title = "",
+                Trailer = "",
+                AverageVotes = 10,
+                Popularity = 100001,
+                ReleaseDate = new DateTime(2021, 12, 29),
+            });
+            await movieRepository.AddAsync(new Movie()
+            {
+                Banner = "",
+                IMDBLink = "",
+                Overview = "",
+                Poster = "",
+                Title = "",
+                Trailer = "",
+                AverageVotes = 10,
+                Popularity = 100001,
+                ReleaseDate = new DateTime(2021, 12, 29),
+            });
+
+            await movieRepository.SaveChangesAsync();
+
+            var movie = movieRepository.AllAsNoTracking().ToListAsync();
+            var user = userRepository.AllAsNoTracking().ToListAsync();
+
+            int movieID = movie.Result.FirstOrDefault().Id;
+            string userID = user.Result.FirstOrDefault().Id;
+
+            var movies = movieService.RemoveAllMoviesFromCollectionAsync(movieID, userID).ToString();
+
+            Assert.That(movies.Any());
+        }
         private void SetupInMemoryDatabase()
         {
             var contextOptions = new DbContextOptionsBuilder<MovieDGDbContext>()
@@ -105,6 +284,7 @@
             dbContext.Database.EnsureCreated();
 
             movieRepository = new EfRepository<Movie>(dbContext);
+            userRepository = new EfRepository<ApplicationUser>(dbContext);
 
         }
 

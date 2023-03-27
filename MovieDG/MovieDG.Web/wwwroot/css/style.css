@@ -1120,7 +1120,7 @@ label {
 
 /* 6. Banner */
 .banner-bg {
-    padding: 295px 0 273px;
+    padding: 295px 0 340px;
     background-position: center;
     background-size: cover;
 }
@@ -1747,7 +1747,7 @@ b{
 .tr-movie-bg {
     background-position: top center;
     background-size: cover;
-    padding: 120px 0 60px;
+    padding: 120px 0 432px;
 }
 
 .tr-movie-bg2 {
@@ -2116,7 +2116,7 @@ b{
 .movie-details-area {
     background-position: top center;
     background-size: cover;
-    padding: 175px 0 120px;
+    padding: 175px 0px 200px; /* 175px, 0px, 120px */
 }
 
 .movie-details-img {

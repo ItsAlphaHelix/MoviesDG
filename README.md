@@ -32,7 +32,7 @@
 
 ## 🌐 Database Diagram
 
-![image](https://github.com/ItsAlphaHelix/MyWebProject/blob/main/MovieDG/MovieDG.Web/wwwroot/images/Database-Diagram.png?raw=true)
+![image](https://github.com/ItsAlphaHelix/MyWebProject/blob/main/Database-Diagram.png?raw=true)
 
 ## 👦 Author
 

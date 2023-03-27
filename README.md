@@ -1,7 +1,5 @@
 # MoviesDG
 
-## Homepage
-
 ![image](https://github.com/ItsAlphaHelix/MyWebProject/blob/main/Homepage.png?raw=true)
 
 ## 📃 Project Description

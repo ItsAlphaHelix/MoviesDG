@@ -24,6 +24,7 @@
 #### - Html/CSS 
 #### - Javascript
 ---
+#### - AJAX
 #### - JQuery
 #### - QRCode.js
 ---

@@ -20,7 +20,6 @@
             this.contactsRepository = contactsRepository;
             this.emailSender = emailSender;
         }
-
         public async Task GetUserSubmisionAsync(ContactInputViewModel model)
         {
             var submision = new Contact()

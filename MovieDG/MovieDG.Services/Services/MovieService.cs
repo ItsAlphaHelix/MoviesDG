@@ -73,7 +73,7 @@
 
             if (movie == null)
             {
-                throw new ArgumentNullException($"The ${movie} can not be null");
+                throw new ArgumentException($"The movie can not be null");
             }
 
             return movie;
@@ -161,7 +161,7 @@
 
             if (latestMovie == null)
             {
-                throw new ArgumentNullException($"The ${latestMovie} can not be null");
+                throw new ArgumentException($"The movie can not be null");
             }
 
             return latestMovie;
@@ -234,7 +234,7 @@
 
             if (user == null)
             {
-                throw new ArgumentException("Invalid user ID");
+                throw new ArgumentException("Invalid User ID");
             }
 
             var movie = await moviesRepository
@@ -275,7 +275,7 @@
 
             if (user == null)
             {
-                throw new ArgumentException("Invalid user ID");
+                throw new ArgumentException("Invalid User ID");
             }
 
             var userMovies = user.UsersMovies
@@ -304,7 +304,7 @@
 
             if (user == null)
             {
-                throw new ArgumentException("Invalid user ID");
+                throw new ArgumentException("Invalid User ID");
             }
 
             var movie = user.UsersMovies.FirstOrDefault(m => m.MovieId == movieId);
@@ -327,7 +327,7 @@
 
             if (user == null)
             {
-                throw new ArgumentException("Invalid user ID");
+                throw new ArgumentException("Invalid User ID");
             }
 
             foreach (var userMovie in user.UsersMovies)

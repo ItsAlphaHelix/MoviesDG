@@ -156,9 +156,8 @@
                 Subject = "Testing",
                 Message = "How to make good test?"
             };
-
+           
             await this.contactRepository.AddAsync(contact);
-
             await this.contactRepository.SaveChangesAsync();
         }
 

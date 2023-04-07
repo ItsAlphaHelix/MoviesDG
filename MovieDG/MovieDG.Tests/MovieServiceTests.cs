@@ -1,12 +1,11 @@
 ﻿namespace MovieDG.Tests
 {
     using Microsoft.EntityFrameworkCore;
-    using Moq;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.Services;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Tests.Seed;
     using MoviesDG.Data;
-    using MoviesDG.Data.Data.Models;
     using MoviesDG.Data.Models;
     using MoviesDG.Data.Repositories;
     using NUnit.Framework;
@@ -27,108 +26,125 @@
         }
 
         [Test]
+        public async Task GetlAllMoviesTest()
+        {
+            await SeedDB.SeedMovies(this.movieRepository);
+
+            var movies = await this.movieService.GetAllMoviesAsync();
+            Assert.That(movies.Count, Is.EqualTo(10));
+
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(3)]
+        [TestCase(2)]
         [TestCase(5)]
-        [TestCase(20)]
-        [TestCase(2)] //This is well test.
-        public async Task GetMovieDetailsByIDTest(int id)
+        public async Task GetMovieDetailsAsyncTest(int id)
         {
-            await SeedData(movieRepository);
+            await SeedDB.SeedMovies(this.movieRepository);
+            var movie = await this.movieService.GetMovieDetailsAsync(id);
 
-            var movie = await movieService.GetMovieDetailsAsync(id);
+            Assert.That(movie.Id, Is.EqualTo(id));
+        }
+
+        [Test]
+        [TestCase(2000)]
+        [TestCase(-1)]
+        public async Task GetMovieDetailsAsyncShouldThrowsArgumentException(int id)
+        {
+            await SeedDB.SeedMovies(this.movieRepository);
+
+            var ex = Assert.ThrowsAsync<ArgumentException>(() => this.movieService.GetMovieDetailsAsync(id));
+
+            Assert.That(ex.Message, Is.EqualTo($"The movie can not be null"));
+        }
+
+        [Test]
+        public async Task GetTop10RatedMoviesAsyncTest()
+        {
+            await SeedDB.SeedMovies(this.movieRepository);
+
+            var movies = await this.movieService.GetTopRatedMoviesAsync();
+            double maxAverageVote = movies.FirstOrDefault().AverageVotes;
 
             Assert.Multiple(() =>
             {
-                Assert.That(movie, Is.Not.Null);
-                Assert.That(movie.Id, Is.EqualTo(id));
+                Assert.That(maxAverageVote, Is.EqualTo(11.5));
+                Assert.That(movies.Count(), Is.EqualTo(10));
             });
         }
 
-
         [Test]
-        public async Task GetTop10RatedMoviesTest()
+        public async Task Get10PopularityMoviesAsyncTest()
         {
-            await SeedData(movieRepository);
+            await SeedDB.SeedMovies(this.movieRepository);
 
-            var movies = await movieService.GetTopRatedMoviesAsync();
-            var expectedResult = movieRepository.AllAsNoTracking().OrderByDescending(x => x.AverageVotes).Take(10);
+            var movies = await this.movieService.GetPopularityMoviesAsync();
+            double popularMovie = movies.FirstOrDefault().Popularity;
 
-            Assert.That(movies.Count(), Is.EqualTo(expectedResult.Count()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(popularMovie, Is.EqualTo(12));
+                Assert.That(movies.Count(), Is.EqualTo(10));
+            });
         }
 
         [Test]
-
-        public async Task Get10PopularityMoviesTest()
+        public async Task Get10RecentMoviesAsyncTest()
         {
-            await SeedData(movieRepository);
+            await SeedDB.SeedMovies(this.movieRepository);
 
-            var movies = await movieService.GetPopularityMoviesAsync();
+            var movies = await this.movieService.GetPopularityMoviesAsync();
 
             Assert.That(movies.Count(), Is.EqualTo(10));
         }
 
         [Test]
-        public async Task Get10RecentMoviesTest()
+        public async Task GetMoviesByGenreAsyncTest()
         {
-            await SeedData(movieRepository);
+            await SeedDB.SeedMovies(this.movieRepository);
 
-            var movies = await movieService.GetRecentMoviesAsync();
+            var movies = await this.movieService.GetMoviesByGenreAsync("Fantasy1");
 
-            Assert.That(movies.Count(), Is.EqualTo(10));
+            Assert.That(movies.Count(), Is.EqualTo(1));
+        }
 
+
+        [Test]
+        public async Task GetMoviesByCountryAsyncTest()
+        {
+            await SeedDB.SeedMovies(this.movieRepository);
+
+            var movies = await this.movieService.GetMoviesByCountryAsync("Bulgaria1");
+
+            Assert.That(movies.Count(), Is.EqualTo(1));
         }
 
         [Test]
-        public async Task GetLatestMovieTest()
+        public async Task GetMoviesByActorNameAsyncTest()
         {
-            await SeedData(movieRepository);
+            await SeedDB.SeedMovies(this.movieRepository);
 
-            var movie = await movieService.GetLatestMovieAsync();
+            var movies = await this.movieService.GetMoviesByActorAsync("Actor1");
 
-            Assert.That(movie, Is.Not.Null);
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(movie.ReleaseDate.Year, Is.EqualTo(2022));
-                Assert.That(movie.ReleaseDate.Month, Is.EqualTo(12));
-                Assert.That(movie.ReleaseDate.Day, Is.EqualTo(29));
-            });
+            Assert.That(movies.Count(), Is.EqualTo(1));
         }
+
 
         [Test]
         public async Task AddMovieToUserCollectionTest()
         {
-            await userRepository.AddAsync(new ApplicationUser()
-            {
-                UserName = "Test",
-                Email = "test@gmail.com",
-                Country = "Testomania",
-                City = "Testo"
-            });
+            await SeedDB.SeedUsers(userRepository);
+            await SeedDB.SeedMovies(movieRepository);
 
-            await userRepository.SaveChangesAsync();
+            var movie = await movieRepository.AllAsNoTracking().ToListAsync();
+            var user = await userRepository.AllAsNoTracking().ToListAsync();
 
-            await movieRepository.AddAsync(new Movie()
-            {
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 10,
-                Popularity = 100001,
-                ReleaseDate = new DateTime(2021, 12, 29)
-            });
+            int movieId = movie.FirstOrDefault().Id;
+            string userId = user.FirstOrDefault().Id;
 
-            await movieRepository.SaveChangesAsync();
-
-            var movie = movieRepository.AllAsNoTracking().ToListAsync();
-            var user = userRepository.AllAsNoTracking().ToListAsync();
-
-            int movieID = movie.Result.FirstOrDefault().Id;
-            string userID = user.Result.FirstOrDefault().Id;
-
-            await movieService.AddMovieToCollectionAsync(movieID, userID);
+            await movieService.AddMovieToCollectionAsync(movieId, userId);
 
             var afterAdding = await movieRepository.AllAsNoTracking().Include(x => x.UsersMovies).FirstOrDefaultAsync();
 
@@ -141,38 +157,16 @@
         }
 
         [Test]
-        public async Task GetAllUserMoviesTest() 
+        public async Task GetAllUserMoviesTest()
         {
-            await userRepository.AddAsync(new ApplicationUser()
-            {
-                UserName = "Test",
-                Email = "test@gmail.com",
-                Country = "Testomania",
-                City = "Testo"
-            });
+            await SeedDB.SeedUsers(userRepository);
+            await SeedDB.SeedMovies(movieRepository);
 
-            await userRepository.SaveChangesAsync();
+            var movie = await movieRepository.AllAsNoTracking().ToListAsync();
+            var user = await userRepository.AllAsNoTracking().ToListAsync();
 
-            await movieRepository.AddAsync(new Movie()
-            {
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 10,
-                Popularity = 100001,
-                ReleaseDate = new DateTime(2021, 12, 29)
-            });
-
-            await movieRepository.SaveChangesAsync();
-
-            var movie = movieRepository.AllAsNoTracking().ToListAsync();
-            var user = userRepository.AllAsNoTracking().ToListAsync();
-
-            int movieID = movie.Result.FirstOrDefault().Id;
-            string userID = user.Result.FirstOrDefault().Id;
+            int movieID = movie.FirstOrDefault().Id;
+            string userID = user.FirstOrDefault().Id;
 
             await movieService.AddMovieToCollectionAsync(movieID, userID);
 
@@ -184,36 +178,14 @@
         [Test]
         public async Task RemoveMovieFromCollectionTest()
         {
-            await userRepository.AddAsync(new ApplicationUser()
-            {
-                UserName = "Test",
-                Email = "test@gmail.com",
-                Country = "Testomania",
-                City = "Testo"
-            });
+            await SeedDB.SeedUsers(userRepository);
+            await SeedDB.SeedMovies(movieRepository);
 
-            await userRepository.SaveChangesAsync();
+            var movie = await movieRepository.AllAsNoTracking().ToListAsync();
+            var user = await userRepository.AllAsNoTracking().ToListAsync();
 
-            await movieRepository.AddAsync(new Movie()
-            {
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 10,
-                Popularity = 100001,
-                ReleaseDate = new DateTime(2021, 12, 29),
-            });
-
-            await movieRepository.SaveChangesAsync();
-
-            var movie = movieRepository.AllAsNoTracking().ToListAsync();
-            var user = userRepository.AllAsNoTracking().ToListAsync();
-
-            int movieID = movie.Result.FirstOrDefault().Id;
-            string userID = user.Result.FirstOrDefault().Id;
+            int movieID = movie.FirstOrDefault().Id;
+            string userID = user.FirstOrDefault().Id;
 
             await movieService.AddMovieToCollectionAsync(movieID, userID);
 
@@ -225,48 +197,14 @@
         [Test]
         public async Task RemoveAllMovieFromUserCollection()
         {
-            await userRepository.AddAsync(new ApplicationUser()
-            {
-                UserName = "Test",
-                Email = "test@gmail.com",
-                Country = "Testomania",
-                City = "Testo"
-            });
+            await SeedDB.SeedUsers(userRepository);
+            await SeedDB.SeedMovies(movieRepository);
 
-            await userRepository.SaveChangesAsync();
+            var movie = await movieRepository.AllAsNoTracking().ToListAsync();
+            var user = await userRepository.AllAsNoTracking().ToListAsync();
 
-            await movieRepository.AddAsync(new Movie()
-            {
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 10,
-                Popularity = 100001,
-                ReleaseDate = new DateTime(2021, 12, 29),
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 10,
-                Popularity = 100001,
-                ReleaseDate = new DateTime(2021, 12, 29),
-            });
-
-            await movieRepository.SaveChangesAsync();
-
-            var movie = movieRepository.AllAsNoTracking().ToListAsync();
-            var user = userRepository.AllAsNoTracking().ToListAsync();
-
-            int movieID = movie.Result.FirstOrDefault().Id;
-            string userID = user.Result.FirstOrDefault().Id;
+            int movieID = movie.FirstOrDefault().Id;
+            string userID = user.FirstOrDefault().Id;
 
             var movies = movieService.RemoveAllMoviesFromCollectionAsync(movieID, userID).ToString();
 
@@ -286,168 +224,6 @@
             movieRepository = new EfRepository<Movie>(dbContext);
             userRepository = new EfRepository<ApplicationUser>(dbContext);
 
-        }
-
-        private static async Task SeedData(EfRepository<Movie> movieRepository)
-        {
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 1000,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 10,
-                Popularity = 100001,
-                ReleaseDate = new DateTime(2022, 12, 29)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 5,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 9,
-                Popularity = 100000,
-                ReleaseDate = new DateTime(2022, 12, 28)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 20,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 8,
-                Popularity = 90000,
-                ReleaseDate = new DateTime(2022, 12, 27)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 2,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 7,
-                Popularity = 80000,
-                ReleaseDate = new DateTime(2022, 12, 26)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 15,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 5,
-                Popularity = 70000,
-                ReleaseDate = new DateTime(2022, 12, 25)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 90,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 4,
-                Popularity = 60000,
-                ReleaseDate = new DateTime(2022, 12, 24)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 100,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 3,
-                Popularity = 50000,
-                ReleaseDate = new DateTime(2022, 12, 23)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 3,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 2,
-                Popularity = 40000,
-                ReleaseDate = new DateTime(2022, 12, 22)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 19,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 2.9,
-                Popularity = 30000,
-                ReleaseDate = new DateTime(2022, 12, 21)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 25,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 1,
-                Popularity = 20000,
-                ReleaseDate = new DateTime(2022, 12, 20)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 21,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 6,
-                Popularity = 29999,
-                ReleaseDate = new DateTime(2022, 12, 19)
-            });
-            await movieRepository.AddAsync(new Movie()
-            {
-                Id = 11,
-                Banner = "",
-                IMDBLink = "",
-                Overview = "",
-                Poster = "",
-                Title = "",
-                Trailer = "",
-                AverageVotes = 9.8,
-                Popularity = 9999,
-                ReleaseDate = new DateTime(2022, 12, 18)
-            });
-
-            await movieRepository.SaveChangesAsync();
         }
 
         [TearDown]

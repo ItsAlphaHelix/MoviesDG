@@ -37,6 +37,8 @@
 
 ![image](https://github.com/ItsAlphaHelix/MyWebProject/blob/main/Database-Diagram.png?raw=true)
 
+![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Homepage2.png?raw=true)
+
 ## 👦 Author
 
 #### - Linkedin [Dimitar Georgiev](https://www.linkedin.com/in/dimitar-georgiev-551a16242/)

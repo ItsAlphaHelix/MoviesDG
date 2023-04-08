@@ -147,44 +147,6 @@ namespace MoviesDG.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MovieDG.Data.Data.Models.Answer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AdminName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ReplyMessage")
-                        .IsRequired()
-                        .HasMaxLength(700)
-                        .HasColumnType("nvarchar(700)");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Answers");
-                });
-
             modelBuilder.Entity("MovieDG.Data.Data.Models.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
@@ -286,6 +248,32 @@ namespace MoviesDG.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("MovieDG.Data.Data.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.MovieCountry", b =>
@@ -593,10 +581,10 @@ namespace MoviesDG.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MovieDG.Data.Data.Models.Answer", b =>
+            modelBuilder.Entity("MovieDG.Data.Data.Models.Message", b =>
                 {
                     b.HasOne("MovieDG.Data.Data.Models.ApplicationUser", null)
-                        .WithMany("Answers")
+                        .WithMany("Messages")
                         .HasForeignKey("ApplicationUserId");
                 });
 
@@ -697,11 +685,11 @@ namespace MoviesDG.Data.Migrations
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Answers");
-
                     b.Navigation("Claims");
 
                     b.Navigation("Logins");
+
+                    b.Navigation("Messages");
 
                     b.Navigation("Roles");
 

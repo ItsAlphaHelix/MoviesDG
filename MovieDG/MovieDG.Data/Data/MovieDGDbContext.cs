@@ -34,6 +34,8 @@
 
         public DbSet<UserMovie> UserMovies { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<MovieActor>()

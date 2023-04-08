@@ -1,15 +1,19 @@
-﻿@using MovieDG.Core.ViewModels.Movies
+﻿@using MovieDG.Core.Contracts
+@using MovieDG.Core.ViewModels.Movies
+@inject IChatService ChatService;
+
 @model HomepageViewModel
 
 @{
     ViewData["Title"] = "Home Page";
+
+    var allMessages = await this.ChatService.GetAllMessagesAsync();
 
     var firstPartTitle = Model.LatestMovie.Title
     .Substring(0, Model.LatestMovie.Title.Length / 2);
     var secondPartTitle = Model.LatestMovie.Title
     .Substring(Model.LatestMovie.Title.Length - firstPartTitle.Length);
 }
-
 <section class="banner-area banner-bg" data-background="@Model.LatestMovie.Banner">
     <div class="container custom-container">
         <div class="row">
@@ -47,7 +51,45 @@
         </div>
     </div>
 </section>
-
+<div class="chatbox">
+    <div class="chatbox__support">
+        <div class="chatbox__header">
+            <div class="chatbox__image--header">
+                @*<img src="~/favicon.png" alt="image" asp-append-version="true">*@
+            </div>
+            <div class="chatbox__content--header">
+                <p class="chatbox__description--header">Here you can discuss the movies you watch.</p>
+            </div>
+        </div>
+        <div class="chatbox__messages">
+            <div>
+                @foreach (var message in allMessages)
+                {
+                    <div class="messages__item messages__item--operator">
+                        <h5>@message.Name: </h5> 
+                        @message.Text
+                    </div>
+                }
+                <!-- <div class="messages__item messages__item--typing">
+                    <span class="messages__dot"></span>
+                    <span class="messages__dot"></span>
+                    <span class="messages__dot"></span>
+                </div> -->
+            </div>
+        </div>
+        <form onsubmit="sendMessage(event)" asp-controller="Chat" asp-action="SendMessage">
+        <div class="chatbox__footer">
+            <img src="~/images/emojis.svg" alt="">
+                <input type="text" name="message" id="message-input" placeholder="Write a message...">
+                <button type="submit" class="btn-light" style="border-radius: 10px; border: none;">Send</button>
+            
+        </div>
+        </form>
+    </div>
+    <div class="chatbox__button">
+        <button>button</button>
+    </div>
+</div>
 
 <section class="ucm-area ucm-bg2" data-background="/images/ucm_bg02.jpg">
     <div class="container">
@@ -85,3 +127,49 @@
         </div>
     </div>
 </section>
+
+@section Scripts{
+    @*<script src="~/lib/microsoft/signalr/dist/browser/signalr.js" asp-append-version="true"></script>*@
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
+    @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/deepstream.io-client-js/4.0.0-rc.16/binary-protocol/src/message-builder.js" asp-append-version="true"></script>*@
+    <script src="https://unpkg.com/axios/dist/axios.min.js" asp-append-version="true"></script>
+
+    <script>
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+        var _connectionId = '';
+        connection.on("RecieveMessage", function (data) {
+
+            var message = document.createElement("div");
+            message.classList.add("messages__item messages__item--operator");
+            var h5 = document.createElement("h5");
+            h5.appendChild(document.createTextNode(data.name));
+
+            message.appendChild(document.createTextNode(data.text));
+            message.appendChild(h5)
+
+
+
+            //var message = messageBuilder()
+            //    .createMessage()
+            //    .withHeader(data.name)
+            //    .withParagraph(data.text)
+            //    .build();
+            //document.querySelector('chatbox__messages').append(message);
+        })
+           
+        var sendMessage = function (event) {
+            event.preventDefault();
+            var data = new FormData(event.target);
+            document.getElementById('message-input').value = '';
+            axios.post('/Chat/SendMessage', data)
+                .then(res => {
+                    console.log("Message Sent!")
+                })
+                .catch(err => {
+                    console.log("Failed to send message!")
+                })
+        }
+    </script>
+}

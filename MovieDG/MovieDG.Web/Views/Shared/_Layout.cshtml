@@ -1,7 +1,7 @@
 ﻿@using MovieDG.Common
 
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html class="no-js" id="html-chat" lang="en">
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,6 +20,9 @@
 	<link rel="stylesheet" href="~/css/default.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/chat-box-style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/typing.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" asp-append-version="true" />
     <link rel="shortcut icon" href="~/favicon.png" type="favicon/png" asp-append-version="true" />
 
@@ -66,6 +69,8 @@
     <script src="~/js/plugins.js" asp-append-version="true"></script>
     <script src="~/js/main.js" asp-append-version="true"></script>
     <script src="~/js/qrcode.js" asp-append-version="true"></script>
+    <script src="~/js/chat.js" asp-append-version="true"></script>
+    <script src="~/js/chat-button.js" asp-append-version="true"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

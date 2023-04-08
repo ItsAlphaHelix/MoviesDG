@@ -2,6 +2,7 @@ using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieDG.Data.Data.Models;
+using MovieDG.Web.Hubs;
 using MovieDG.Web.Middlewares;
 using MovieDG.Web.Providers;
 using MoviesDG.Data;
@@ -38,7 +39,6 @@ builder.Services.AddNotyFService();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -68,6 +68,7 @@ app.UseEndpoints(endpoint =>
     endpoint.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoint.MapHub<ChatHub>("/chathub");
 });
 
 app.UseNotyf();

@@ -1,6 +1,6 @@
 # MoviesDG
 
-![image](https://github.com/ItsAlphaHelix/MyWebProject/blob/main/Homepage.png?raw=true)
+![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Homepage2.png?raw=true)
 
 ## 📃 Project Description
 

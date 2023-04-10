@@ -5,18 +5,22 @@
     using MovieDG.Core.ViewModels.Movies;
     using MovieDG.Web.Models;
     using System.Diagnostics;
+    using System.Security.Claims;
 
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IMovieService moviesService;
+        private readonly IChatService chatService;
         public HomeController(
             ILogger<HomeController> logger,
-            IMovieService moviesService
+            IMovieService moviesService,
+            IChatService chatService
             )
         {
             _logger = logger;
             this.moviesService = moviesService;
+            this.chatService = chatService;
         }
 
         public async Task<IActionResult> IndexAsync()

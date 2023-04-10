@@ -1,1 +1,3 @@
-﻿// Write your Javascript code.
+﻿var connection = new signalR.HubConnectionBuilder()
+    .withUrl("/chatHub")
+    .build();

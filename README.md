@@ -4,7 +4,7 @@
 
 ## 📃 Project Description
 
-### This is an application that is built using Asp.Net Core technology and the MVC pattern. To use the application, each user must create their own profile in order to access it. Once logged in, they will be able to watch trailers for their favorite movies and search for movies by genre, country, and actors. Users can also create their own movie collections, add or delete movies to them. Each user has profile settings, including the ability to change their username, location, email, password, and enable two-factor authentication. Users can also delete their profile if they choose to do so.
+### This is an application that is built using Asp.Net Core technology and the MVC pattern. To use the application, each user must create their own profile in order to access it. Once logged in, they will be able to watch trailers for their favorite movies and search for movies by genre, country, and actors. Users can also create their own movie collections, add or delete movies to them. Additionally, users of the application have a chat feature. The application also has a "Contacts" option that serves as a direct link to the application support team. Each user has profile settings, including the ability to change their username, location, email, password, and enable two-factor authentication. Users can also delete their profile if they choose to do so.
 
 ## 🔨 Built Using
 

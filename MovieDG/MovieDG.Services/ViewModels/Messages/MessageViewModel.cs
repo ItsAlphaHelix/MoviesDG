@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MovieDG.Core.ViewModels.Messages
+﻿namespace MovieDG.Core.ViewModels.Messages
 {
+    using System.ComponentModel.DataAnnotations;
     public class MessageViewModel
     {
+        [Required]
         public string FromName { get; set; }
 
+        [Required]
         public string Text { get; set; }
     }
 }

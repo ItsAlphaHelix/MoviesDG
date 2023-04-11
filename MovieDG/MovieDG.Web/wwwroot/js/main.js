@@ -373,12 +373,13 @@ $('.popup-video').magnificPopup({
 
 });
 //for menu active class
-$('.tr-movie-menu-active button').on('click', function (event) {
-	$(this).siblings('.active').removeClass('active');
-	$(this).addClass('active');
-	event.preventDefault();
-});
+//$('.tr-movie-menu-active button').on('click', function (event) {
+//	event.preventDefault();
 
+//	$(this).siblings('.active').removeClass('active');
+//	$(this).addClass('active');
+
+//});
 
 /*=============================================
 	=    		 Aos Active  	         =

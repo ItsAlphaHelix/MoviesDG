@@ -1,6 +1,8 @@
 ﻿namespace MovieDG.Web.Hubs
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.SignalR;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using MovieDG.Core.ViewModels.Messages;
     using MovieDG.Data.Data.Models;
     using MoviesDG.Data.Repositories;
@@ -22,6 +24,11 @@
                 Name = name,
                 Text = text
             };
+
+            if (string.IsNullOrWhiteSpace(message.Text) || message.Text.Contains('<'))
+            {
+                throw new ArgumentException("Invalid message!");
+            }
 
             var messageModel = new MessageViewModel()
             {

@@ -273,7 +273,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.MovieCountry", b =>
@@ -288,7 +288,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("MoviesCountries");
+                    b.ToTable("MoviesCountries", (string)null);
                 });
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.MovieGenre", b =>
@@ -303,7 +303,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("MoviesGenres");
+                    b.ToTable("MoviesGenres", (string)null);
                 });
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.MovieLanguage", b =>
@@ -318,7 +318,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.ToTable("MoviesLanguages");
+                    b.ToTable("MoviesLanguages", (string)null);
                 });
 
             modelBuilder.Entity("MovieDG.Data.Data.Models.UserMovie", b =>
@@ -336,7 +336,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("UserMovies");
+                    b.ToTable("UserMovies", (string)null);
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Data.Models.Contact", b =>
@@ -365,7 +365,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.Actor", b =>
@@ -383,7 +383,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actors");
+                    b.ToTable("Actors", (string)null);
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.Country", b =>
@@ -401,7 +401,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.Genre", b =>
@@ -419,7 +419,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.Language", b =>
@@ -437,7 +437,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages");
+                    b.ToTable("Languages", (string)null);
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.Movie", b =>
@@ -495,7 +495,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 
             modelBuilder.Entity("MoviesDG.Data.Models.MovieActor", b =>
@@ -515,7 +515,7 @@ namespace MoviesDG.Data.Migrations
 
                     b.HasIndex("ActorId");
 
-                    b.ToTable("MoviesActors");
+                    b.ToTable("MoviesActors", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

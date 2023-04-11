@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MovieDG.Core.ViewModels.Movies
+@using MovieDG.Data.Data.Models
+@inject SignInManager<ApplicationUser> SignInManager
+
+@model IEnumerable<MovieViewModel>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="section-title text-center mb-50">
+                <h2 class="title">@ViewData["Title"]</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="tr-movie-menu-active text-center">
+                <button class=".top-rating" data-filter="TopRatedMovies">Top Rating</button>
+                    <button class=".popularity" data-filter="PopularityMovies">Popularity</button>
+                    <button class=".recent" data-filter="RecentMovies">Recent</button>
+            </div>
+        </div>
+    </div>
+    <div class="row movie-item-row">
+@foreach (var movie in Model)
+{
+    <div class="custom-col- grid-item grid-sizer top-rating">
+        <div class="movie-item movie-item-two">
+            <div class="movie-poster">
+                <img src="@movie.Poster" alt="">
+                <ul class="overlay-btn">
+                    <li>
+                        @if (this.User?.Identity?.IsAuthenticated == true)
+                        {
+                            <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
+                        }
+                        else
+                        {
+                            <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
+                        }
+                    </li>
+                    <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
+                </ul>
+            </div>
+            <div class="movie-content">
+                <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                <div class="movie-content-bottom">
+                    <ul>
+                        <li class="tag">
+                            <a href="#">HD</a>
+                        </li>
+                        <li>
+                            <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+    </div>
+</div>
+
+<script> 
+    $(document).ready(function () {
+        $('.tr-movie-menu-active button').click(function () {
+            var filterType = $(this).data('filter');
+            $.ajax({
+                url: '@Url.Action("Filter")',
+                type: 'GET',
+                data: { filterType: filterType },
+                success: function (data) {
+                    $('#movies-list').html(data);
+                    window.history.pushState(null, null, filterType);
+                },
+                error: function () {
+                    alert('An error occurred.');
+                }
+            });
+            $('.filter-buttons button').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+</script>

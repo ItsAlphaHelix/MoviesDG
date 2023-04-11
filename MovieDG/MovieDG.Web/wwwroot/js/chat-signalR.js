@@ -5,14 +5,13 @@ $("#sendMessage").prop('disabled', true);
 connection.on("ReceiveMessage", function (message) {
 
     let container = document.querySelector('.chatbox');
-
-
     let messageHtml =
         `<div class="messages__item messages__item--operator">
-            <h5>${message.fromName}: </h5>
+            <h6>${message.fromName}: </h6>
             ${message.text}
          </div>
         `;
+
     let element = document.createElement('div');
 
     element.innerHTML = messageHtml;

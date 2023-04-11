@@ -7,22 +7,26 @@
     using System.Diagnostics;
     using System.Security.Claims;
 
+
+    public class Movie
+    {
+        public string Title { get; set; }
+        public int Year { get; set; }
+        public double Rating { get; set; }
+        public string Category { get; set; }
+    }
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IMovieService moviesService;
-        private readonly IChatService chatService;
         public HomeController(
             ILogger<HomeController> logger,
-            IMovieService moviesService,
-            IChatService chatService
+            IMovieService moviesService
             )
         {
             _logger = logger;
             this.moviesService = moviesService;
-            this.chatService = chatService;
         }
-
         public async Task<IActionResult> IndexAsync()
         {
             var latestMovie = await this.moviesService.GetLatestMovieAsync();

@@ -72,25 +72,27 @@
                         @message.Text
                     </div>
                 }
-               @* <div class="messages__item messages__item--typing">
-                    <span class="messages__dot"></span>
-                    <span class="messages__dot"></span>
-                    <span class="messages__dot"></span>
+                @* <div class="messages__item messages__item--typing">
+                <span class="messages__dot"></span>
+                <span class="messages__dot"></span>
+                <span class="messages__dot"></span>
                 </div> *@
             </div>
         </div>
-        <form id="form-id">
+        <form>
             <div class="chatbox__footer">
                 <img src="~/images/emojis.svg" alt="">
                 <input type="text" name="message" id="message-input" placeholder="Write a message...">
-                <button type="submit" class="btn-light" style="border-radius: 10px; border: none;">Send</button>
-
+                <button class="btn-light" style="border-radius: 10px; border: none;">Send</button>
             </div>
         </form>
     </div>
-    <div class="chatbox__button">
-        <button>button</button>
-    </div>
+    @if (this.User.Identity.IsAuthenticated == true)
+    {
+        <div class="chatbox__button">
+            <button>button</button>
+        </div>
+    }
 </div>
 
 <section class="ucm-area ucm-bg2" data-background="/images/ucm_bg02.jpg">
@@ -103,35 +105,37 @@
             </div>
         </div>
         <div class="tab-content" id="myTabContent">
-                <div class="ucm-active-two owl-carousel">       
-                    @foreach (var movie in Model.NewMovies)
-                    {
-                        <div class="movie-item movie-item-two mb-30">
-                            <div class="movie-poster">
+            <div class="ucm-active-two owl-carousel">
+                @foreach (var movie in Model.NewMovies)
+                {
+                    <div class="movie-item movie-item-two mb-30">
+                        <div class="movie-poster">
                             <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id"><img src="@movie.Poster" alt=""></a>
-                            </div>
-                            <div class="movie-content">
+                        </div>
+                        <div class="movie-content">
                             <h5 class="title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
-                                <div class="movie-content-bottom">
-                                    <ul>
-                                        <li class="tag">
-                                            <a href="#">HD</a>
-                                        </li>
-                                        <li>
+                            <div class="movie-content-bottom">
+                                <ul>
+                                    <li class="tag">
+                                        <a href="#">HD</a>
+                                    </li>
+                                    <li>
                                         <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
-                                        </li>
-                                    </ul>
-                                </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                    }
+                    </div>
+                }
             </div>
         </div>
     </div>
 </section>
 
 @section Scripts
-{
+    {
+    <script src="~/js/chat.js" asp-append-version="true"></script>
+    <script src="~/js/chat-button.js" asp-append-version="true"></script>
     <script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/chat-signalR.js" asp-append-version="true"></script>
 }

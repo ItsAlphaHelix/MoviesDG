@@ -4,7 +4,7 @@
 
     public interface IMovieService
     {
-        Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync();
+        Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync(int pageNumber, int pageSize);
 
         Task<MovieDetailsViewModel> GetMovieDetailsAsync(int id);
 

@@ -16,39 +16,52 @@
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int pageNumber, int pageSize = 10)
         {
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                var movies = await this.movieService.GetAllMoviesAsync(pageNumber, pageSize);
 
-            var movies = await this.movieService.GetAllMoviesAsync();
-          
-            return View(movies);
+                if (pageNumber > movies.Count())
+                {
+                    return View();
+                }
+
+                return PartialView("_LoadMoreMovies", movies);
+            }
+            else
+            {
+                var movies = await this.movieService.GetAllMoviesAsync(1, pageSize);
+                return View(movies);
+            }
         }
 
 
         [AllowAnonymous]
         public async Task<IActionResult> Filter(string filterType)
         {
-            var movies = await this.movieService.GetAllMoviesAsync();
-            string typeOfMovies = string.Empty;
 
             switch (filterType)
             {
-                case "RecentMovies":
-                    movies = await this.movieService.GetRecentMoviesAsync();
-                    typeOfMovies = "Recent Movies";
-                    break;
-                case "TopRatedMovies":
-                    movies = await this.movieService.GetTopRatedMoviesAsync();
-                    typeOfMovies = "Top Rated Movies";
-                    break;
-                case "PopularityMovies":
-                    movies = await this.movieService.GetPopularityMoviesAsync();
-                    typeOfMovies = "Popularity Movies";
-                    break;
-            }
+                case "recent":
 
-            ViewData["Title"] = typeOfMovies;
-            return PartialView("_MoviesPartial", movies);
+                    var recentMovies = await this.movieService.GetRecentMoviesAsync();
+                    ViewData["Title"] = "Recent Movies";
+
+                    return PartialView("_MoviesPartial", recentMovies);
+                case "top-rated":
+
+                    var topRatedMovies = await this.movieService.GetTopRatedMoviesAsync();
+
+                    ViewData["Title"] = "Top Rated Movies";
+                    return PartialView("_MoviesPartial", topRatedMovies);
+                default:
+
+                    var popularityMovies = await this.movieService.GetPopularityMoviesAsync();
+                    ViewData["Title"] = "Popularity Movies";
+
+                    return PartialView("_MoviesPartial", popularityMovies);
+            }
         }
 
         [AllowAnonymous]

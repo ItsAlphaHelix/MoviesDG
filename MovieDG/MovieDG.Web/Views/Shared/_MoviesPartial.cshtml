@@ -15,9 +15,9 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="tr-movie-menu-active text-center">
-                <button class=".top-rating" data-filter="TopRatedMovies">Top Rating</button>
-                    <button class=".popularity" data-filter="PopularityMovies">Popularity</button>
-                    <button class=".recent" data-filter="RecentMovies">Recent</button>
+                <button class=".top-rating" name="Top Rated Movies" data-filter="top-rated">Top Rating</button>
+                <button class=".popularity" name="Popularity Movies" data-filter="popularity">Popularity</button>
+                <button class=".recent" name="Recent Movies" data-filter="recent">Recent</button>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
     </div>
 </div>
 
-<script> 
+<script>
     $(document).ready(function () {
         $('.tr-movie-menu-active button').click(function () {
             var filterType = $(this).data('filter');
@@ -70,8 +70,29 @@
                 type: 'GET',
                 data: { filterType: filterType },
                 success: function (data) {
+
                     $('#movies-list').html(data);
+
+                    if (filterType == "top-rated") {
+                        filterType = "TopRatedMovies";
+                    } else if (filterType == "recent") {
+                        filterType = "RecentMovies";
+
+                    } else if (filterType = "popularity") {
+                        filterType = "PopularityMovies";
+                    }
+
                     window.history.pushState(null, null, filterType);
+
+                    if (filterType == "TopRatedMovies") {
+                        filterType = "Top Rated Movies"
+                    } else if (filterType == "RecentMovies") {
+                        filterType = "Recent Movies"
+                    } else if (filterType == "PopularityMovies") {
+                        filterType = "Popularity Movies"
+                    }
+
+                    document.title = filterType + " - MoviesDG";
                 },
                 error: function () {
                     alert('An error occurred.');

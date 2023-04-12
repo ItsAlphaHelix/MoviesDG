@@ -23,7 +23,7 @@
             this.userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync()
+        public async Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync(int pageNumber, int pageSize)
         {
             var movies = await moviesRepository
                 .AllAsNoTracking()
@@ -36,6 +36,8 @@
                     Popularity = x.Popularity,
                     AverageVotes = x.AverageVotes
                 })
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             return movies;
@@ -94,7 +96,7 @@
                     Popularity = x.Popularity,
                     AverageVotes = x.AverageVotes
                 })
-                .Take(10)
+                .Take(20)
                 .ToListAsync();
 
             return topRatedMovies;
@@ -114,7 +116,7 @@
                     Popularity = x.Popularity,
                     AverageVotes = x.AverageVotes
                 })
-                .Take(10)
+                .Take(20)
                 .ToListAsync();
 
             return popularityMovies;
@@ -134,7 +136,7 @@
                      Popularity = x.Popularity,
                      AverageVotes = x.AverageVotes
                  })
-                 .Take(10)
+                 .Take(20)
                  .ToListAsync();
 
             return recentMovies;

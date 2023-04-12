@@ -20,6 +20,16 @@
                     data: { filterType: filterType },
                     success: function (data) {
                         $('#movies-list').html(data);
+
+                        if (filterType == "top-rated") {
+                            filterType = "TopRatedMovies";
+                        } else if (filterType == "recent") {
+                            filterType = "RecentMovies";
+
+                        } else if (filterType = "popularity") {
+                            filterType = "PopularityMovies";
+                        }
+
                         window.history.pushState(null, null, filterType);
                     },
                     error: function () {

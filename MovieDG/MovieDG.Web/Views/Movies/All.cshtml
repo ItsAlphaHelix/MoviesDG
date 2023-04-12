@@ -7,9 +7,33 @@
     
 <section id="movies-list" class="top-rated-movie tr-movie-bg" data-background="/images/tr_movies_bg.jpg">
             @await Html.PartialAsync("_MoviesPartial", Model)
+
+        <div id="tr-button" class="tr-movie-btn text-center mt-25">
+            <button id="load-button" class="btn" data-page-number="2">LOAD MORE</button>
+        </div>
 </section>
 
 @section scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('#load-button').click(function () {
+                var nextPageNumber = $(this).data('pageNumber');
+                $.get('/Movies/All', { pageNumber: nextPageNumber }, )
+                    .done(function (data) {
+
+                        $('#tr-button').append(data);
+                        $('#tr-button').append($('#load-button'))
+                        $('#load-button').data('pageNumber', nextPageNumber + 1);
+                       
+                    })
+                    .fail(function (xhr, status, error) {
+                        console.log('An error occurred while loading the next page of movies: ' + error);
+                    });
+            });
+        });
+
+    </script>
     <script>
         $(document).ready(function () {
             $('.tr-movie-menu-active button').click(function () {
@@ -17,10 +41,31 @@
                 $.ajax({
                     url: '@Url.Action("Filter")',
                     type: 'GET',
-                    data: { filterType: filterType },
+                    data: { filterType: filterType},
                     success: function (data) {
+
                         $('#movies-list').html(data);
+
+                        if(filterType == "top-rated"){
+                            filterType = "TopRatedMovies";
+                        } else if (filterType == "recent") {
+                            filterType = "RecentMovies";
+
+                        } else if (filterType = "popularity") {
+                            filterType = "PopularityMovies";
+                        }
+
                         window.history.pushState(null, null, filterType);
+
+                        if(filterType == "TopRatedMovies") {
+                            filterType = "Top Rated Movies";
+                        } else if (filterType == "RecentMovies") {
+                            filterType = "Recent Movies";
+                        } else if (filterType == "PopularityMovies") {
+                            filterType = "Popularity Movies";
+                        }
+                        
+                        document.title = filterType + " - MoviesDG";
                     },
                     error: function () {
                         alert('An error occurred.');
@@ -28,7 +73,6 @@
                 });
                 $('.filter-buttons button').removeClass('active');
                 $(this).addClass('active');
-                return false;
             });
         });
     </script>

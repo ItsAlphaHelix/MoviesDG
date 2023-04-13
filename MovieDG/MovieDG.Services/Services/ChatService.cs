@@ -8,11 +8,11 @@ namespace MovieDG.Core.Services
     using MoviesDG.Data.Repositories;
     public class ChatService : IChatService
     {
-        private readonly IRepository<Message> messageRepository;
+        private readonly IRepository<Chat> messageRepository;
         private readonly IRepository<ApplicationUser> userRepository;
 
         public ChatService(
-            IRepository<Message> messageRepository, IRepository<ApplicationUser> userRepository)
+            IRepository<Chat> messageRepository, IRepository<ApplicationUser> userRepository)
         {
             this.messageRepository = messageRepository;
             this.userRepository = userRepository;

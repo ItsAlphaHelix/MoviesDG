@@ -34,7 +34,7 @@
 
         public DbSet<UserMovie> UserMovies { get; set; }
 
-        public DbSet<Message> Messages { get; set; }
+        public DbSet<Chat> Chats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

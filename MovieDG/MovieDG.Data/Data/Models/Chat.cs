@@ -1,7 +1,7 @@
 ﻿namespace MovieDG.Data.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
-    public class Message
+    public class Chat
     {
         public int Id { get; set; }
 

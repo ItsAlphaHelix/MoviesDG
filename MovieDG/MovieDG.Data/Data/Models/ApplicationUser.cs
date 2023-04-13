@@ -14,7 +14,7 @@ namespace MovieDG.Data.Data.Models
             this.Logins = new HashSet<IdentityUserLogin<string>>();
 
             this.UsersMovies = new HashSet<UserMovie>();
-            this.Messages = new HashSet<Message>();
+            this.Messages = new HashSet<Chat>();
         }
 
         [Required]
@@ -25,7 +25,7 @@ namespace MovieDG.Data.Data.Models
 
         public ICollection<UserMovie> UsersMovies { get; set; }
 
-        public ICollection<Message> Messages { get; set; }
+        public ICollection<Chat> Messages { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

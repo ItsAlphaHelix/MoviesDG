@@ -8,9 +8,9 @@
     using MoviesDG.Data.Repositories;
     public class ChatHub : Hub
     {
-        private readonly IRepository<Message> messageRepository;
+        private readonly IRepository<Chat> messageRepository;
 
-        public ChatHub(IRepository<Message> messageRepository)
+        public ChatHub(IRepository<Chat> messageRepository)
         {
             this.messageRepository = messageRepository;
         }
@@ -19,7 +19,7 @@
         {
             string name = Context?.User?.Identity?.Name ?? "";
 
-            var message = new Message()
+            var message = new Chat()
             {
                 Name = name,
                 Text = text

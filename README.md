@@ -36,7 +36,7 @@
 
 ## 🌐 Database Diagram
 
-![image](https://github.com/ItsAlphaHelix/MyWebProject/blob/main/Database-Diagram.png?raw=true)
+![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Database-Diagram.png?raw=true)
 
 ## 👦 Author
 

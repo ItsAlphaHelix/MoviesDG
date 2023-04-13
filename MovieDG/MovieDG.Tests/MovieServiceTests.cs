@@ -25,15 +25,15 @@
             movieService = new MovieService(movieRepository, userRepository);
         }
 
-        //[Test]
-        //public async Task GetlAllMoviesTest()
-        //{
-        //    await SeedDB.SeedMovies(this.movieRepository);
+        [Test]
+        public async Task GetlAllMoviesTest()
+        {
+            await SeedDB.SeedMovies(this.movieRepository);
 
-        //    var movies = await this.movieService.GetAllMoviesAsync();
-        //    Assert.That(movies.Count, Is.EqualTo(10));
+            var movies = await this.movieService.GetAllMoviesAsync(1,10);
+            Assert.That(movies.Count, Is.EqualTo(10));
 
-        //}
+        }
 
         [Test]
         [TestCase(1)]

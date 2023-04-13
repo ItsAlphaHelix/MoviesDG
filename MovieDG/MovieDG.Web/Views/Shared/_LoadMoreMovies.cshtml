@@ -27,7 +27,16 @@
                         </ul>
                     </div>
                     <div class="movie-content">
-                        <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                        @if (movie.Title.Length > 21)
+                        {
+                            string word = movie.Title.Substring(0, 19);
+                            string title = word + " ...";
+                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@title</a></h5>
+                        }
+                        else
+                        {
+                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                        }
                         <div class="movie-content-bottom">
                             <ul>
                                 <li class="tag">

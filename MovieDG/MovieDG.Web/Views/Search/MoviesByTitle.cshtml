@@ -29,7 +29,7 @@
                         <div class="movie-content">
                             @if (movie.Title.Length > 21)
                             {
-                                string word = movie.Title.Substring(0, 19);
+                                string word = movie.Title.Substring(0, 18);
                                 string title = word + " ...";
                                 <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@title</a></h5>
                             }

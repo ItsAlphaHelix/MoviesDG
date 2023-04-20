@@ -142,11 +142,11 @@
             return recentMovies;
         }
 
-        public async Task<BannerHomeMovieViewModel> GetLatestMovieAsync()
+        public async Task<BannerHomeMovieViewModel> GetMovieForHomepage()
         {
-            var latestMovie = await this.moviesRepository
+            var homepageMovie = await this.moviesRepository
                  .AllAsNoTracking()
-                 .OrderByDescending(x => x.ReleaseDate)
+                 .Where(x => x.Id == 46)
                  .Select(x => new BannerHomeMovieViewModel()
                  {
                      Title = x.Title,
@@ -161,12 +161,12 @@
                  })
                  .FirstOrDefaultAsync();
 
-            if (latestMovie == null)
+            if (homepageMovie == null)
             {
                 throw new ArgumentException($"The movie can not be null");
             }
 
-            return latestMovie;
+            return homepageMovie;
         }
 
         public async Task<IEnumerable<MovieViewModel>> GetMoviesByGenreAsync(string name)

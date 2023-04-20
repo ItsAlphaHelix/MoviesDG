@@ -7,6 +7,8 @@
     using System.Globalization;
     using Microsoft.EntityFrameworkCore;
     using MovieDG.Data.Data.Models;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using System.Security.Cryptography.X509Certificates;
 
     public class CollectService : ICollectService
     {

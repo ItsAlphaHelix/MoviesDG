@@ -1,6 +1,9 @@
 ﻿namespace MovieDG.Core.Contracts
 {
+    using MovieDG.Core.ViewModels.Genres;
     using MovieDG.Core.ViewModels.Movies;
+    using MovieDG.Data.Data.Models;
+    using MoviesDG.Data.Models;
 
     public interface IMovieService
     {
@@ -14,7 +17,7 @@
 
         Task<IEnumerable<MovieViewModel>> GetRecentMoviesAsync();
 
-        Task<BannerHomeMovieViewModel> GetLatestMovieAsync();
+        Task<BannerHomeMovieViewModel> GetMovieForHomepage();
 
         Task<IEnumerable<MovieViewModel>> GetMoviesByGenreAsync(string name);
 

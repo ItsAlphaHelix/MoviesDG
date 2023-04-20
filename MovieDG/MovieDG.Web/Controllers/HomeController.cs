@@ -6,15 +6,6 @@
     using MovieDG.Web.Models;
     using System.Diagnostics;
     using System.Security.Claims;
-
-
-    public class Movie
-    {
-        public string Title { get; set; }
-        public int Year { get; set; }
-        public double Rating { get; set; }
-        public string Category { get; set; }
-    }
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -29,12 +20,12 @@
         }
         public async Task<IActionResult> IndexAsync()
         {
-            var latestMovie = await this.moviesService.GetLatestMovieAsync();
+            var homepageMovie = await this.moviesService.GetMovieForHomepage();
             var newMovies = await this.moviesService.GetRecentMoviesAsync();
 
             var viewModel = new HomepageViewModel()
             {
-                LatestMovie = latestMovie,
+                LatestMovie = homepageMovie,
                 NewMovies = newMovies
             };
 

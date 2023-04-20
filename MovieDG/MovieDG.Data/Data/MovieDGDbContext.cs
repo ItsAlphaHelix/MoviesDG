@@ -5,6 +5,8 @@
     using MovieDG.Data.Data.Models;
     using MoviesDG.Data.Data.Models;
     using MoviesDG.Data.Models;
+    using System.Security.Cryptography.X509Certificates;
+
     public class MovieDGDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public MovieDGDbContext(DbContextOptions<MovieDGDbContext> options)

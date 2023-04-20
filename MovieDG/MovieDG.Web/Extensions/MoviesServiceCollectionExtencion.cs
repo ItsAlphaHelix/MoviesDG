@@ -20,7 +20,7 @@
             services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IChatService, ChatService>();
-            services.AddScoped<IEmailSender>(x => new SendGridEmailSender(configuration.GetSection("SendGrid:ApiKey").Value));
+            services.AddScoped<IEmailSender>(x => new SendGridEmailSender(configuration.GetSection("SendGridKey").Value));
 
             services.AddSignalR();
 

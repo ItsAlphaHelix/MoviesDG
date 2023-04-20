@@ -1,5 +1,6 @@
 ﻿namespace MoviesDG.Core.DataApi
 {
+    using Azure.Identity;
     using Microsoft.Extensions.Configuration;
     using MoviesDG.Core.DataApi.Models;
     using System.Net.Http.Json;
@@ -14,7 +15,15 @@
         public DataService(IConfiguration configuration)
         {
             this.configuration = configuration;
-            this.key = this.configuration.GetSection("TMDB:ApiKey").Value;
+            //var keyVaultUrl = new Uri(builder.Configuration.GetSection("KeyVaultURl").Value!);
+            //var azureCredential = new DefaultAzureCredential();
+
+            //builder.Configuration.AddAzureKeyVault(keyVaultUrl, azureCredential);
+
+            //var keyVaultUrl = new Uri(configuration.GetSection("TMDB").Value!);
+            //var azureCredential = new DefaultAzureCredential();
+
+            this.key = this.configuration.GetSection($"TMDBKey").Value;
         }
         public async Task<MovieDTO> GetMovieDataAsync(int movieId)
         {

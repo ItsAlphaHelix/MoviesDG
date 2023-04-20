@@ -19,11 +19,11 @@ var azureCredential = new DefaultAzureCredential();
 
 builder.Configuration.AddAzureKeyVault(keyVaultUrl, azureCredential);
 
-var connection = builder.Configuration.GetSection("DefaultConnection").Value;
+var connectionString = builder.Configuration.GetSection("DefaultConnection").Value;
 
-//var connectionString = builder.Configuration.GetConnectionString(connection);
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MovieDGDbContext>(options =>
-    options.UseSqlServer(connection));
+    options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)

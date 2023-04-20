@@ -2122,7 +2122,7 @@ b {
 .movie-details-area {
     background-position: top center;
     background-size: cover;
-    padding: 175px 0px 200px; /* 175px, 0px, 120px */
+    padding: 175px 0px 300px; /* 175px, 0px, 120px */
 }
 
 .movie-details-img {

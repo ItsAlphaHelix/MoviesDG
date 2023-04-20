@@ -16,13 +16,12 @@
                 <div class="movie-poster">
                     <img src="@Model.Poster" alt="">
                 </div>
-
             </div>
             <div class="col-xl-6 col-lg-8">
                 <div class="movie-details-content">
                     @{
                         var firstPartTitle = Model.Title.Substring(0, Model.Title.Length / 2);
-                        var secondPartTitle = Model.Title.Substring(Model.Title.Length - firstPartTitle.Length);
+                        var secondPartTitle = Model.Title.Substring(firstPartTitle.Length, Model.Title.Length - firstPartTitle.Length);
                     }
                     <h2>@firstPartTitle<span>@secondPartTitle</span></h2>
                     <div class="banner-meta">
@@ -45,6 +44,7 @@
                     </div>
                     <p>
                         <b>Description: &nbsp;</b> @Model.Overview
+
                     </p>
                     <br />
                     <br />

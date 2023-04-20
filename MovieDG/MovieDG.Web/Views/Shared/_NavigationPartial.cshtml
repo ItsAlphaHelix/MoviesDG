@@ -89,7 +89,7 @@
                             </div>
                             <div class="header-action d-none d-md-block">
                                 <ul>
-                                    <li class="header-search"><a asp-action="MoviesByTitle" data-toggle="modal" data-target="#search-modal"><i class="fas fa-search"></i></a></li>
+                                    <li class="header-search"><a asp-action="" data-toggle="modal" data-target="#search-modal"><i class="fas fa-search"></i></a></li>
                                     <li class="header-lang">
                                         <form>
                                             <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="icon"><img src="~/images/settings.png" /></a>
@@ -141,7 +141,7 @@
                     <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <form asp-controller="Search" asp-action="MoviesByTitle">
+                                <form asp-controller="Search" asp-action="MoviesByTitle" method="get">
                                     <input name="Title" type="search" placeholder="Search here..." required>
                                     <button><i class="fas fa-search"></i></button>
                                 </form>

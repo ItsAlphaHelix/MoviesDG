@@ -15,13 +15,6 @@
         public DataService(IConfiguration configuration)
         {
             this.configuration = configuration;
-            //var keyVaultUrl = new Uri(builder.Configuration.GetSection("KeyVaultURl").Value!);
-            //var azureCredential = new DefaultAzureCredential();
-
-            //builder.Configuration.AddAzureKeyVault(keyVaultUrl, azureCredential);
-
-            //var keyVaultUrl = new Uri(configuration.GetSection("TMDB").Value!);
-            //var azureCredential = new DefaultAzureCredential();
 
             this.key = this.configuration.GetSection($"TMDBKey").Value;
         }

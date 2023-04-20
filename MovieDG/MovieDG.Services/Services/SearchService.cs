@@ -19,7 +19,6 @@
         {
             if (!string.IsNullOrWhiteSpace(title))
             {
-
                 var searchTerm = $"%{title.ToLower()}%";
 
                 var searchMovies = await this.moviesRepository

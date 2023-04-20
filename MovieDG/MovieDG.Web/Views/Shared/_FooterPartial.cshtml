@@ -50,7 +50,7 @@
                                     <li><a asp-controller="Movies" asp-action="All">Movies</a></li>
                                 </ul>
                                 <div class="footer-search">
-                                    <form asp-controller="Search" asp-action="MoviesByTitle">
+                                    <form asp-controller="Search" asp-action="MoviesByTitle" method="get">
                                         <input name="Title" type="search" placeholder="Find Favorite Movie" required>
                                         <button><i class="fas fa-search"></i></button>
                                     </form>

@@ -82,7 +82,7 @@
 
         }
 
-        public async Task<IEnumerable<MovieViewModel>> GetTopRatedMoviesAsync()
+        public async Task<IEnumerable<MovieViewModel>> GetTopRatedMoviesAsync(int pageNumber, int pageSize)
         {
             var topRatedMovies = await this.moviesRepository
                 .AllAsNoTracking()
@@ -96,13 +96,14 @@
                     Popularity = x.Popularity,
                     AverageVotes = x.AverageVotes
                 })
-                .Take(20)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             return topRatedMovies;
         }
 
-        public async Task<IEnumerable<MovieViewModel>> GetPopularityMoviesAsync()
+        public async Task<IEnumerable<MovieViewModel>> GetPopularityMoviesAsync(int pageNumber, int pageSize)
         {
             var popularityMovies = await this.moviesRepository
                 .AllAsNoTracking()
@@ -116,13 +117,14 @@
                     Popularity = x.Popularity,
                     AverageVotes = x.AverageVotes
                 })
-                .Take(20)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             return popularityMovies;
         }
 
-        public async Task<IEnumerable<MovieViewModel>> GetRecentMoviesAsync()
+        public async Task<IEnumerable<MovieViewModel>> GetRecentMoviesAsync(int pageNumber, int pageSize)
         {
             var recentMovies = await this.moviesRepository
                  .AllAsNoTracking()
@@ -134,9 +136,10 @@
                      Poster = x.Poster,
                      Trailer = x.Trailer,
                      Popularity = x.Popularity,
-                     AverageVotes = x.AverageVotes
+                     AverageVotes = x.AverageVotes,
                  })
-                 .Take(20)
+                 .Skip((pageNumber - 1) * pageSize)
+                 .Take(pageSize)
                  .ToListAsync();
 
             return recentMovies;
@@ -338,6 +341,61 @@
             }
 
             await this.userRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<MovieViewModel>> GetAllYearsAsync()
+        {
+
+            var movies = await moviesRepository
+                .AllAsNoTracking()
+                .Select(x => new MovieViewModel()
+                {
+                    Year = x.ReleaseDate.Year.ToString()
+                })
+                .Distinct()
+                .OrderByDescending(x => x.Year)
+                .ToListAsync();
+
+            return movies;
+        }
+
+        public async Task<IEnumerable<MovieViewModel>> GetMoviesByYear(string year)
+        {
+            var movies = await this.moviesRepository
+                .AllAsNoTracking()
+                .Where(x => x.ReleaseDate.Year.ToString() == year)
+                .OrderByDescending(x => x.ReleaseDate.Year)
+                .Select(x => new MovieViewModel()
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Poster = x.Poster,
+                    Trailer = x.Trailer,
+                    AverageVotes = x.AverageVotes
+                })
+                .ToListAsync();
+
+            return movies;
+        }
+
+        public async Task<IEnumerable<MovieViewModel>> GetRecentCarouselMovies()
+        {
+            var recentMovies = await this.moviesRepository
+                 .AllAsNoTracking()
+                 .OrderByDescending(x => x.ReleaseDate)
+                 .Select(x => new MovieViewModel()
+                 {
+                     Id = x.Id,
+                     Title = x.Title,
+                     Poster = x.Poster,
+                     Trailer = x.Trailer,
+                     Popularity = x.Popularity,
+                     AverageVotes = x.AverageVotes
+                 })
+                 .Take(20)
+                 .ToListAsync();
+
+            return recentMovies;
         }
     }
 }

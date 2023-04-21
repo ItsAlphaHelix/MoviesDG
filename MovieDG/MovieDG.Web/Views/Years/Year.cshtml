@@ -1,0 +1,59 @@
+﻿@using MovieDG.Core.ViewModels.Movies
+@model IEnumerable<MovieViewModel>
+
+@{
+    this.ViewData["Title"] = "Years";
+    var year = this.Context.Request.Query["year"];
+}
+
+<section class="top-rated-movie tr-movie-bg" data-background="/images/tr_movies_bg.jpg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="section-title text-center mb-50">
+                    <h2>
+                        All Movies Released In &nbsp;<span>@year</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row movie-item-row">
+            @foreach (var movie in Model)
+            {
+                <div class="custom-col- grid-item grid-sizer">
+                    <div class="movie-item movie-item-two">
+                        <div class="movie-poster">
+                            <img src="@movie.Poster" alt="">
+                            <ul class="overlay-btn">
+                                <li><a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a></li>
+                                <li><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
+                            </ul>
+                        </div>
+                        <div class="movie-content">
+                            @if (movie.Title.Length > 21)
+                            {
+                                string word = movie.Title.Substring(0, 18);
+                                string title = word + " ...";
+                                <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@title</a></h5>
+                            }
+                            else
+                            {
+                                <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                            }
+                            <div class="movie-content-bottom">
+                                <ul>
+                                    <li class="tag">
+                                        <a href="#">HD</a>
+                                    </li>
+                                    <li>
+                                        <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

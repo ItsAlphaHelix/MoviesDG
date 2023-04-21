@@ -4,14 +4,10 @@
 @{
     this.ViewData["Title"] = "All Movies";
 }
-    
 <section id="movies-list" class="top-rated-movie tr-movie-bg" data-background="/images/tr_movies_bg.jpg">
-            @await Html.PartialAsync("_MoviesPartial", Model)
-
-        <div id="tr-button" class="tr-movie-btn text-center mt-25">
-            <button id="load-button" class="btn" data-page-number="2">LOAD MORE</button>
-        </div>
+    @await Html.PartialAsync("_MoviesPartial", Model)
 </section>
+
 
 @section scripts{
 

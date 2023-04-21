@@ -11,11 +11,11 @@
 
         Task<MovieDetailsViewModel> GetMovieDetailsAsync(int id);
 
-        Task<IEnumerable<MovieViewModel>> GetTopRatedMoviesAsync();
+        Task<IEnumerable<MovieViewModel>> GetTopRatedMoviesAsync(int pageNumber, int pageSize);
 
-        Task<IEnumerable<MovieViewModel>> GetPopularityMoviesAsync();
+        Task<IEnumerable<MovieViewModel>> GetPopularityMoviesAsync(int pageNumber, int pageSize);
 
-        Task<IEnumerable<MovieViewModel>> GetRecentMoviesAsync();
+        Task<IEnumerable<MovieViewModel>> GetRecentMoviesAsync(int pageNumber, int pageSize);
 
         Task<BannerHomeMovieViewModel> GetMovieForHomepage();
 
@@ -32,5 +32,10 @@
         Task RemoveMovieFromCollectionAsync(int movieId, string userId);
 
         Task RemoveAllMoviesFromCollectionAsync(int movieId, string userId);
+        Task<IEnumerable<MovieViewModel>> GetAllYearsAsync();
+
+        Task<IEnumerable<MovieViewModel>> GetMoviesByYear(string year);
+
+        Task<IEnumerable<MovieViewModel>> GetRecentCarouselMovies();
     }
 }

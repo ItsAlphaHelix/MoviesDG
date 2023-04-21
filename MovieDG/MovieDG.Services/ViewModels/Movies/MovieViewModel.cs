@@ -15,5 +15,7 @@ namespace MovieDG.Core.ViewModels.Movies
         public double Popularity { get; set; }
 
         public double AverageVotes { get; set; }
+        public string Year { get; set; }
+
     }
 }

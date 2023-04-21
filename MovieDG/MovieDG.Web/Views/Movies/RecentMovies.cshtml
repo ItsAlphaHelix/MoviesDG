@@ -12,6 +12,25 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+            $('#load-button').click(function () {
+                var nextPageNumber = $(this).data('pageNumber');
+
+                $.get('/Movies/RecentMovies', {pageNumber: nextPageNumber },)
+                    .done(function (data) {
+
+                        $('#tr-button').append(data);
+                        $('#tr-button').append($('#load-button'))
+                        $('#load-button').data('pageNumber', nextPageNumber + 1);
+
+                    })
+                    .fail(function (xhr, status, error) {
+                        console.log('An error occurred while loading the next page of movies: ' + error);
+                    });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
             $('.tr-movie-menu-active button').click(function () {
                 var filterType = $(this).data('filter');
                 $.ajax({

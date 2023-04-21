@@ -9,7 +9,6 @@
     string wordMovies = ViewData["Title"].ToString().Substring(indexOfWordMovieMovies);
     string firstWords = ViewData["Title"].ToString().Substring(0, indexOfWordMovieMovies);
 }
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -28,27 +27,27 @@
         </div>
     </div>
     <div class="row movie-item-row">
-@foreach (var movie in Model)
-{
-    <div class="custom-col- grid-item grid-sizer">
-        <div class="movie-item movie-item-two">
-            <div class="movie-poster">
-                <img src="@movie.Poster" alt="">
-                <ul class="overlay-btn">
-                    <li>
-                        @if (this.User?.Identity?.IsAuthenticated == true)
-                        {
-                            <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
-                        }
-                        else
-                        {
-                            <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
-                        }
-                    </li>
-                    <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
-                </ul>
-            </div>
-            <div class="movie-content">
+        @foreach (var movie in Model)
+        {
+            <div class="custom-col- grid-item grid-sizer">
+                <div class="movie-item movie-item-two">
+                    <div class="movie-poster">
+                        <img src="@movie.Poster" alt="">
+                        <ul class="overlay-btn">
+                            <li>
+                                @if (this.User?.Identity?.IsAuthenticated == true)
+                                {
+                                    <a href="https://www.youtube.com/watch?v=@movie.Trailer" class="popup-video btn">Watch Now</a>
+                                }
+                                else
+                                {
+                                    <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
+                                }
+                            </li>
+                            <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
+                        </ul>
+                    </div>
+                    <div class="movie-content">
                         @if (movie.Title.Length > 21)
                         {
                             string word = movie.Title.Substring(0, 18);
@@ -59,22 +58,55 @@
                         {
                             <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
                         }
-                <div class="movie-content-bottom">
-                    <ul>
-                        <li class="tag">
-                            <a href="#">HD</a>
-                        </li>
-                        <li>
-                            <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
-                        </li>
-                    </ul>
+                        <div class="movie-content-bottom">
+                            <ul>
+                                <li class="tag">
+                                    <a href="#">HD</a>
+                                </li>
+                                <li>
+                                    <span class="like"><i class="fas fa-thumbs-up"></i> @movie.AverageVotes.ToString("F1")</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-}
+        }
     </div>
 </div>
+<div id="tr-button" class="tr-movie-btn text-center mt-25">
+    <button id="load-button" class="btn" data-page-number="2">LOAD MORE</button>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#load-button').click(function () {
+            var nextPageNumber = $(this).data('pageNumber');
+            var documentTitle = document.title;
+            var filterType = "";
+            if (documentTitle == "Top Rated Movies - MoviesDG") {
+                filterType = "top-rated"
+            } else if (documentTitle == "Popularity MoviesTop Rated Movies - MoviesDG") {
+                filterType = "popularity";
+            } else if (documentTitle == "Recent MoviesTop Rated Movies - MoviesDG") {
+                filterType = "recent";
+            }
+            
+            $.get('/Movies/LoadMoreByFilter', { filterType: filterType, pageNumber: nextPageNumber },)
+                .done(function (data) {
+
+                    $('#tr-button').append(data);
+                    $('#tr-button').append($('#load-button'))
+                    $('#load-button').data('pageNumber', nextPageNumber + 1);
+
+                })
+                .fail(function (xhr, status, error) {
+                    console.log('An error occurred while loading the next page of movies: ' + error);
+                });
+        });
+    });
+
+</script>
 
 <script>
     $(document).ready(function () {

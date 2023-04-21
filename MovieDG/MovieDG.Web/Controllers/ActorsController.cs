@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using MovieDG.Core.Contracts;
-
-namespace MovieDG.Web.Controllers
+﻿namespace MovieDG.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using MovieDG.Core.Contracts;
     public class ActorsController : Controller
     {
         private readonly IMovieService movieService;

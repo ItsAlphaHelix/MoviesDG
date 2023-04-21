@@ -2,10 +2,12 @@
 
 @inject MovieDG.Core.Contracts.IGenreService GenresService;
 @inject MovieDG.Core.Contracts.ICountryService CountriesService;
+@inject MovieDG.Core.Contracts.IMovieService MovieService;
 
 @{
     var genres = await GenresService.GetAllGenresAsync();
     var countries = await CountriesService.GetAllCountriesAsync();
+    var years = await MovieService.GetAllYearsAsync();
 
     var list = new List<string>()
     {
@@ -33,7 +35,8 @@
         "Delete Personal Data",
         "No Results",
         "Access denied",
-        "Confirm email change"
+        "Confirm email change",
+        "Reset password"
     };
 }
 
@@ -74,6 +77,15 @@
                                             @foreach (var country in countries)
                                             {
                                                 <li><a asp-controller="Countries" asp-action="Name" asp-route-name="@country.Name">@country.Name</a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item-has-children">
+                                        <a href="#">Years</a>
+                                        <ul class="submenu">
+                                            @foreach (var year in years)
+                                            {
+                                                <li><a asp-controller="Years" asp-action="Year" asp-route-year="@year.Year">@year.Year</a></li>
                                             }
                                         </ul>
                                     </li>

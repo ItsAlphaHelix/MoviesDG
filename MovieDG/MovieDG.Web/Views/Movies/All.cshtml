@@ -13,16 +13,22 @@
     <script>
         $(document).ready(function () {
             $('#load-button').click(function () {
+
+                $('#load-button').hide();
                 var nextPageNumber = $(this).data('pageNumber');
-                // Load a script after AJAX request is done
-                $.getScript('/js/main.js', function () {
-                    console.log('Script loaded successfully.');
-                });
+
                 $.get('/Movies/All', { pageNumber: nextPageNumber })
                     .done(function (data) {
                         $('#tr-button').append(data);
                         $('#tr-button').append($('#load-button'))
                         $('#load-button').data('pageNumber', nextPageNumber + 1);
+
+                        if ($.trim(data).length === 0) {
+                            $('#load-button').hide();
+                        } else {
+                            $('#load-button').show();
+                        }
+
                         $.getScript('/js/main.js');
                     })
                     .fail(function (xhr, status, error) {

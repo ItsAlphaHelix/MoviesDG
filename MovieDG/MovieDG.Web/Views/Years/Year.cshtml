@@ -20,15 +20,20 @@
         @await Html.PartialAsync("_LoadMoreMovies", Model)
     </div>
 
-    <div id="tr-button" class="tr-movie-btn text-center mt-25">
-        <button id="load-button" class="btn" data-page-number="2">LOAD MORE</button>
-    </div>
+    @if (Model.Count() >= 10)
+    {
+        <div id="tr-button" class="tr-movie-btn text-center mt-25">
+            <button id="load-button" class="btn" data-page-number="2">LOAD MORE</button>
+        </div>
+    }
 </section>
 
 @section scripts{
     <script>
         $(document).ready(function () {
             $('#load-button').click(function () {
+
+                $('#load-button').hide();
                 var nextPageNumber = $(this).data('pageNumber');
                 var currentUrl = window.location.href;
                 var year = currentUrl.split('=')[1];
@@ -39,6 +44,13 @@
                         $('#tr-button').append(data);
                         $('#tr-button').append($('#load-button'))
                         $('#load-button').data('pageNumber', nextPageNumber + 1);
+
+                        if ($.trim(data).length === 0) {
+                            $('#load-button').hide();
+                        } else {
+                            $('#load-button').show();
+                        }
+
                         $.getScript('/js/main.js');
                     })
                     .fail(function (xhr, status, error) {

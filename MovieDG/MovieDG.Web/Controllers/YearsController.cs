@@ -17,7 +17,7 @@
             {
                 var movies = await this.moviesService.GetMoviesByYear(year, pageNumber, pageSize);
 
-                if (pageNumber > movies.Count())
+                if (pageSize > movies.Count())
                 {
                     return View();
                 }

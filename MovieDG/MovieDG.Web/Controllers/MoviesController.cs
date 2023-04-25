@@ -22,7 +22,7 @@
             {
                 var movies = await this.moviesService.GetAllMoviesAsync(pageNumber, pageSize);
 
-                if (pageNumber > movies.Count())
+                if (pageSize > movies.Count())
                 {
                     return View();
                 }
@@ -73,34 +73,37 @@
                 case "recent":
 
                     var recentMovies = await this.moviesService.GetRecentMoviesAsync(pageNumber, pageSize);
-                    ViewData["Title"] = "Recent Movies";
 
-                    if (pageNumber > recentMovies.Count())
+                    if (pageSize > recentMovies.Count())
                     {
                         return View();
                     }
+
+                    ViewData["Title"] = "Recent Movies";
 
                     return PartialView("_LoadMoreMovies", recentMovies);
                 case "top-rated":
 
                     var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync(pageNumber, pageSize);
-                    ViewData["Title"] = "Top Rated Movies";
 
-                    if (pageNumber > topRatedMovies.Count())
+                    if (pageSize > topRatedMovies.Count())
                     {
                         return View();
                     }
+
+                    ViewData["Title"] = "Top Rated Movies";
 
                     return PartialView("_LoadMoreMovies", topRatedMovies);
                 default:
 
                     var popularityMovies = await this.moviesService.GetPopularityMoviesAsync(pageNumber, pageSize);
-                    ViewData["Title"] = "Popularity Movies";
 
-                    if (pageNumber > popularityMovies.Count())
+                    if (pageSize > popularityMovies.Count())
                     {
                         return View();
                     }
+
+                    ViewData["Title"] = "Popularity Movies";
 
                     return PartialView("_LoadMoreMovies", popularityMovies);
             }
@@ -113,7 +116,7 @@
             {
                 var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync(pageNumber, pageSize);
 
-                if (pageNumber > topRatedMovies.Count())
+                if (pageSize > topRatedMovies.Count())
                 {
                     return View();
                 }
@@ -134,7 +137,7 @@
             {
                 var popularityMovies = await this.moviesService.GetPopularityMoviesAsync(pageNumber, pageSize);
 
-                if (pageNumber > popularityMovies.Count())
+                if (pageSize > popularityMovies.Count())
                 {
                     return View();
                 }
@@ -155,7 +158,7 @@
             {
                 var recentMovies = await this.moviesService.GetRecentMoviesAsync(pageNumber, pageSize);
 
-                if (pageNumber > recentMovies.Count())
+                if (pageSize > recentMovies.Count())
                 {
                     return View();
                 }

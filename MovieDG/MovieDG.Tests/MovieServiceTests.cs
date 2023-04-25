@@ -65,7 +65,7 @@
         {
             await SeedDB.SeedMovies(this.movieRepository);
 
-            var movies = await this.movieService.GetTopRatedMoviesAsync();
+            var movies = await this.movieService.GetTopRatedMoviesAsync(1, 10);
             double maxAverageVote = movies.FirstOrDefault().AverageVotes;
 
             Assert.Multiple(() =>

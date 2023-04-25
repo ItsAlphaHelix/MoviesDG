@@ -1,6 +1,5 @@
 ﻿namespace MovieDG.Web.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MovieDG.Core.Contracts;
     public class ActorsController : Controller
@@ -14,7 +13,7 @@
         {
             var movies = await this.movieService.GetMoviesByActorAsync(name);
 
-            return View(movies);
+            return this.View(movies);
         }
     }
 }

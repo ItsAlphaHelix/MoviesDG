@@ -13,6 +13,8 @@
     <script>
         $(document).ready(function () {
             $('#load-button').click(function () {
+
+                $('#load-button').hide();
                 var nextPageNumber = $(this).data('pageNumber');
 
                 $.get('/Movies/RecentMovies', {pageNumber: nextPageNumber },)
@@ -21,6 +23,13 @@
                         $('#tr-button').append(data);
                         $('#tr-button').append($('#load-button'))
                         $('#load-button').data('pageNumber', nextPageNumber + 1);
+
+                        if ($.trim(data).length === 0) {
+                            $('#load-button').hide();
+                        } else {
+                            $('#load-button').show();
+                        }
+
                         $.getScript('/js/main.js');
                     })
                     .fail(function (xhr, status, error) {

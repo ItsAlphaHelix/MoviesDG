@@ -17,7 +17,7 @@
             {
                 var movies = await this.moviesService.GetMoviesByGenreAsync(name, pageNumber, pageSize);
 
-                if (pageNumber > movies.Count())
+                if (pageSize > movies.Count())
                 {
                     return View();
                 }

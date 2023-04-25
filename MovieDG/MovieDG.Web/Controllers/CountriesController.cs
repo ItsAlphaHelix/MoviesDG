@@ -16,7 +16,7 @@
             {
                 var movies = await this.moviesService.GetMoviesByCountryAsync(name, pageNumber, pageSize);
 
-                if (pageNumber > movies.Count())
+                if (pageSize > movies.Count())
                 {
                     return View();
                 }

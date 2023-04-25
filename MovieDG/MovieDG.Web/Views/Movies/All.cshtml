@@ -10,25 +10,26 @@
 
 
 @section scripts{
-
     <script>
         $(document).ready(function () {
             $('#load-button').click(function () {
                 var nextPageNumber = $(this).data('pageNumber');
-                $.get('/Movies/All', { pageNumber: nextPageNumber }, )
+                // Load a script after AJAX request is done
+                $.getScript('/js/main.js', function () {
+                    console.log('Script loaded successfully.');
+                });
+                $.get('/Movies/All', { pageNumber: nextPageNumber })
                     .done(function (data) {
-
                         $('#tr-button').append(data);
                         $('#tr-button').append($('#load-button'))
                         $('#load-button').data('pageNumber', nextPageNumber + 1);
-                       
+                        $.getScript('/js/main.js');
                     })
                     .fail(function (xhr, status, error) {
                         console.log('An error occurred while loading the next page of movies: ' + error);
                     });
             });
         });
-
     </script>
     <script>
         $(document).ready(function () {
@@ -60,7 +61,6 @@
                         } else if (filterType == "PopularityMovies") {
                             filterType = "Popularity Movies";
                         }
-                        
                         document.title = filterType + " - MoviesDG";
                     },
                     error: function () {

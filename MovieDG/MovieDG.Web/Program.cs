@@ -69,10 +69,7 @@ app.UseAuthorization();
 app.UseEndpoints(endpoint =>
 {
     endpoint.MapHub<ChatHub>("/chatHub");
-});
 
-app.UseEndpoints(endpoint =>
-{
     endpoint.MapControllerRoute(
         name: "areas",
         pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

@@ -4,6 +4,7 @@
     using MovieDG.Core.ViewModels.Movies;
     using MovieDG.Data.Data.Models;
     using MoviesDG.Data.Models;
+    using System.Runtime.InteropServices;
 
     public interface IMovieService
     {
@@ -19,9 +20,9 @@
 
         Task<BannerHomeMovieViewModel> GetMovieForHomepage();
 
-        Task<IEnumerable<MovieViewModel>> GetMoviesByGenreAsync(string name);
+        Task<IEnumerable<MovieViewModel>> GetMoviesByGenreAsync(string name, int pageNumber, int pageSize);
 
-        Task<IEnumerable<MovieViewModel>> GetMoviesByCountryAsync(string name);
+        Task<IEnumerable<MovieViewModel>> GetMoviesByCountryAsync(string name, int pageNumber, int pageSize);
 
         Task<IEnumerable<MovieViewModel>> GetMoviesByActorAsync(string name);
 
@@ -32,9 +33,10 @@
         Task RemoveMovieFromCollectionAsync(int movieId, string userId);
 
         Task RemoveAllMoviesFromCollectionAsync(int movieId, string userId);
+
         Task<IEnumerable<MovieViewModel>> GetAllYearsAsync();
 
-        Task<IEnumerable<MovieViewModel>> GetMoviesByYear(string year);
+        Task<IEnumerable<MovieViewModel>> GetMoviesByYear(string year, int pageNumber, int pageSize);
 
         Task<IEnumerable<MovieViewModel>> GetRecentCarouselMovies();
     }

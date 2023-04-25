@@ -4,17 +4,31 @@
     using MovieDG.Core.Contracts;
     public class CountriesController : Controller
     {
-        private readonly IMovieService movieService;
-        public CountriesController(IMovieService movieService)
+        private readonly IMovieService moviesService;
+        public CountriesController(IMovieService moviesService)
         {
-            this.movieService = movieService;
+            this.moviesService = moviesService;
         }
 
-        public async Task<IActionResult> Name(string name)
+        public async Task<IActionResult> Name(string name, int pageNumber, int pageSize = 10)
         {
-            var movies = await this.movieService.GetMoviesByCountryAsync(name);
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                var movies = await this.moviesService.GetMoviesByCountryAsync(name, pageNumber, pageSize);
 
-            return View(movies);
+                if (pageNumber > movies.Count())
+                {
+                    return View();
+                }
+
+                return PartialView("_LoadMoreMovies", movies);
+            }
+            else
+            {
+                var movies = await this.moviesService.GetMoviesByCountryAsync(name, 1, pageSize);
+
+                return View(movies);
+            }
         }
     }
 }

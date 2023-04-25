@@ -11,11 +11,25 @@
         {
             this.moviesService = moviesService;
         }
-        public async Task<IActionResult> Type(string name)
+        public async Task<IActionResult> Type(string name, int pageNumber, int pageSize = 10)
         {
-            var movies = await this.moviesService.GetMoviesByGenreAsync(name);
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+            {
+                var movies = await this.moviesService.GetMoviesByGenreAsync(name, pageNumber, pageSize);
 
-            return View(movies);
+                if (pageNumber > movies.Count())
+                {
+                    return View();
+                }
+
+                return PartialView("_LoadMoreMovies", movies);
+            }
+            else
+            {
+                var movies = await this.moviesService.GetMoviesByGenreAsync(name, 1, pageSize);
+
+                return View(movies);
+            }
         }
     }
 }

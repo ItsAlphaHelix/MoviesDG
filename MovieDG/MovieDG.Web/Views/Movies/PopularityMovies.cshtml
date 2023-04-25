@@ -21,7 +21,7 @@
                         $('#tr-button').append(data);
                         $('#tr-button').append($('#load-button'))
                         $('#load-button').data('pageNumber', nextPageNumber + 1);
-
+                        $.getScript('/js/main.js');
                     })
                     .fail(function (xhr, status, error) {
                         console.log('An error occurred while loading the next page of movies: ' + error);

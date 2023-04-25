@@ -172,8 +172,13 @@
             return homepageMovie;
         }
 
-        public async Task<IEnumerable<MovieViewModel>> GetMoviesByGenreAsync(string name)
+        public async Task<IEnumerable<MovieViewModel>> GetMoviesByGenreAsync(string name, int pageNumber, int pageSize)
         {
+            if (name.Contains("%20"))
+            {
+                name = name.Replace("%20", " ");
+            }
+
             var movies = await this.moviesRepository
                 .AllAsNoTracking()
                 .Where(x => x.MovieGenres.Any(x => x.Genre.Type == name))
@@ -186,13 +191,22 @@
                     Trailer = x.Trailer,
                     AverageVotes = x.AverageVotes
                 })
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             return movies;
         }
 
-        public async Task<IEnumerable<MovieViewModel>> GetMoviesByCountryAsync(string name)
+        public async Task<IEnumerable<MovieViewModel>> GetMoviesByCountryAsync(string name, int pageNumber, int pageSize)
         {
+            //This is example how name comming from front-end it is "United%20States%20of%20America", but in the database this "%20 
+            //doesn't exists and i replace it with empty space for getting "United States of America";
+            if (name.Contains("%20"))
+            {
+                name = name.Replace("%20", " ");
+            }
+
             var movies = await this.moviesRepository
                 .AllAsNoTracking()
                 .Where(x => x.MovieCountries.Any(x => x.Country.Name == name))
@@ -205,6 +219,8 @@
                     Trailer = x.Trailer,
                     AverageVotes = x.AverageVotes
                 })
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             return movies;
@@ -359,7 +375,7 @@
             return movies;
         }
 
-        public async Task<IEnumerable<MovieViewModel>> GetMoviesByYear(string year)
+        public async Task<IEnumerable<MovieViewModel>> GetMoviesByYear(string year, int pageNumber, int pageSize)
         {
             var movies = await this.moviesRepository
                 .AllAsNoTracking()
@@ -373,6 +389,8 @@
                     Trailer = x.Trailer,
                     AverageVotes = x.AverageVotes
                 })
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync();
 
             return movies;

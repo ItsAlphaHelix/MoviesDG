@@ -26,10 +26,10 @@
             </div>
         </div>
     </div>
-    <div class="row movie-item-row">
+    <div id="list-of-movies" class="row movie-item-row">
         @foreach (var movie in Model)
         {
-            <div class="custom-col- grid-item grid-sizer">
+            <div id="movie" class="custom-col- grid-item grid-sizer">
                 <div class="movie-item movie-item-two">
                     <div class="movie-poster">
                         <img src="@movie.Poster" alt="">
@@ -74,6 +74,7 @@
         }
     </div>
 </div>
+
 <div id="tr-button" class="tr-movie-btn text-center mt-25">
     <button id="load-button" class="btn" data-page-number="2">LOAD MORE</button>
 </div>
@@ -91,14 +92,14 @@
             } else if (documentTitle == "Recent MoviesTop Rated Movies - MoviesDG") {
                 filterType = "recent";
             }
-            
+
             $.get('/Movies/LoadMoreByFilter', { filterType: filterType, pageNumber: nextPageNumber },)
                 .done(function (data) {
 
                     $('#tr-button').append(data);
                     $('#tr-button').append($('#load-button'))
                     $('#load-button').data('pageNumber', nextPageNumber + 1);
-
+                    $.getScript('/js/main.js');
                 })
                 .fail(function (xhr, status, error) {
                     console.log('An error occurred while loading the next page of movies: ' + error);
@@ -138,7 +139,6 @@
                     } else if (filterType == "PopularityMovies") {
                         filterType = "Popularity Movies"
                     }
-
                     document.title = filterType + " - MoviesDG";
                 },
                 error: function () {

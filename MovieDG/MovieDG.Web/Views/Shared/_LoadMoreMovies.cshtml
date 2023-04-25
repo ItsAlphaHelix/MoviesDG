@@ -4,11 +4,12 @@
 @inject SignInManager<ApplicationUser> SignInManager
 
 @model IEnumerable<MovieViewModel>
+
 <div class="container">
-    <div class="row movie-item-row">
+    <div id="list-of-movies" class="row movie-item-row">
         @foreach (var movie in Model)
         {
-            <div class="custom-col- grid-item grid-sizer top-rating">
+            <div class="custom-col- grid-item grid-sizer">
                 <div class="movie-item movie-item-two">
                     <div class="movie-poster">
                         <img src="@movie.Poster" alt="">
@@ -23,7 +24,7 @@
                                     <a asp-area="Identity" asp-page="/Account/Login" class="btn">Watch Now</a>
                                 }
                             </li>
-                            <li><a asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
+                            <li><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn">Details</a></li>
                         </ul>
                     </div>
                     <div class="movie-content">
@@ -31,11 +32,11 @@
                         {
                             string word = movie.Title.Substring(0, 18);
                             string title = word + " ...";
-                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@title</a></h5>
+                            <h5 class="title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@title</a></h5>
                         }
                         else
                         {
-                            <h5 class="title"><a asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
+                            <h5 class="title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">@movie.Title</a></h5>
                         }
                         <div class="movie-content-bottom">
                             <ul>

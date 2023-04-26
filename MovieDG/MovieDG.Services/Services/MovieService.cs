@@ -1,6 +1,7 @@
 ﻿namespace MovieDG.Core.Services
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Memory;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.ViewModels.Actors;
     using MovieDG.Core.ViewModels.Countries;
@@ -39,6 +40,7 @@
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
+
 
             return movies;
         }

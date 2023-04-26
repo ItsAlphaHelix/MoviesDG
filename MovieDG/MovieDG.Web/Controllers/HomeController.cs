@@ -5,7 +5,6 @@
     using MovieDG.Core.ViewModels.Movies;
     using MovieDG.Web.Models;
     using System.Diagnostics;
-    using System.Security.Claims;
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,6 +17,8 @@
             _logger = logger;
             this.moviesService = moviesService;
         }
+
+        [ResponseCache(Duration = 3600)]
         public async Task<IActionResult> IndexAsync()
         {
             var homepageMovie = await this.moviesService.GetMovieForHomepage();

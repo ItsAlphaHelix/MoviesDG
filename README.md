@@ -42,6 +42,7 @@ https://moviesdg.azurewebsites.net/
 
 #### - Linkedin [Dimitar Georgiev](https://www.linkedin.com/in/dimitar-georgiev-551a16242/)
 
+![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Asp.Net%20Advanced.jpg?raw=true)
 
 ## 📜 License
 

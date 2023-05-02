@@ -9,7 +9,7 @@
 <div class="login-dark">
     <div class="navbar-wrap main-menu d-none d-lg-flex">
         <ul class="navigation">
-            <li><a asp-area="" asp-controller="Home" asp-action="Index">Back To The Home</a></li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Back To Home</a></li>
         </ul>
     </div>
     <br />
@@ -25,6 +25,7 @@
             <div class="form-group">
                 <button class="btn btn-primary btn-block" type="submit">Log In</button>
              </div>
+        <a asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">log in with a recovery code</a>
      </form>
  </div>
 

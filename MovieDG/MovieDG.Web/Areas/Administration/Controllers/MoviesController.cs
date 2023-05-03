@@ -6,6 +6,8 @@
     using MoviesDG.Core.DataApi;
     using MoviesDG.Data.Models;
     using MoviesDG.Data.Repositories;
+
+    using static MovieDG.Web.Areas.Administration.AdminConstants.AdminMessageConstants;
     public class MoviesController : AdministrationController
     {
         private readonly ICollectService collectService;
@@ -33,7 +35,7 @@
         {
             if (inputModel.StartIndex > inputModel.EndIndex)
             {
-                this.toastNotification.Error($"End index cannot be less than Start index !");
+                this.toastNotification.Error(MovieStartIndexErrorMessage);
                 return this.View(inputModel);
             }
 
@@ -43,7 +45,7 @@
 
                 if (currentMovie is not null)
                 {
-                    this.toastNotification.Error($"Movie with Id: ({i}) already exists !");
+                    this.toastNotification.Error(String.Format(MovieAlreadyExistMessage, i));
 
                     return RedirectToAction(nameof(Create));
                 }
@@ -56,7 +58,7 @@
 
             var movies = await this.collectService.AddMoviesToDatabaseAsync(inputModel.StartIndex, inputModel.EndIndex);
 
-            this.toastNotification.Success("Successfully added movie!");
+            this.toastNotification.Success(SuccessfullyAddMovieMessage);
 
             return RedirectToAction(nameof(Create));
         }

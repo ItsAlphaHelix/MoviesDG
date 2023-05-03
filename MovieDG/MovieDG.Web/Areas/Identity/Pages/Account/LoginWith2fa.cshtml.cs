@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
@@ -34,12 +35,9 @@
         public class InputModel
         {
             [Required]
-            [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(7, ErrorMessage = IdentityErrorMessagesConstants.TwoFactorCodeErrorMessage, MinimumLength = 6)]
             [DataType(DataType.Text)]
-            [Display(Name = "Authenticator code")]
             public string TwoFactorCode { get; set; }
-
-            [Display(Name = "Remember this machine")]
             public bool RememberMachine { get; set; }
         }
 
@@ -50,7 +48,7 @@
 
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException(IdentityErrorMessagesConstants.UnableToLoadTwoFactorAuthUserErrorMessage);
             }
 
             this.ReturnUrl = returnUrl;
@@ -71,7 +69,7 @@
             var user = await this.signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to load two-factor authentication user.");
+                throw new InvalidOperationException(IdentityErrorMessagesConstants.UnableToLoadTwoFactorAuthUserErrorMessage);
             }
 
             var authenticatorCode = this.Input.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
@@ -80,18 +78,18 @@
 
             if (result.Succeeded)
             {
-                this.logger.LogInformation("User with ID '{UserId}' logged in with 2fa.", user.Id);
+                this.logger.LogInformation(String.Format(IdentityMessageConstants.LoginWithTwoFactorAuthMessage, user.Id));
                 return this.LocalRedirect(returnUrl);
             }
             else if (result.IsLockedOut)
             {
-                this.logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);
+                this.logger.LogWarning(String.Format(IdentityMessageConstants.LockedoutAccountMessage, user.Id));
                 return this.RedirectToPage("./Lockout");
             }
             else
             {
-                this.logger.LogWarning("Invalid authenticator code entered for user with ID '{UserId}'.", user.Id);
-                this.ModelState.AddModelError(string.Empty, "Invalid authenticator code.");
+                this.logger.LogWarning(IdentityMessageConstants.InvalidAuthCodeMessage, user.Id);
+                this.ModelState.AddModelError(string.Empty, IdentityErrorMessagesConstants.InvalidAuthCodeErrorMessage);
                 return this.Page();
             }
         }

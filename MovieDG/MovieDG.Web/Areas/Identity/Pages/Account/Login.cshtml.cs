@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using System.ComponentModel.DataAnnotations;
     public class LoginModel : PageModel
     {
@@ -39,8 +40,6 @@
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-
-            [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
 
@@ -72,7 +71,7 @@
                 var result = await this.signInManager.PasswordSignInAsync(this.Input.Username, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    this.logger.LogInformation("User logged in.");
+                    this.logger.LogInformation(IdentityMessageConstants.LoginUserMessage);
                     return this.LocalRedirect(returnUrl);
                 }
 
@@ -83,12 +82,12 @@
 
                 if (result.IsLockedOut)
                 {
-                    this.logger.LogWarning("User account locked out.");
+                    this.logger.LogWarning(IdentityMessageConstants.UserAccountLockMessage);
                     return this.RedirectToPage("./Lockout");
                 }
                 else
                 {
-                    this.ModelState.AddModelError(string.Empty, "The username or password you typed are incorrect.");
+                    this.ModelState.AddModelError(string.Empty, IdentityErrorMessagesConstants.IncorrectUserOrPasswordErrorMessage);
                     return this.Page();
                 }
             }

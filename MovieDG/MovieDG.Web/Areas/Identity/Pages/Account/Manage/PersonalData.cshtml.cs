@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using System.Threading.Tasks;
 
     public class PersonalDataModel : PageModel
@@ -25,7 +26,7 @@
             var user = await this.userManager.GetUserAsync(User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             return this.Page();

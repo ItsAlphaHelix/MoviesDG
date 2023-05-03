@@ -1,13 +1,14 @@
 ﻿namespace MovieDG.Core.Services
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.ViewModels.Contact;
-    using MovieDG.Data.Data.Models;
     using MoviesDG.Core.Messaging;
     using MoviesDG.Data.Data.Models;
     using MoviesDG.Data.Repositories;
+    using MovieDG.Common;
+    using static MovieDG.Core.ErrorMessages.ErrorMessageConstants;
+
     public class ContactService : IContactService
     {
         private readonly IRepository<Contact> contactsRepository;
@@ -68,7 +69,7 @@
 
             if (submision == null)
             {
-                throw new NullReferenceException("The submision can not be null!");
+                throw new ArgumentException(ContactSubmissionErrorMessage);
             }
 
             return submision;
@@ -92,7 +93,7 @@
 
             if (contact == null)
             {
-                throw new NullReferenceException("The contact can not be null");
+                throw new ArgumentException(ContactNullErrorMessage);
             }
 
             this.contactsRepository.Delete(contact);

@@ -5,6 +5,8 @@
     using MoviesDG.Core.DataApi.Models;
     using System.Net.Http.Json;
     using System.Text.Json;
+
+    using static MovieDG.Core.ErrorMessages.ErrorMessageConstants;
     public class DataService : IDataService
     {
         private const string BaseUrl = "https://api.themoviedb.org/3";
@@ -16,7 +18,7 @@
         {
             this.configuration = configuration;
 
-            this.key = this.configuration.GetSection($"TMDBKey").Value;
+            this.key = this.configuration.GetSection($"TMDB:ApiKey").Value;
         }
         public async Task<MovieDTO> GetMovieDataAsync(int movieId)
         {
@@ -32,15 +34,15 @@
                 }
                 catch (HttpRequestException)
                 {
-                    Console.WriteLine("An error occurred.");
+                    Console.WriteLine(HttpRequestExceptionErrorMessage);
                 }
                 catch (NotSupportedException)
                 {
-                    Console.WriteLine("The content type is not supported.");
+                    Console.WriteLine(NotSupportedException);
                 }
                 catch (JsonException)
                 {
-                    Console.WriteLine("Invalid JSON.");
+                    Console.WriteLine(JsonExceptionErrorMessage);
                 }
             }
 
@@ -60,15 +62,15 @@
                 }
                 catch (HttpRequestException)
                 {
-                    Console.WriteLine("An error occurred.");
+                    Console.WriteLine(HttpRequestExceptionErrorMessage);
                 }
                 catch (NotSupportedException)
                 {
-                    Console.WriteLine("The content type is not supported.");
+                    Console.WriteLine(NotSupportedException);
                 }
                 catch (JsonException)
                 {
-                    Console.WriteLine("Invalid JSON.");
+                    Console.WriteLine(JsonExceptionErrorMessage);
                 }
             }
 
@@ -88,15 +90,15 @@
                 }
                 catch (HttpRequestException)
                 {
-                    Console.WriteLine("An error occurred.");
+                    Console.WriteLine(HttpRequestExceptionErrorMessage);
                 }
                 catch (NotSupportedException)
                 {
-                    Console.WriteLine("The content type is not supported.");
+                    Console.WriteLine(NotSupportedException);
                 }
                 catch (JsonException)
                 {
-                    Console.WriteLine("Invalid JSON.");
+                    Console.WriteLine(JsonExceptionErrorMessage);
                 }
             }
 
@@ -116,15 +118,15 @@
                 }
                 catch (HttpRequestException)
                 {
-                    Console.WriteLine("An error occurred.");
+                    Console.WriteLine(HttpRequestExceptionErrorMessage);
                 }
                 catch (NotSupportedException)
                 {
-                    Console.WriteLine("The content type is not supported.");
+                    Console.WriteLine(NotSupportedException);
                 }
                 catch (JsonException)
                 {
-                    Console.WriteLine("Invalid JSON.");
+                    Console.WriteLine(JsonExceptionErrorMessage);
                 }
             }
 

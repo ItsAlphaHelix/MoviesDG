@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using System.Threading.Tasks;
     public class TwoFactorAuthenticationModel : PageModel
     {
@@ -43,7 +44,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             this.HasAuthenticator = await this.userManager.GetAuthenticatorKeyAsync(user) != null;
@@ -59,11 +60,11 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             await this.signInManager.ForgetTwoFactorClientAsync();
-            this.toastNotification.Success("The current browser has been forgotten. When you login again from this browser you will be prompted for your 2fa code.");
+            this.toastNotification.Success(IdentityMessageConstants.ForgottenBrowserMessage);
             return this.RedirectToPage();
         }
     }

@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using MoviesDG.Data.Constants;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
@@ -69,7 +70,7 @@
             var user = await this.userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{this.userManager.GetUserId(User)}'.");
+                return NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             await LoadAsync(user);
@@ -81,7 +82,7 @@
             var user = await this.userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{this.userManager.GetUserId(User)}'.");
+                return NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             if (!ModelState.IsValid)
@@ -97,7 +98,7 @@
 
                 if (!setUsername.Succeeded)
                 {
-                    this.StatusMessage = "Unexpected error when trying to set username.";
+                    this.StatusMessage = IdentityErrorMessagesConstants.SetUsernameErrorMessage;
                     return this.RedirectToPage();
                 }
             }
@@ -117,7 +118,7 @@
             }
 
             await this.signInManager.RefreshSignInAsync(user);
-            this.toastNotification.Success("Your profile has been updated.");
+            this.toastNotification.Success(IdentityMessageConstants.SuccessfullyUpdateUserProfile);
             return RedirectToPage();
         }
     }

@@ -1,6 +1,5 @@
 ﻿namespace MovieDG.Web.Areas.Administration.Controllers
 {
-    using AspNetCore;
     using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,7 @@
     using MovieDG.Core.Contracts;
     using MovieDG.Core.ViewModels.Contact;
     using MovieDG.Data.Data.Models;
+    using static MovieDG.Web.Areas.Administration.AdminConstants.AdminMessageConstants;
 
     public class ContactController : AdministrationController
     {
@@ -68,7 +68,7 @@
 
             await this.contactService.ReplyMessageToUserAsync(replyModel);
 
-            this.toastNotification.Success("Successfully sended answer to user!");
+            this.toastNotification.Success(SuccessSentAnswer);
 
             return RedirectToAction(nameof(Reply));
         }
@@ -78,7 +78,7 @@
         {
             await this.contactService.DeleteQuestionAsync(id);
 
-            this.toastNotification.Success("Successfully deleted question!");
+            this.toastNotification.Success(SuccessDeleteQuestion);
 
             return this.RedirectToAction(nameof(this.Submisions));
         }

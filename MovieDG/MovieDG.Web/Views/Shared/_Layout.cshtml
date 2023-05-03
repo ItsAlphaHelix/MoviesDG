@@ -1,23 +1,27 @@
 ﻿@using MovieDG.Common
 
+@{
+    string CurrentURL = this.Context.Request.Path;
+}
+
 <!DOCTYPE html>
 <html class="no-js" id="html-chat" lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - @GlobalConstants.SystemName</title>
-	<link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/animate.min.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/magnific-popup.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/fontawesome-all.min.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/flaticon.css" asp-append-version="true" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @GlobalConstants.SystemName</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/animate.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/fontawesome-all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/flaticon.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/odometer.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/aos.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/slick.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/default.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/slick.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/default.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
@@ -44,14 +48,21 @@
     <!-- Scroll-top-end-->
     <!-- header-area -->
     <header>
-        <partial name="_NavigationPartial.cshtml"/>
-    </header>
-       
-        <main role="main">
-            @RenderBody()
-        </main>
+        @if (!CurrentURL.Contains("Identity") && !CurrentURL.Contains("Administration"))
+        {
+            <partial name="_NavigationPartial.cshtml" />
 
-    <partial name="_FooterPartial.cshtml"/>
+        }
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    @if (!CurrentURL.Contains("Identity") && !CurrentURL.Contains("Administration"))
+    {
+        <partial name="_FooterPartial.cshtml" />
+    }
 
     <script src="~/js/jquery-3.6.0.min.js" asp-append-version="true"></script>
     <script src="~/js/popper.min.js" asp-append-version="true"></script>

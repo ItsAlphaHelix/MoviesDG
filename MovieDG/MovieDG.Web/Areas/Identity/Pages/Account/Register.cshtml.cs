@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using MoviesDG.Data.Repositories;
     using System.ComponentModel.DataAnnotations;
     using System.Text;
@@ -43,31 +44,28 @@
         public class InputModel
         {
             [Required]
-            [RegularExpression(@"[A-Z]{1}[\w]+", ErrorMessage = "Username must start with a capital letter.")]
+            [RegularExpression(IdentityMessageConstants.StartWithCapitalLetterRegex, ErrorMessage = IdentityErrorMessagesConstants.UserNameErrorMessage)]
             public string Username { get; set; }
 
             [Required]
-            [RegularExpression(@"[A-Z]{1}[\w]+", ErrorMessage = "Country must start with a capital letter.")]
+            [RegularExpression(IdentityMessageConstants.StartWithCapitalLetterRegex, ErrorMessage = IdentityErrorMessagesConstants.CountryErrorMessage)]
             public string Country { get; set; }
 
             [Required]
-            [RegularExpression(@"[A-Z]{1}[\w]+", ErrorMessage = "City must start with a capital letter.")]
+            [RegularExpression(IdentityMessageConstants.StartWithCapitalLetterRegex, ErrorMessage = IdentityErrorMessagesConstants.CityErrorMessage)]
             public string City { get; set; }
 
             [Required]
             [EmailAddress]
-            [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = IdentityErrorMessagesConstants.PasswordErrorMessage, MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare(nameof(Password), ErrorMessage = IdentityErrorMessagesConstants.ConfirmPasswordErrorMessage)]
             public string ConfirmPassword { get; set; }
         }
 
@@ -87,11 +85,11 @@
             {
                 if (this.usersRepository.AllAsNoTracking().Any(x => x.Email.ToLower() == this.Input.Email.ToLower()))
                 {
-                    this.ModelState.AddModelError(string.Empty, $"This Email address is already taken.");
+                    this.ModelState.AddModelError(string.Empty, IdentityErrorMessagesConstants.AlreadyTakenEmailErrorMessage);
                 }
                 else if (this.usersRepository.AllAsNoTracking().Any(x => x.UserName.ToLower() == this.Input.Username.ToLower()))
                 {
-                    this.ModelState.AddModelError(string.Empty, $"This Username is already taken.");
+                    this.ModelState.AddModelError(string.Empty, IdentityMessageConstants.AlreadyTakenUsernameMessage);
                 }
                 else
                 {
@@ -100,7 +98,7 @@
 
                     if (result.Succeeded)
                     {
-                        this.logger.LogInformation("User created a new account with password.");
+                        this.logger.LogInformation(IdentityMessageConstants.UserCreateNewAccountWithPassMessage);
                         //await this.userManager.AddToRoleAsync(user, GlobalConstants.BasicUserRoleName);
 
                         var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -8,6 +8,7 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using System.Text;
     public class ConfirmEmailChangeModel : PageModel
     {
@@ -38,26 +39,26 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account
             var user = await this.userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{userId}'.");
+                return NotFound(IdentityErrorMessagesConstants.UserNullErrorMessage);
             }
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await this.userManager.ChangeEmailAsync(user, email, code);
             if (!result.Succeeded)
             {
-                this.toastNotification.Error("Error changing email.");
+                this.toastNotification.Error(IdentityErrorMessagesConstants.ChangeEmailErrorMessage);
                 return Page();
             }
 
             var setUserNameResult = await this.userManager.SetUserNameAsync(user, email);
             if (!setUserNameResult.Succeeded)
             {
-                this.toastNotification.Error("Error changing email.");
+                this.toastNotification.Error(IdentityErrorMessagesConstants.ChangeEmailErrorMessage);
                 return Page();
             }
 
             await this.signInManager.RefreshSignInAsync(user);
-            this.toastNotification.Success("Thank you for confirming your email change.");
+            this.toastNotification.Success(IdentityMessageConstants.SuccessfullyConfirmEmailMessage);
             return Page();
         }
     }

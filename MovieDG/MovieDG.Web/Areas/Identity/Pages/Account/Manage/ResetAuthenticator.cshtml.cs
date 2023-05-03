@@ -5,6 +5,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
+
     public class ResetAuthenticatorModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -32,7 +34,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{user.Id}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             return this.Page();
@@ -43,15 +45,15 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID 'user.Id'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             await this.userManager.SetTwoFactorEnabledAsync(user, false);
             await this.userManager.ResetAuthenticatorKeyAsync(user);
-            this.logger.LogInformation("User with ID '{UserId}' has reset their authentication app key.", user.Id);
+            this.logger.LogInformation(String.Format(IdentityMessageConstants.SuccessfullyResetAuthAppKeyLogMessage, user.Id));
 
             await this.signInManager.RefreshSignInAsync(user);
-            this.toastNotification.Success("Your authenticator app key has been reset, you will need to configure your authenticator app using the new key.");
+            this.toastNotification.Success(IdentityMessageConstants.SuccessfullyResetAuthAppKeyMessage);
 
             return this.RedirectToPage("./EnableAuthenticator");
         }

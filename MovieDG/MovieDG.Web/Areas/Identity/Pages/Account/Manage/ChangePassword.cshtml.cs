@@ -7,6 +7,7 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using System.ComponentModel.DataAnnotations;
     using System.Threading.Tasks;
     public class ChangePasswordModel : PageModel
@@ -39,23 +40,17 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
             private const int MaxLengthNewPassword = 100;
             private const int MinLengthNewPassword = 6;
 
-            private const string NewPasswordErrorMessageMaxAndMinLength = "The {0} must be at least {2} and at max {1} characters long.";
-            private const string NewPasswordConfirmationError = "The new password and confirmation password do not match.";
-
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
             public string OldPassword { get; set; }
 
             [Required]
-            [StringLength(MaxLengthNewPassword, ErrorMessage = NewPasswordErrorMessageMaxAndMinLength, MinimumLength = MinLengthNewPassword)]
+            [StringLength(MaxLengthNewPassword, ErrorMessage = IdentityErrorMessagesConstants.PasswordErrorMessage, MinimumLength = MinLengthNewPassword)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = NewPasswordConfirmationError)]
+            [Compare(nameof(NewPassword), ErrorMessage = IdentityErrorMessagesConstants.NewPasswordConfirmationError)]
             public string ConfirmPassword { get; set; }
         }
 
@@ -64,7 +59,7 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
             var user = await this.userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{this.userManager.GetUserId(User)}'.");
+                return NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             var hasPassword = await this.userManager.HasPasswordAsync(user);
@@ -86,12 +81,12 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
             var user = await this.userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{this.userManager.GetUserId(User)}'.");
+                return NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             if (Input.OldPassword == Input.NewPassword)
             {
-                ModelState.AddModelError(string.Empty, "The new password cannot be the same as the old!");
+                ModelState.AddModelError(string.Empty, IdentityErrorMessagesConstants.NewPasswordErrorMessage);
 
                 return Page();
             }
@@ -107,8 +102,8 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account.Manage
             }
 
             await this.signInManager.RefreshSignInAsync(user);
-            this.logger.LogInformation("User changed their password successfully.");
-            this.toastNotification.Success("Your password has been changed.");
+            this.logger.LogInformation(IdentityMessageConstants.SuccessfullyUserChangePasswordLogMessage);
+            this.toastNotification.Success(IdentityMessageConstants.SuccessfullyUserChangePasswordMessage);
 
             return RedirectToPage();
         }

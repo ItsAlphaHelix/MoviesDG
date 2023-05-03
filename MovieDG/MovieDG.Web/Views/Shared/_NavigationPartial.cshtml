@@ -8,40 +8,8 @@
     var genres = await GenresService.GetAllGenresAsync();
     var countries = await CountriesService.GetAllCountriesAsync();
     var years = await MovieService.GetAllYearsAsync();
-
-    var list = new List<string>()
-    {
-        "Log in",
-        "Register",
-        "Forgot your password?",
-        "Resend email",
-        "Profile",
-        "Manage Email",
-        "Change password",
-        "Two-factor authentication (2FA)",
-        "Personal Data",
-        "Configure authenticator app",
-        "Reset authenticator key",
-        "Two-factor authentication",
-        "Recovery code verification",
-        "Locked out",
-        "Disable two-factor authentication (2FA)",
-        "Resend email confirmation?",
-        "Administration",
-        "Create Movie",
-        "All Submisions",
-        "Details",
-        "Reply Message",
-        "Delete Personal Data",
-        "No Results",
-        "Access denied",
-        "Confirm email change",
-        "Reset password"
-    };
 }
 
-@if (!list.Contains(this.ViewData["Title"]))
-{
     <div id="sticky-header" class="menu-area transparent-header">
         <div class="container custom-container">
             <div class="row">
@@ -166,4 +134,3 @@
             </div>
         </div>
     </div>
-}

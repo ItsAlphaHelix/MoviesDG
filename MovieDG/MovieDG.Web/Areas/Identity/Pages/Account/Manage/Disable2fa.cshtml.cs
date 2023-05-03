@@ -5,6 +5,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
+
     public class Disable2faModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -29,12 +31,12 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             if (!await this.userManager.GetTwoFactorEnabledAsync(user))
             {
-                throw new InvalidOperationException($"Cannot disable 2FA for user with ID '{this.userManager.GetUserId(this.User)}' as it's not currently enabled.");
+                throw new InvalidOperationException(String.Format(IdentityErrorMessagesConstants.InvalidDisable2FAErrorMessage, user.Id));
             }
 
             return this.Page();
@@ -45,17 +47,17 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             var disable2faResult = await this.userManager.SetTwoFactorEnabledAsync(user, false);
             if (!disable2faResult.Succeeded)
             {
-                throw new InvalidOperationException($"Unexpected error occurred disabling 2FA for user with ID '{this.userManager.GetUserId(this.User)}'.");
+                throw new InvalidOperationException(String.Format(IdentityErrorMessagesConstants.Unexpected2FAErrorMessage, user.Id));
             }
 
-            this.logger.LogInformation("User with ID '{UserId}' has disabled 2fa.", this.userManager.GetUserId(this.User));
-            this.toastNotification.Success("2fa has been disabled. You can reenable 2fa when you setup an authenticator app");
+            this.logger.LogInformation(String.Format(IdentityMessageConstants.SuccessfullyDisabled2FALogMessage, user.Id));
+            this.toastNotification.Success(IdentityMessageConstants.SuccessfullyDisabled2FAMessage);
             return this.RedirectToPage("./TwoFactorAuthentication");
         }
     }

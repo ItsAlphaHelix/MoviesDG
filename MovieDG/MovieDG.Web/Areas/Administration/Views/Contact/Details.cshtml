@@ -29,8 +29,8 @@
                 <input asp-for="@Model.Subject" type="text" disabled>
                 <textarea asp-for="@Model.Message" name="message" disabled></textarea>
                 <form method="post" asp-action="Delete" asp-route-id="@Model.Id">
-                    <button class="btn delete">Delete Question></button>
-                    <a asp-controller="Contact" asp-action="Reply" asp-route-id="@Model.Id" class="btn">Reply</a>
+                    <button class="btn delete">Delete Question</button>
+                    <a asp-controller="Contact" asp-action="Reply" asp-route-id="@Model.Id" class="btn" style="margin-left: 8px">Reply</a>
                 </form>
             </div>
         </div>

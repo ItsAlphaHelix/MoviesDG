@@ -9,6 +9,8 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
+
     [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {
@@ -35,7 +37,7 @@
             var user = await this.userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{userId}'.");
+                return NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, userId));
             }
 
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
@@ -43,12 +45,12 @@
 
             if (result.Succeeded == true)
             {
-                this.toastNotification.Success("Thank you for confirming your email.");
+                this.toastNotification.Success(IdentityMessageConstants.SuccessfullyConfirmEmailMessage);
 
                 return Page();
             }
             
-            this.toastNotification.Error("Error confirming your email.");
+            this.toastNotification.Error(IdentityErrorMessagesConstants.ConfirmEmailErrorMessage);
 
             return Page();
         }

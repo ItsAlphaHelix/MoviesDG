@@ -12,6 +12,7 @@
     using Microsoft.AspNetCore.WebUtilities;
     using MovieDG.Common;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using MoviesDG.Core.Messaging;
 
     public class EmailModel : PageModel
@@ -46,7 +47,6 @@
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
             public string NewEmail { get; set; }
         }
 
@@ -68,7 +68,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             await this.LoadAsync(user);
@@ -80,7 +80,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             if (!this.ModelState.IsValid)
@@ -109,12 +109,12 @@
                     "Confirm your email",
                     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                this.toastNotification.Success("Confirmation link to change email sent. Please check your email.");
+                this.toastNotification.Success(IdentityMessageConstants.ConfirmLinkToChangeEmailSentMessage);
 
                 return this.RedirectToPage();
             }
 
-            this.toastNotification.Error("Your email is unchanged.");
+            this.toastNotification.Error(IdentityErrorMessagesConstants.EmailUnchangeErrorMessage);
             return this.RedirectToPage();
         }
 
@@ -123,7 +123,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             if (!this.ModelState.IsValid)
@@ -148,7 +148,7 @@
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            this.toastNotification.Success("Verification email sent. Please check your email.");
+            this.toastNotification.Success(IdentityMessageConstants.SuccessfullyVerificationEmailSentMessage);
             return this.RedirectToPage();
         }
     }

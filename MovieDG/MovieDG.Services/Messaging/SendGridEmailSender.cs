@@ -8,6 +8,7 @@
     using SendGrid;
     using SendGrid.Helpers.Mail;
 
+    using static MovieDG.Core.ErrorMessages.ErrorMessageConstants;
     public class SendGridEmailSender : IEmailSender
     {
         private readonly SendGridClient client;
@@ -21,7 +22,7 @@
         {
             if (string.IsNullOrWhiteSpace(subject) && string.IsNullOrWhiteSpace(htmlContent))
             {
-                throw new ArgumentException("Subject and message should be provided.");
+                throw new ArgumentException(EmailSubjectErrorMessage);
             }
 
             var fromAddress = new EmailAddress(from, fromName);

@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.Extensions.Logging;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Text;
@@ -48,9 +49,8 @@
         public class InputModel
         {
             [Required]
-            [StringLength(7, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(7, ErrorMessage = IdentityErrorMessagesConstants.CodeLengthErrorMessage, MinimumLength = 6)]
             [DataType(DataType.Text)]
-            [Display(Name = "Verification Code")]
             public string Code { get; set; }
         }
 
@@ -59,7 +59,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             await this.LoadSharedKeyAndQrCodeUriAsync(user);
@@ -72,7 +72,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             if (!this.ModelState.IsValid)
@@ -89,16 +89,16 @@
 
             if (!is2faTokenValid)
             {
-                this.ModelState.AddModelError("Input.Code", "Verification code is invalid.");
+                this.ModelState.AddModelError("Input.Code", IdentityErrorMessagesConstants.InvalidVerificationCodeErrorMessage);
                 await this.LoadSharedKeyAndQrCodeUriAsync(user);
                 return this.Page();
             }
 
             await this.userManager.SetTwoFactorEnabledAsync(user, true);
             var userId = await this.userManager.GetUserIdAsync(user);
-            this.logger.LogInformation("User with ID '{UserId}' has enabled 2FA with an authenticator app.", userId);
+            this.logger.LogInformation(String.Format(IdentityMessageConstants.Enable2FAWithAppLogMessage, userId));
 
-            this.toastNotification.Success("Your authenticator app has been verified.");
+            this.toastNotification.Success(IdentityMessageConstants.SuccessfullyVerifiedAuthAppMessage);
 
             if (await this.userManager.CountRecoveryCodesAsync(user) == 0)
             {
@@ -149,7 +149,7 @@
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                this.urlEncoder.Encode("MovieDG.Web"),
+                this.urlEncoder.Encode(IdentityMessageConstants.WebAppName),
                 this.urlEncoder.Encode(email),
                 unformattedKey);
         }

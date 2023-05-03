@@ -1,7 +1,6 @@
 ﻿namespace MovieDG.Core.Services
 {
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Caching.Memory;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.ViewModels.Actors;
     using MovieDG.Core.ViewModels.Countries;
@@ -10,6 +9,7 @@
     using MovieDG.Data.Data.Models;
     using MoviesDG.Data.Models;
     using MoviesDG.Data.Repositories;
+    using static MovieDG.Core.ErrorMessages.ErrorMessageConstants;
 
     public class MovieService : IMovieService
     {
@@ -77,7 +77,7 @@
 
             if (movie == null)
             {
-                throw new ArgumentException($"The movie can not be null");
+                throw new ArgumentException(MovieNullErrorMessage);
             }
 
             return movie;
@@ -168,7 +168,7 @@
 
             if (homepageMovie == null)
             {
-                throw new ArgumentException($"The movie can not be null");
+                throw new ArgumentException(MovieNullErrorMessage);
             }
 
             return homepageMovie;
@@ -257,7 +257,7 @@
 
             if (user == null)
             {
-                throw new ArgumentException("Invalid User ID");
+                throw new ArgumentException(InvalidMovieUserErrorMessage);
             }
 
             var movie = await moviesRepository
@@ -265,7 +265,7 @@
                         .FirstOrDefaultAsync(u => u.Id == movieId);
             if (movie == null)
             {
-                throw new ArgumentException("Invalid Movie ID");
+                throw new ArgumentException(InvalidMovieUserErrorMessage);
             }
 
             if (!user.UsersMovies.Any(m => m.MovieId == movieId))
@@ -298,7 +298,7 @@
 
             if (user == null)
             {
-                throw new ArgumentException("Invalid User ID");
+                throw new ArgumentException(InvalidMovieUserErrorMessage);
             }
 
             var userMovies = user.UsersMovies
@@ -327,7 +327,7 @@
 
             if (user == null)
             {
-                throw new ArgumentException("Invalid User ID");
+                throw new ArgumentException(InvalidMovieUserErrorMessage);
             }
 
             var movie = user.UsersMovies.FirstOrDefault(m => m.MovieId == movieId);
@@ -350,7 +350,7 @@
 
             if (user == null)
             {
-                throw new ArgumentException("Invalid User ID");
+                throw new ArgumentException(InvalidMovieUserErrorMessage);
             }
 
             foreach (var userMovie in user.UsersMovies)

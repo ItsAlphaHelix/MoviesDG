@@ -4,9 +4,7 @@
     {
         public const int MaxActorName = 50;
 
-        public const int MaxCountryName = 30;
-
-        public const int MinCountryName = 5;
+        public const int TrailerMaxLength = 250;
 
         public const int MaxGenreType = 30;
 
@@ -18,26 +16,22 @@
 
         public const int IMDBLinkMaxLength = 150;
 
-        public const int MaxContactName = 30;
+        public const int MaxCountryName = 30;
+        public const int MinCountryName = 5;
 
+        public const int MaxContactName = 30;
         public const int MinContactName = 4;
 
         public const int MaxAdminName = 30;
-
         public const int MinAdminName = 4;
 
         public const int MaxSubjectLength = 40;
-
         public const int MinSubjectLength = 5;
 
         public const int MaxMessageLength = 700;
-
         public const int MinMessageLength = 7;
 
-        public const int TrailerMaxLength = 250;
-
         public const int MaxUserName = 40;
-
         public const int MinUserName = 3;
     }
 }

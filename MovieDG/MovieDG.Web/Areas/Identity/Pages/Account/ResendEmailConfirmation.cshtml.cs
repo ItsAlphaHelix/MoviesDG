@@ -5,6 +5,7 @@
     using System.Text;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@
     using Microsoft.AspNetCore.WebUtilities;
     using MovieDG.Common;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using MoviesDG.Core.Messaging;
 
     [AllowAnonymous]
@@ -19,11 +21,16 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IEmailSender emailSender;
+        private readonly INotyfService toastNotification;
 
-        public ResendEmailConfirmationModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public ResendEmailConfirmationModel(
+            UserManager<ApplicationUser> userManager,
+            IEmailSender emailSender,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
             this.emailSender = emailSender;
+            this.toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -46,7 +53,7 @@
             var user = await this.userManager.FindByEmailAsync(this.Input.Email);
             if (user == null)
             {
-                this.ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+                this.toastNotification.Success(IdentityMessageConstants.VerificationEmailSuccessfullySentMessage);
                 return this.Page();
             }
 
@@ -65,7 +72,7 @@
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            this.ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+            this.toastNotification.Success(IdentityMessageConstants.VerificationEmailSuccessfullySentMessage);
             return this.Page();
         }
     }

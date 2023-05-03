@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
 
     public class LogoutModel : PageModel
     {
@@ -26,7 +27,7 @@
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await this.signInManager.SignOutAsync();
-            this.logger.LogInformation("User logged out.");
+            this.logger.LogInformation(IdentityMessageConstants.UserLogoutMessage);
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

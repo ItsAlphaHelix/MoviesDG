@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using MovieDG.Data.Data.Models;
+    using MovieDG.Web.Areas.Identity.IdentityConstants;
     using MoviesDG.Data.Repositories;
     using System.ComponentModel.DataAnnotations;
     public class DeletePersonalDataModel : PageModel
@@ -40,7 +41,7 @@
             var user = await this.userManager.GetUserAsync(User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             this.RequirePassword = await this.userManager.HasPasswordAsync(user);
@@ -52,7 +53,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             if (user == null)
             {
-                return this.NotFound($"Unable to load user with ID '{this.userManager.GetUserId(this.User)}'.");
+                return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
             var userMovies = this.userMoviesRepository.All().Where(x => x.UserId == user.Id);
@@ -71,7 +72,7 @@
             {
                 if (!await this.userManager.CheckPasswordAsync(user, this.Input.Password))
                 {
-                    this.ModelState.AddModelError(string.Empty, "Incorrect password.");
+                    this.ModelState.AddModelError(string.Empty, IdentityErrorMessagesConstants.IncorrectPasswordErrorMessage);
                     return Page();
                 }
             }
@@ -80,12 +81,12 @@
             var userId = await this.userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
-                throw new InvalidOperationException($"Unexpected error occurred deleting user.");
+                throw new InvalidOperationException(IdentityErrorMessagesConstants.DeleteUserErrorMessage);
             }
 
             await this.signInManager.SignOutAsync();
 
-            this.logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
+            this.logger.LogInformation(String.Format(IdentityMessageConstants.DeleteUserLogMessage, userId));
 
             return this.Redirect("~/");
         }

@@ -1,20 +1,18 @@
 ﻿namespace MovieDG.Web.Hubs
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.SignalR;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using MovieDG.Core.ViewModels.Messages;
     using MovieDG.Data.Data.Models;
     using MoviesDG.Data.Repositories;
     public class ChatHub : Hub
     {
         private readonly IRepository<Chat> messageRepository;
-
-        public ChatHub(IRepository<Chat> messageRepository)
+        private static int connectedClientsCount = 0;
+        public ChatHub(
+            IRepository<Chat> messageRepository)
         {
             this.messageRepository = messageRepository;
         }
-
         public async Task SendMessage(string text)
         {
             string name = Context?.User?.Identity?.Name ?? "";
@@ -41,6 +39,23 @@
 
             //message send to all users
             await Clients.All.SendAsync("ReceiveMessage", messageModel);
+        }
+
+        public override async Task OnConnectedAsync()
+        {
+            connectedClientsCount++;
+            await base.OnConnectedAsync();
+        }
+
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            connectedClientsCount--;
+            await base.OnDisconnectedAsync(exception);
+        }
+
+        public static bool AreClientsDisconnected()
+        {
+            return connectedClientsCount == 0;
         }
     }
 }

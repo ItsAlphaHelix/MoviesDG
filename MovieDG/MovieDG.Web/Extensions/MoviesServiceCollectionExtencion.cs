@@ -3,6 +3,7 @@
     using AspNetCoreHero.ToastNotification;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.Services;
+    using MovieDG.Web.Hubs.ChatHubServices;
     using MoviesDG.Core.DataApi;
     using MoviesDG.Core.Messaging;
     using MoviesDG.Data.Repositories;
@@ -23,6 +24,7 @@
             services.AddScoped<IEmailSender>(x => new SendGridEmailSender(configuration.GetSection("SendGrid:ApiKey").Value));
 
             services.AddSignalR();
+            services.AddHostedService<ChatResetService>();
 
             return services;
         }

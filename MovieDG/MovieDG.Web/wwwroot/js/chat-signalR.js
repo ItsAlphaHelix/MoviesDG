@@ -2,6 +2,11 @@
 //Disable send button until connection is established
 $("#sendMessage").prop('disabled', true);
 
+connection.on("ChatReset", function () {
+    let chatBoxMessage = document.querySelector('.chatbox__messages')
+    chatBoxMessage.innerHTML = '';
+});
+
 connection.on("ReceiveMessage", function (message) {
 
     let container = document.querySelector('.chatbox');

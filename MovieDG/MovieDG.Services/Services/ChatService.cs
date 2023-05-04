@@ -1,5 +1,4 @@
-﻿
-namespace MovieDG.Core.Services
+﻿namespace MovieDG.Core.Services
 {
     using Microsoft.EntityFrameworkCore;
     using MovieDG.Core.Contracts;
@@ -17,10 +16,9 @@ namespace MovieDG.Core.Services
             this.messageRepository = messageRepository;
             this.userRepository = userRepository;
         }
-
         public async Task<IEnumerable<MessageViewModel>> GetAllMessagesAsync()
         {
-            var messages = await this.messageRepository.AllAsNoTracking()
+            var messages = await this.messageRepository.All()
                 .Select(x => new MessageViewModel()
             {
                 FromName = x.Name,

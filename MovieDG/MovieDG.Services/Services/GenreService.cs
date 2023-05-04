@@ -9,7 +9,6 @@
     public class GenreService : IGenreService
     {
         private readonly IRepository<Genre> genresRepository;
-
         public GenreService(IRepository<Genre> genresRepository)
         {
             this.genresRepository = genresRepository;

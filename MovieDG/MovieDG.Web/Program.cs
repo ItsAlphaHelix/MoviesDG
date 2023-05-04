@@ -1,5 +1,6 @@
 using AspNetCoreHero.ToastNotification.Extensions;
 using Azure.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieDG.Data.Data.Models;
@@ -9,6 +10,7 @@ using MovieDG.Web.Providers;
 using MoviesDG.Data;
 using MoviesDG.Web.Extensions;
 using NToastNotify;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,6 +67,13 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en-US"),
+    SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("bg-BG") },
+    SupportedUICultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("bg-BG") }
+});
 
 app.UseEndpoints(endpoint =>
 {

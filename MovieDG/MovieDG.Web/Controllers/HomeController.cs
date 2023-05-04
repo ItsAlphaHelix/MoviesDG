@@ -7,14 +7,13 @@
     using System.Diagnostics;
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
         private readonly IMovieService moviesService;
         public HomeController(
             ILogger<HomeController> logger,
-            IMovieService moviesService
-            )
+            IMovieService moviesService)
         {
-            _logger = logger;
+            this.logger = logger;
             this.moviesService = moviesService;
         }
 

@@ -27,7 +27,7 @@
 
             var movies = await this.searchService.SearchMovieByTitleAsync("Jhon Wick1");
             var movies2 = await this.searchService.SearchMovieByTitleAsync("Jhon");
-            
+
             Assert.That(movies.Count(), Is.EqualTo(1));
             Assert.That(movies2.Count(), Is.EqualTo(10));
         }

@@ -9,6 +9,7 @@
     using MovieDG.Data.Data.Models;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using System.Security.Cryptography.X509Certificates;
+    using SendGrid.Helpers.Mail;
 
     public class CollectService : ICollectService
     {
@@ -158,9 +159,12 @@
 
                     await this.moviesRepository.AddAsync(movie);
                     await this.moviesRepository.SaveChangesAsync();
+
                     addedMovies++;
                 }
             }
+
+
 
             return addedMovies;
         }

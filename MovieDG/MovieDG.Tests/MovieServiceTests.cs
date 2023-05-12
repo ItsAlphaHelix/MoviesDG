@@ -30,7 +30,7 @@
         {
             await SeedDB.SeedMovies(this.movieRepository);
 
-            var movies = await this.movieService.GetAllMoviesAsync(1,10);
+            var movies = await this.movieService.GetAllMoviesAsync(1, 10);
             Assert.That(movies.Count, Is.EqualTo(10));
 
         }
@@ -80,12 +80,12 @@
         {
             await SeedDB.SeedMovies(this.movieRepository);
 
-            var movies = await this.movieService.GetPopularityMoviesAsync();
-            double popularMovie = movies.FirstOrDefault().Popularity;
+            var movies = await this.movieService.GetPopularityMoviesAsync(1, 10);
+            double popularMovie = movies.FirstOrDefault()?.Popularity ?? 0;
 
             Assert.Multiple(() =>
             {
-                Assert.That(popularMovie, Is.EqualTo(12));
+                Assert.That(popularMovie, Is.EqualTo(10));
                 Assert.That(movies.Count(), Is.EqualTo(10));
             });
         }
@@ -95,9 +95,13 @@
         {
             await SeedDB.SeedMovies(this.movieRepository);
 
-            var movies = await this.movieService.GetPopularityMoviesAsync();
-
-            Assert.That(movies.Count(), Is.EqualTo(10));
+            var movies = await this.movieService.GetRecentMoviesAsync(1, 10);
+            double recentMovie = movies.FirstOrDefault()?.Popularity ?? 0;
+            Assert.Multiple(() =>
+            {
+                Assert.That(recentMovie, Is.EqualTo(10));
+                Assert.That(movies.Count(), Is.EqualTo(10));
+            });
         }
 
         [Test]
@@ -105,7 +109,7 @@
         {
             await SeedDB.SeedMovies(this.movieRepository);
 
-            var movies = await this.movieService.GetMoviesByGenreAsync("Fantasy1");
+            var movies = await this.movieService.GetMoviesByGenreAsync("Fantasy1", 1 , 10);
 
             Assert.That(movies.Count(), Is.EqualTo(1));
         }

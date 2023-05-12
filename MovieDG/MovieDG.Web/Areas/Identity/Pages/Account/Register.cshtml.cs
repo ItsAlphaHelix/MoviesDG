@@ -56,6 +56,10 @@
             public string City { get; set; }
 
             [Required]
+            [Phone]
+            public string PhoneNmber { get; set; }
+
+            [Required]
             [EmailAddress]
             public string Email { get; set; }
 
@@ -93,7 +97,7 @@
                 }
                 else
                 {
-                    var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email, Country = this.Input.Country, City = this.Input.City };
+                    var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email, Country = this.Input.Country, City = this.Input.City, PhoneNumber = this.Input.PhoneNmber };
                     var result = await this.userManager.CreateAsync(user, this.Input.Password);
 
                     if (result.Succeeded)

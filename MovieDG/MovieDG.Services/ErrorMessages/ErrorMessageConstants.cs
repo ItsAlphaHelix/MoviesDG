@@ -35,5 +35,21 @@
         public const string NotSupportedException = "The content type is not supported.";
 
         public const string JsonExceptionErrorMessage = "Invalid JSON.";
+
+        //User Message Exceptions
+
+        public const string UserNameErrorMessage = "Username must start with a capital letter.";
+
+        public const string UserNotFound = "User not found.";
+
+        public const string AlreadyAssignedRoleToUser = "The user is already assigned to the {0} role.";
+
+        //Role Message Exceptions
+
+        public const string RoleDoesNotExist = "The role doesn't exists.";
+
+        public const string MemberRoleCanNotBeNull = "The member role can not be null.";
+
+        public const string AdminRoleCanNotBeNull = "The admin role can not be null.";
     }
 }

@@ -7,7 +7,7 @@
     using MovieDG.Core.Contracts;
     using MovieDG.Core.ViewModels.Contact;
     using MovieDG.Data.Data.Models;
-    using static MovieDG.Web.Areas.Administration.AdminConstants.AdminMessageConstants;
+    using static MovieDG.Web.Areas.Administration.AdminMessageConstants.AdminMessageConstants;
 
     public class ContactController : AdministrationController
     {

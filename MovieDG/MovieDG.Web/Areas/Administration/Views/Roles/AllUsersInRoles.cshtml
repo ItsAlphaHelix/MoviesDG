@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MovieDG.Core.ViewModels.Users
+@using MovieDG.Data.Data.Models
+@using MovieDG.Common
+@model UserWithRolesViewModel
+
+@{
+    this.ViewData["Title"] = "All Users In Roles";
+}
+<link rel="stylesheet" href="/css/admin.css" />
+
+<div class="admin-container">
+    <partial name="../Shared/_AdminNav.cshtml" />
+    @if (!Model.Admins.Any() && !Model.Members.Any())
+    {
+        <h2 style="text-align: center" class="title">No Users In Roles Yet!</h2>
+    }
+    <br />
+    <br />
+    <br />
+
+    @if (Model.Admins.Any())
+    {
+        <h2 style="text-align: center; margin-bottom: 25px" class="title">All Users In Role Admin</h2>
+
+        @foreach (var user in Model.Admins)
+        {
+            <div class="col-xl-8 col-lg-7 ml-auto mr-auto">
+                <div class="contact-form-wrap">
+                    <div class="contact-form">
+                        <div class="row">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <input asp-for="@user.UserName" type="text" disabled>
+                                <form asp-action="RemoveUserFromRole">
+                                    <input type="hidden" name="username" value="@user.UserName" />
+                                    <input type="hidden" name="role" value="@GlobalConstants.AdminRoleName" />
+                                    <button class="btn">Remove From Role</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    @if (Model.Members.Any())
+    {
+        <h2 style="text-align: center; margin-bottom: 25px; margin-top: 100px">All Users In Role Member</h2>
+
+        @foreach (var user in Model.Members)
+        {
+            <div class="col-xl-8 col-lg-7 ml-auto mr-auto">
+                <div class="contact-form-wrap">
+                    <div class="contact-form">
+                        <div class="row">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <input asp-for="@user.UserName" type="text" disabled>
+                                <form asp-action="RemoveUserFromRole">
+                                    <input type="hidden" name="username" value="@user.UserName" />
+                                    <input type="hidden" name="role" value="@GlobalConstants.MemberRoleName" />
+                                    <button class="btn">Remove From Role</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

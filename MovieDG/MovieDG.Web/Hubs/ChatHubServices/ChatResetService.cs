@@ -20,7 +20,7 @@
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(TimeSpan.FromHours(24), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(24), stoppingToken);
 
                 if (ChatHub.AreClientsDisconnected())
                 {

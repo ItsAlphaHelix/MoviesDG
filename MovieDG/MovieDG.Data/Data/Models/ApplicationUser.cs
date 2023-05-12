@@ -23,6 +23,10 @@ namespace MovieDG.Data.Data.Models
         [Required]
         public string City { get; set; }
 
+        [Required]
+        [Phone]
+        public string PhoneNumber { get; set; }
+
         public ICollection<UserMovie> UsersMovies { get; set; }
 
         public ICollection<Chat> Messages { get; set; }

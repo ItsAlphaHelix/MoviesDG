@@ -21,6 +21,7 @@
             services.AddScoped<ISearchService, SearchService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IEmailSender>(x => new SendGridEmailSender(configuration.GetSection("SendGrid:ApiKey").Value));
 
             services.AddSignalR();

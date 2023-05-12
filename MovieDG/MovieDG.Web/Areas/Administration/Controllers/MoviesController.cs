@@ -7,7 +7,7 @@
     using MoviesDG.Data.Models;
     using MoviesDG.Data.Repositories;
 
-    using static MovieDG.Web.Areas.Administration.AdminConstants.AdminMessageConstants;
+    using static MovieDG.Web.Areas.Administration.AdminMessageConstants.AdminMessageConstants;
     public class MoviesController : AdministrationController
     {
         private readonly ICollectService collectService;

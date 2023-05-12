@@ -1,0 +1,37 @@
+﻿@using MovieDG.Core.ViewModels.Users;
+
+@model UserViewModel
+
+@{
+    this.ViewData["Title"] = "Add User To Role";
+}
+
+<link rel="stylesheet" href="/css/admin.css" />
+
+<div class="admin-container">
+    <partial name="../Shared/_AdminNav.cshtml" />
+
+    <h2 style="text-align: center; margin-bottom: 20px">@this.ViewData["Title"]</h2>
+    <form asp-action="Add" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group ">
+            <div class="col-md-3 ml-auto mr-auto">
+                <input asp-for="UserName" class="form-control" placeholder="Usename" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3 ml-auto mr-auto">
+                <select class="form-control" id="Role" asp-for="Role">
+                    <option value="Admin">Admin</option>
+                    <option value="Member">Member</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3 ml-auto mr-auto">
+                <button class="btn" type="submit" style="margin-top: 8px">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

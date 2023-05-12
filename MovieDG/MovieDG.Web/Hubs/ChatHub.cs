@@ -23,7 +23,7 @@
                 Text = text
             };
 
-            if (string.IsNullOrWhiteSpace(message.Text) || message.Text.Contains('<'))
+            if (string.IsNullOrWhiteSpace(message.Text))
             {
                 throw new ArgumentException("Invalid message!");
             }

@@ -27,11 +27,6 @@
             services.AddSignalR();
             services.AddHostedService<ChatResetService>();
 
-            return services;
-        }
-
-        public static IServiceCollection AddNotyFService(this IServiceCollection services)
-        {
             services.AddNotyf(configuration =>
             {
                 configuration.DurationInSeconds = 5;

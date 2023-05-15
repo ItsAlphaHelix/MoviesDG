@@ -1,16 +1,12 @@
 using AspNetCoreHero.ToastNotification.Extensions;
-using Azure.Identity;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MovieDG.Data.Data.Models;
-using MovieDG.Web.Hubs;
 using MovieDG.Web.Middlewares;
 using MovieDG.Web.Providers;
 using MoviesDG.Data;
 using MoviesDG.Web.Extensions;
 using NToastNotify;
-using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,8 +40,6 @@ builder.Services.AddControllersWithViews(
 ).AddRazorRuntimeCompilation();
 
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddNotyFService();
-
 
 var app = builder.Build();
 
@@ -68,25 +62,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseRequestLocalization(new RequestLocalizationOptions
+app.UseEndpoints(endpoints =>
 {
-    DefaultRequestCulture = new RequestCulture("en-US"),
-    SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("bg-BG") },
-    SupportedUICultures = new List<CultureInfo> { new CultureInfo("en-US"), new CultureInfo("bg-BG") }
-});
-
-app.UseEndpoints(endpoint =>
-{
-    endpoint.MapHub<ChatHub>("/chatHub");
-
-    endpoint.MapControllerRoute(
-        name: "areas",
-        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
-
-    endpoint.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoints.UseCustomEndpoints();
 });
 
 app.UseNotyf();

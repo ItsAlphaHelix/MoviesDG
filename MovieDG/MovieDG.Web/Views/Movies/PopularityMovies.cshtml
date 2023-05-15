@@ -59,6 +59,7 @@
                         }
 
                         window.history.pushState(null, null, filterType);
+                        $.getScript('/js/main.js');
                     },
                     error: function () {
                         alert('An error occurred.');

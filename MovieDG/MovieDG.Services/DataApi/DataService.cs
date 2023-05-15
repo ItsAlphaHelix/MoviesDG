@@ -1,6 +1,5 @@
 ﻿namespace MoviesDG.Core.DataApi
 {
-    using Azure.Identity;
     using Microsoft.Extensions.Configuration;
     using MoviesDG.Core.DataApi.Models;
     using System.Net.Http.Json;

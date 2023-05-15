@@ -100,7 +100,6 @@
                 throw new ArgumentException(ErrorMessageConstants.RoleDoesNotExist);
             }
 
-
             await userManager.RemoveFromRoleAsync(user, role);
         }
     }

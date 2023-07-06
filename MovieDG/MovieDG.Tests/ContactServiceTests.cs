@@ -20,7 +20,7 @@
         [SetUp]
         public void SetUp()
         {
-            SetupInMemoryDataBase();
+            contactRepository =  InMemoryDatabaseSetup.SetupWithoutUserRepo<Contact>();
             contactService = new ContactService(contactRepository, null);
         }
 
@@ -132,20 +132,6 @@
             Assert.That(result.Result.Count(), Is.EqualTo(0));
         }
 
-        private void SetupInMemoryDataBase()
-        {
-            var contextOptions = new DbContextOptionsBuilder<MovieDGDbContext>()
-                              .UseInMemoryDatabase("MoviesDG")
-                              .Options;
-
-            dbContext = new MovieDGDbContext(contextOptions);
-
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
-
-            contactRepository = new EfRepository<Contact>(dbContext);
-        }
-
         private async Task SeedData()
         {
             var contact  = new Contact
@@ -162,9 +148,9 @@
         }
 
         [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
-            dbContext.Dispose();
+            InMemoryDatabaseSetup.InMemoryDatabaseDispose();
         }
     }
 }

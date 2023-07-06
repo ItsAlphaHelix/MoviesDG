@@ -11,7 +11,7 @@
         public static async Task SeedMovies(EfRepository<Movie> movieRepository)
         {
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 30; i++)
             {
                 List<MovieGenre> genres = new List<MovieGenre>();
 
@@ -46,16 +46,16 @@
 
                 Movie movie = new Movie()
                 {
-                    Id = i + 1,
+                    Id = 46 + i,
                     Banner = "",
                     IMDBLink = "",
                     Overview = "",
                     Poster = "",
-                    Title = "Jhon Wick" + i,
+                    Title = "John Wick" + i,
                     Trailer = "",
                     AverageVotes = i + 2.5,
                     Popularity = i + 3,
-                    ReleaseDate = new DateTime(2022, 12, i + 1),
+                    ReleaseDate = new DateTime(1994 + i, 12, i + 1),
                     MovieGenres = new List<MovieGenre>(genres),
                     MovieCountries = new List<MovieCountry>(countries),
                     MovieActors = new List<MovieActor>(actors)
@@ -74,6 +74,7 @@
                 UserName = "Test",
                 Email = "test@gmail.com",
                 Country = "Testomania",
+                PhoneNumber = "0553322012",
                 City = "Testo"
             };
 

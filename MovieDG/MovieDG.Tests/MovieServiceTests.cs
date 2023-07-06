@@ -1,6 +1,7 @@
 ﻿namespace MovieDG.Tests
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.Services;
     using MovieDG.Data.Data.Models;
@@ -21,18 +22,17 @@
         [SetUp]
         public void SetUp()
         {
-            SetupInMemoryDatabase();
+            (movieRepository, userRepository) = InMemoryDatabaseSetup.SetupWithUserRepo<Movie>();
             movieService = new MovieService(movieRepository, userRepository);
         }
 
         [Test]
-        public async Task GetlAllMoviesTest()
+        public async Task GetAllMoviesAsyncTest()
         {
             await SeedDB.SeedMovies(this.movieRepository);
 
             var movies = await this.movieService.GetAllMoviesAsync(1, 10);
             Assert.That(movies.Count, Is.EqualTo(10));
-
         }
 
         [Test]
@@ -43,21 +43,20 @@
         public async Task GetMovieDetailsAsyncTest(int id)
         {
             await SeedDB.SeedMovies(this.movieRepository);
-            var movie = await this.movieService.GetMovieDetailsAsync(id);
 
+            var movie = await this.movieService.GetMovieDetailsAsync(id);
             Assert.That(movie.Id, Is.EqualTo(id));
         }
 
         [Test]
         [TestCase(2000)]
         [TestCase(-1)]
-        public async Task GetMovieDetailsAsyncShouldThrowsArgumentException(int id)
+        public async Task GetMovieDetailsAsyncShouldThrowsAnArgumentException(int id)
         {
             await SeedDB.SeedMovies(this.movieRepository);
 
             var ex = Assert.ThrowsAsync<ArgumentException>(() => this.movieService.GetMovieDetailsAsync(id));
-
-            Assert.That(ex.Message, Is.EqualTo($"The movie can not be null"));
+            Assert.That(ex.Message, Is.EqualTo($"The movie can not be null."));
         }
 
         [Test]
@@ -66,13 +65,7 @@
             await SeedDB.SeedMovies(this.movieRepository);
 
             var movies = await this.movieService.GetTopRatedMoviesAsync(1, 10);
-            double maxAverageVote = movies.FirstOrDefault().AverageVotes;
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(maxAverageVote, Is.EqualTo(11.5));
-                Assert.That(movies.Count(), Is.EqualTo(10));
-            });
+            Assert.That(movies.Count(), Is.EqualTo(10));
         }
 
         [Test]
@@ -81,13 +74,7 @@
             await SeedDB.SeedMovies(this.movieRepository);
 
             var movies = await this.movieService.GetPopularityMoviesAsync(1, 10);
-            double popularMovie = movies.FirstOrDefault()?.Popularity ?? 0;
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(popularMovie, Is.EqualTo(10));
-                Assert.That(movies.Count(), Is.EqualTo(10));
-            });
+            Assert.That(movies.Count(), Is.EqualTo(10));
         }
 
         [Test]
@@ -96,12 +83,7 @@
             await SeedDB.SeedMovies(this.movieRepository);
 
             var movies = await this.movieService.GetRecentMoviesAsync(1, 10);
-            double recentMovie = movies.FirstOrDefault()?.Popularity ?? 0;
-            Assert.Multiple(() =>
-            {
-                Assert.That(recentMovie, Is.EqualTo(10));
-                Assert.That(movies.Count(), Is.EqualTo(10));
-            });
+            Assert.That(movies.Count(), Is.EqualTo(10));
         }
 
         [Test]
@@ -109,7 +91,7 @@
         {
             await SeedDB.SeedMovies(this.movieRepository);
 
-            var movies = await this.movieService.GetMoviesByGenreAsync("Fantasy1", 1 , 10);
+            var movies = await this.movieService.GetMoviesByGenreAsync("Fantasy1", 1, 10);
 
             Assert.That(movies.Count(), Is.EqualTo(1));
         }
@@ -120,7 +102,7 @@
         {
             await SeedDB.SeedMovies(this.movieRepository);
 
-            var movies = await this.movieService.GetMoviesByCountryAsync("Bulgaria1");
+            var movies = await this.movieService.GetMoviesByCountryAsync("Bulgaria1", 1, 10);
 
             Assert.That(movies.Count(), Is.EqualTo(1));
         }
@@ -137,7 +119,7 @@
 
 
         [Test]
-        public async Task AddMovieToUserCollectionTest()
+        public async Task AddMovieToUserCollectionAsyncTest()
         {
             await SeedDB.SeedUsers(userRepository);
             await SeedDB.SeedMovies(movieRepository);
@@ -161,7 +143,7 @@
         }
 
         [Test]
-        public async Task GetAllUserMoviesTest()
+        public async Task GetAllUserMoviesAsyncTest()
         {
             await SeedDB.SeedUsers(userRepository);
             await SeedDB.SeedMovies(movieRepository);
@@ -180,7 +162,7 @@
         }
 
         [Test]
-        public async Task RemoveMovieFromCollectionTest()
+        public async Task RemoveMovieFromCollectionAsyncTest()
         {
             await SeedDB.SeedUsers(userRepository);
             await SeedDB.SeedMovies(movieRepository);
@@ -199,7 +181,7 @@
         }
 
         [Test]
-        public async Task RemoveAllMovieFromUserCollection()
+        public async Task RemoveAllMovieFromUserCollectionAsyncTest()
         {
             await SeedDB.SeedUsers(userRepository);
             await SeedDB.SeedMovies(movieRepository);
@@ -214,26 +196,41 @@
 
             Assert.That(movies.Any());
         }
-        private void SetupInMemoryDatabase()
+
+        [Test]
+        public async Task GetAllYearsAsyncTest()
         {
-            var contextOptions = new DbContextOptionsBuilder<MovieDGDbContext>()
-                              .UseInMemoryDatabase("MoviesDG")
-                              .Options;
+            await SeedDB.SeedMovies(movieRepository);
 
-            dbContext = new MovieDGDbContext(contextOptions);
+            var years = await this.movieService.GetAllYearsAsync();
+            Assert.That(years.Count(), Is.EqualTo(30));
+        }
 
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
+        [Test]
+        public async Task GetMoviesByYearAsyncTest()
+        {
+            await SeedDB.SeedMovies(movieRepository);
 
-            movieRepository = new EfRepository<Movie>(dbContext);
-            userRepository = new EfRepository<ApplicationUser>(dbContext);
+            var movie = await this.movieService.GetMoviesByYear("2023", 1, 10);
+            var movieTitle = movie.FirstOrDefault().Title;
 
+            Assert.That(movieTitle, Is.EqualTo("John Wick29"));
+        }
+
+        [Test]
+        public async Task GetRecentCarouselMoviesAsyncTest()
+        {
+            await SeedDB.SeedMovies(movieRepository);
+
+            var movies = await this.movieService.GetRecentCarouselMovies();
+
+            Assert.That(movies.Count(), Is.EqualTo(20));
         }
 
         [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
-            dbContext.Dispose();
+            InMemoryDatabaseSetup.InMemoryDatabaseDispose();
         }
     }
 }

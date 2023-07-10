@@ -113,5 +113,22 @@
 
             await genreRepository.SaveChangesAsync();
         }
+
+        public static async Task SeedMessages(EfRepository<Chat> chatRepository)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                var chat = new Chat()
+                {
+                    Id = i + 1,
+                    Text = $"Hello + {i}",
+                    Name = $"Alpha + {i}"
+                };
+
+                await chatRepository.AddAsync(chat);
+            }
+
+            await chatRepository.SaveChangesAsync();
+        }
     }
 }

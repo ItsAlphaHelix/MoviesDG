@@ -5,7 +5,11 @@
     ViewData["Title"] = "Two-factor authentication (2FA)";
     ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
 }
-
+<div style="display: block; text-align: center;">
+    <p style="color: white; font-size: 20px">Here you can chose two options:</p>
+    <p>When you click on scan QR code this means. You will be redirect to page for activate your second factor authentication.</p>
+    <p>When you click on reset QR code </p>
+</div>
 <br />
         <div style="text-align: center;">
     @if (Model.Is2faEnabled)

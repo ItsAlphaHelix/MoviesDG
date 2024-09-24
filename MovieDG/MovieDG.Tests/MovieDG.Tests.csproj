@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MovieDG.Services\MovieDG.Core.csproj" />
+    <ProjectReference Include="..\MovieDG.Web\MovieDG.Web.csproj" />
   </ItemGroup>
 
 </Project>

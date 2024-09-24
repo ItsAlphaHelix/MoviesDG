@@ -1,13 +1,15 @@
 ﻿namespace MovieDG.Web.Areas.Identity.Pages.Account
 {
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
+    using MovieDG.Common;
     using MovieDG.Data.Data.Models;
     using MovieDG.Web.Areas.Identity.IdentityConstants;
+    using MoviesDG.Core.Messaging;
     using MoviesDG.Data.Repositories;
     using System.ComponentModel.DataAnnotations;
     using System.Text;
@@ -19,19 +21,22 @@
         private readonly ILogger<RegisterModel> logger;
         private readonly IEmailSender emailSender;
         private readonly IRepository<ApplicationUser> usersRepository;
+        private readonly INotyfService toastNotification;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IRepository<ApplicationUser> usersRepository)
+            IRepository<ApplicationUser> usersRepository,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
             this.emailSender = emailSender;
             this.usersRepository = usersRepository;
+            this.toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -83,7 +88,6 @@
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
         {
             returnUrl ??= this.Url.Content("~/");
-
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
@@ -103,30 +107,31 @@
                     if (result.Succeeded)
                     {
                         this.logger.LogInformation(IdentityMessageConstants.UserCreateNewAccountWithPassMessage);
-                        //await this.userManager.AddToRoleAsync(user, GlobalConstants.BasicUserRoleName);
 
                         var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
                         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                         var callbackUrl = this.Url.Page(
                             "/Account/ConfirmEmail",
                             pageHandler: null,
-                            values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                            values: new { area = "Identity", userId = user.Id, code, returnUrl },
                             protocol: this.Request.Scheme);
 
                         await this.emailSender.SendEmailAsync(
-                            this.Input.Email,
-                            "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                               GlobalConstants.AppEmail,
+                               GlobalConstants.SystemName,
+                               this.Input.Email,
+                               "Confirm your email",
+                               $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                         if (this.userManager.Options.SignIn.RequireConfirmedAccount)
                         {
-                            return this.RedirectToPage("RegisterConfirmation", new { email = this.Input.Email, returnUrl = returnUrl });
+                            this.toastNotification.Information("Your account has been created. Please go to your email box to verify it!");
+
+                            return RedirectToPage("./Register");
                         }
-                        else
-                        {
-                            await this.signInManager.SignInAsync(user, isPersistent: false);
-                            return this.LocalRedirect(returnUrl);
-                        }
+
+                        //This will be add only when email provider somehow stop to work :)
+                        //await this.signInManager.SignInAsync(user, isPersistent: false);
                     }
 
                     foreach (var error in result.Errors)

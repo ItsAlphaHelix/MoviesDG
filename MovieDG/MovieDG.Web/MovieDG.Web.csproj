@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-MovieDG.Web-A520A1D9-F4F9-44FB-8955-5E9C289C7886</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -64,19 +66,20 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
-    <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
-    <PackageReference Include="Azure.Identity" Version="1.8.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.15" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.15" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.15" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.15">
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.33" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.33" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.33" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.33" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.33">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.17" />
     <PackageReference Include="NToastNotify" Version="8.0.0" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
   </ItemGroup>
 
   <ItemGroup>

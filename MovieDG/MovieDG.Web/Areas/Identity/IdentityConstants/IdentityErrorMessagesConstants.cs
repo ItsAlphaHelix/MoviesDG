@@ -1,10 +1,12 @@
-﻿namespace MovieDG.Web.Areas.Identity.IdentityConstants
+﻿using NUnit.Framework;
+
+namespace MovieDG.Web.Areas.Identity.IdentityConstants
 {
     public static class IdentityErrorMessagesConstants
     {
             public const string UserNullErrorMessage = "Unable to load user with ID '{0}'.";
 
-            public const string ChangeEmailErrorMessage = "Error changing email.";
+            public const string ChangeEmailErrorMessage = "There was an error with changing your email.";
 
             public const string IncorrectUserOrPasswordErrorMessage = "The username or password you typed are incorrect.";
 
@@ -28,7 +30,7 @@
 
             public const string ConfirmPasswordErrorMessage = "The password and confirmation password do not match.";
 
-            public const string ConfirmEmailErrorMessage = "Error confirming your email.";
+            public const string ConfirmEmailErrorMessage = "There was an error with confirming your email. ";
 
             public const string UnableToLoadTwoFactorAuthUserErrorMessage = "Unable to load two-factor authentication user.";
 

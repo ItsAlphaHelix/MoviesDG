@@ -2,6 +2,7 @@
 @model EmailModel
 @{
     ViewData["Title"] = "Manage Email";
+
     ViewData["ActivePage"] = ManageNavPages.Email;
 }
 
@@ -9,20 +10,12 @@
     <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        @if (Model.IsEmailConfirmed)
-        {
-            <div class="form-group">
-                 <input asp-for="Email" type="text" class="form-control" placeholder="Email" disabled/>
-            </div>
-        }
-        else
-        {
-            <input asp-for="Email" type="text" class="form-control" placeholder="Email" disabled/>
-            <button class="btn btn-primary btn-block" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
-        }
+        <div class="form-group">
+            <input asp-for="Email" type="text" class="form-control" disabled />
+        </div>
     </div>
     <div class="form-group">
-        <input asp-for="Input.NewEmail" type="text" class="form-control" placeholder="NewEmail" />
+        <input asp-for="Input.NewEmail" type="text" class="form-control" placeholder="Enter new email..." />
         <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
     </div>
     <button asp-page-handler="ChangeEmail" class="btn btn-primary btn-block" type="submit">Change email</button>

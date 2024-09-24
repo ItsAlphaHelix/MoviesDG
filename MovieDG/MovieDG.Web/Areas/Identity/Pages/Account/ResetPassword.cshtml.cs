@@ -1,9 +1,7 @@
 ﻿
 namespace MovieDG.Web.Areas.Identity.Pages.Account
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.Text;
+    using AspNetCoreHero.ToastNotification.Abstractions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -11,15 +9,20 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account
     using Microsoft.AspNetCore.WebUtilities;
     using MovieDG.Data.Data.Models;
     using MovieDG.Web.Areas.Identity.IdentityConstants;
+    using System.ComponentModel.DataAnnotations;
+    using System.Text;
 
     [AllowAnonymous]
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
-
-        public ResetPasswordModel(UserManager<ApplicationUser> userManager)
+        private readonly INotyfService toastNotification;
+        public ResetPasswordModel(
+            UserManager<ApplicationUser> userManager,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
+            this.toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -27,10 +30,6 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
-
             [Required]
             [StringLength(100, ErrorMessage = IdentityErrorMessagesConstants.PasswordErrorMessage, MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -66,17 +65,22 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account
                 return this.Page();
             }
 
-            var user = await this.userManager.FindByEmailAsync(this.Input.Email);
+            string username = this.Request?.Cookies["Username"];
+
+            var user = await this.userManager.FindByNameAsync(username);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return this.RedirectToPage("./ResetPasswordConfirmation");
+                return this.RedirectToPage("./Login");
             }
 
             var result = await this.userManager.ResetPasswordAsync(user, this.Input.Code, this.Input.Password);
+            
             if (result.Succeeded)
             {
-                return this.RedirectToPage("./ResetPasswordConfirmation");
+                this.toastNotification.Success("Successfully reset password.");
+                this.Response.Cookies.Delete("Username");
+                return this.RedirectToPage("./Login");
             }
 
             foreach (var error in result.Errors)

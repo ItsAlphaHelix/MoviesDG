@@ -63,7 +63,7 @@
             var callbackUrl = this.Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
-                values: new { userId = userId, code = code },
+                values: new { userId, code },
                 protocol: this.Request.Scheme);
             await this.emailSender.SendEmailAsync(
                 GlobalConstants.AppEmail,
@@ -72,7 +72,7 @@
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            this.toastNotification.Success(IdentityMessageConstants.VerificationEmailSuccessfullySentMessage);
+            this.toastNotification.Information(IdentityMessageConstants.VerificationEmailSuccessfullySentMessage);
             return this.Page();
         }
     }

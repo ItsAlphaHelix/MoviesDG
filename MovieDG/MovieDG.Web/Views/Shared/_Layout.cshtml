@@ -63,7 +63,32 @@
     {
         <partial name="_FooterPartial.cshtml" />
     }
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentUrl = window.location.href;
+            const elementsLi = document.querySelectorAll('.navigation > li');
+            const activeElement = document.querySelector('li.active');
 
+            const urlMapping = {
+                "All": 1,
+                "Mine": 5,
+                "Genres": 2,
+                "Countries": 3,
+                "Years": 4,
+                "Contact": 6
+            };
+
+            for (const [keyword, index] of Object.entries(urlMapping)) {
+                if (currentUrl.includes(keyword)) {
+                    if (activeElement) {
+                        activeElement.classList.remove('active');
+                    }
+                    elementsLi[index].classList.add('active');
+                    break;  
+                }
+            }
+        });
+    </script>
     <script src="~/js/jquery-3.6.0.min.js" asp-append-version="true"></script>
     <script src="~/js/popper.min.js" asp-append-version="true"></script>
     <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>

@@ -153,7 +153,7 @@
                  .AllAsNoTracking()
                  .Where(x => x.Id == 46)
                  .Select(x => new BannerHomeMovieViewModel()
-                 {
+                 {                    
                      Title = x.Title,
                      Trailer = x.Trailer,
                      Banner = x.Banner,
@@ -263,6 +263,7 @@
             var movie = await moviesRepository
                         .All()
                         .FirstOrDefaultAsync(u => u.Id == movieId);
+
             if (movie == null)
             {
                 throw new ArgumentException(InvalidMovieUserErrorMessage);

@@ -11,9 +11,7 @@
 
 @section scripts{
     <script>
-        $(document).ready(function () {
             $('#load-button').click(function () {
-
                 $('#load-button').hide();
                 var nextPageNumber = $(this).data('pageNumber');
 
@@ -29,54 +27,50 @@
                             $('#load-button').show();
                         }
 
-                        $.getScript('/js/main.js');
+                        // $.getScript('/js/main.js');
                     })
                     .fail(function (xhr, status, error) {
                         console.log('An error occurred while loading the next page of movies: ' + error);
                     });
             });
-        });
+           
     </script>
     <script>
-        $(document).ready(function () {
-            $('.tr-movie-menu-active button').click(function () {
-                var filterType = $(this).data('filter');
-                $.ajax({
-                    url: '@Url.Action("Filter")',
-                    type: 'GET',
-                    data: { filterType: filterType},
-                    success: function (data) {
+        $('.tr-movie-menu-active button').click(function () {
+            var filterType = $(this).data('filter');
+            $.ajax({
+                url: '@Url.Action("Filter")',
+                type: 'GET',
+                data: { filterType: filterType },
+                success: function (data) {
+                    $('#movies-list').html(data);
+                    let test = document.querySelectorAll('button')[3];
+                    $(test).addClass('active');
+                    if (filterType == "top-rated") {
+                        filterType = "TopRatedMovies";
+                    } else if (filterType == "recent") {
+                        filterType = "RecentMovies";
 
-                        $('#movies-list').html(data);
-
-                        if(filterType == "top-rated"){
-                            filterType = "TopRatedMovies";
-                        } else if (filterType == "recent") {
-                            filterType = "RecentMovies";
-
-                        } else if (filterType = "popularity") {
-                            filterType = "PopularityMovies";
-                        }
-
-                        window.history.pushState(null, null, filterType);
-
-                        if(filterType == "TopRatedMovies") {
-                            filterType = "Top Rated Movies";
-                        } else if (filterType == "RecentMovies") {
-                            filterType = "Recent Movies";
-                        } else if (filterType == "PopularityMovies") {
-                            filterType = "Popularity Movies";
-                        }
-                        document.title = filterType + " - MoviesDG";
-                        $.getScript('/js/main.js');
-                    },
-                    error: function () {
-                        alert('An error occurred.');
+                    } else if (filterType = "popularity") {
+                        filterType = "PopularityMovies";
                     }
-                });
-                $('.filter-buttons button').removeClass('active');
-                $(this).addClass('active');
+
+                    window.history.pushState(null, null, filterType);
+
+                    if (filterType == "TopRatedMovies") {
+                        filterType = "Top Rated Movies";
+                    } else if (filterType == "RecentMovies") {
+                        filterType = "Recent Movies";
+                    } else if (filterType == "PopularityMovies") {
+                        filterType = "Popularity Movies";
+                    }
+                    document.title = filterType + " - MoviesDG";
+                },
+                error: function () {
+                    alert('An error occurred.');
+                }
             });
+
         });
     </script>
 }

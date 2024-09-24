@@ -5,7 +5,7 @@
     using MovieDG.Tests.Seed;
     using MoviesDG.Data.Models;
     using MoviesDG.Data.Repositories;
-    public class GenreServiceTest
+    public class GenreServiceTests
     {
         private IGenreService genreService;
         private EfRepository<Genre> genreRepository;

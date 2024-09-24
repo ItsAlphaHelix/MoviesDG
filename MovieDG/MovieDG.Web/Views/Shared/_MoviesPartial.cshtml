@@ -82,10 +82,25 @@
     </div>
 }
 
-<script>
-    $(document).ready(function () {
+<script src="~/js/jquery-3.6.0.min.js" asp-append-version="true"></script>
+<script src="~/js/popper.min.js" asp-append-version="true"></script>
+<script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
+<script src="~/js/isotope.pkgd.min.js" asp-append-version="true"></script>
+<script src="~/js/imagesloaded.pkgd.min.js" asp-append-version="true"></script>
+<script src="~/js/jquery.magnific-popup.min.js" asp-append-version="true"></script>
+<script src="~/js/owl.carousel.min.js" asp-append-version="true"></script>
+<script src="~/js/jquery.odometer.min.js" asp-append-version="true"></script>
+<script src="~/js/jquery.appear.js" asp-append-version="true"></script>
+<script src="~/js/slick.min.js" asp-append-version="true"></script>
+<script src="~/js/ajax-form.js" asp-append-version="true"></script>
+<script src="~/js/wow.min.js" asp-append-version="true"></script>
+<script src="~/js/aos.js" asp-append-version="true"></script>
+<script src="~/js/plugins.js" asp-append-version="true"></script>
+<script src="~/js/main.js" asp-append-version="true"></script>
+<script src="~/js/qrcode.js" asp-append-version="true"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" asp-append-version="true"></script>
+<script>    
         $('#load-button').click(function () {
-
             $('#load-button').hide();
             var nextPageNumber = $(this).data('pageNumber');
             var documentTitle = document.title;
@@ -111,18 +126,15 @@
                         $('#load-button').show();
                     }
 
-                    $.getScript('/js/main.js');
+                    // $.getScript('/js/main.js');
                 })
                 .fail(function (xhr, status, error) {
                     console.log('An error occurred while loading the next page of movies: ' + error);
                 });
         });
-    });
-
 </script>
 
-<script>
-    $(document).ready(function () {
+<script>  
         $('.tr-movie-menu-active button').click(function () {
             var filterType = $(this).data('filter');
             $.ajax({
@@ -131,8 +143,9 @@
                 data: { filterType: filterType },
                 success: function (data) {
 
-                    $('#movies-list').html(data);
-
+                $('#movies-list').html(data);
+                let test = document.querySelectorAll('button')[3];
+                    $(test).addClass('active');
                     if (filterType == "top-rated") {
                         filterType = "TopRatedMovies";
                     } else if (filterType == "recent") {
@@ -152,14 +165,13 @@
                         filterType = "Popularity Movies"
                     }
                     document.title = filterType + " - MoviesDG";
-                    $.getScript('/js/main.js');
+                    // $.getScript('/js/main.js');
                 },
                 error: function () {
                     alert('An error occurred.');
                 }
             });
-            $('.filter-buttons button').removeClass('active');
-            $(this).addClass('active');
+            // $('.filter-buttons button').removeClass('active');
+            
         });
-    });
 </script>

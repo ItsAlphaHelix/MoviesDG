@@ -42,24 +42,26 @@ namespace MovieDG.Web.Areas.Identity.Pages.Account
                 return NotFound(IdentityErrorMessagesConstants.UserNullErrorMessage);
             }
 
+
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await this.userManager.ChangeEmailAsync(user, email, code);
             if (!result.Succeeded)
             {
                 this.toastNotification.Error(IdentityErrorMessagesConstants.ChangeEmailErrorMessage);
-                return Page();
+                return RedirectToPage("./Manage/Email");
             }
 
-            var setUserNameResult = await this.userManager.SetUserNameAsync(user, email);
-            if (!setUserNameResult.Succeeded)
-            {
-                this.toastNotification.Error(IdentityErrorMessagesConstants.ChangeEmailErrorMessage);
-                return Page();
-            }
+            ////For now i dont want to change username
+            //var setUserNameResult = await this.userManager.SetUserNameAsync(user, user.UserName);
+            //if (!setUserNameResult.Succeeded)
+            //{
+            //    this.toastNotification.Error(IdentityErrorMessagesConstants.ChangeEmailErrorMessage);
+            //    return RedirectToPage("./Manage/Email");
+            //}
 
             await this.signInManager.RefreshSignInAsync(user);
-            this.toastNotification.Success(IdentityMessageConstants.SuccessfullyConfirmEmailMessage);
-            return Page();
+            this.toastNotification.Success(IdentityMessageConstants.SuccessfullyChangedEmailMessage);
+            return RedirectToPage("./Manage/Email");
         }
     }
 }

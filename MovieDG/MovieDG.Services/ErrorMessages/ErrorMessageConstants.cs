@@ -18,7 +18,7 @@
 
         public const string MovieError = "Value cannot be negative.";
 
-        public const string MovieNullErrorMessage = "The movie can not be null,";
+        public const string MovieNullErrorMessage = "The movie can not be null.";
 
         public const string InvalidMovieUserErrorMessage = "Invalid User ID.";
 

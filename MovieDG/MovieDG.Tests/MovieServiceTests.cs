@@ -1,7 +1,6 @@
 ﻿namespace MovieDG.Tests
 {
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.Services;
     using MovieDG.Data.Data.Models;
@@ -17,7 +16,6 @@
         private EfRepository<Movie> movieRepository;
         private EfRepository<ApplicationUser> userRepository;
         private IMovieService movieService;
-        private MovieDGDbContext dbContext;
 
         [SetUp]
         public void SetUp()
@@ -36,10 +34,10 @@
         }
 
         [Test]
-        [TestCase(1)]
-        [TestCase(3)]
-        [TestCase(2)]
-        [TestCase(5)]
+        [TestCase(47)]
+        [TestCase(48)]
+        [TestCase(60)]
+        [TestCase(61)]
         public async Task GetMovieDetailsAsyncTest(int id)
         {
             await SeedDB.SeedMovies(this.movieRepository);

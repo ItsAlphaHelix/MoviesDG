@@ -70,7 +70,7 @@
         }
 
         [Test]
-        public void RoleDoesNotExistThrowsArgumentExceptionAsyncTest()
+        public void RoleDoesNotExistThrowsArgumentExceptionTest()
         {
             string userName = "ToBeAdmin";
             string role = "Moderator";
@@ -89,7 +89,7 @@
         }
 
         [Test]
-        public void UserAlreadyInRoleThrowsArgumentExceptionAsyncTest()
+        public void UserAlreadyInRoleThrowsArgumentExceptionTest()
         {
             string userName = "ToBeAdmin";
             string role = "Admin";

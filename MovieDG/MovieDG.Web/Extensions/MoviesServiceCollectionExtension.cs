@@ -1,14 +1,16 @@
 ﻿namespace MoviesDG.Web.Extensions
 {
     using AspNetCoreHero.ToastNotification;
+    using Microsoft.AspNetCore.Identity;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.Services;
+    using MovieDG.Data.Data.Models;
     using MovieDG.Web.Hubs.ChatHubServices;
     using MoviesDG.Core.DataApi;
     using MoviesDG.Core.Messaging;
     using MoviesDG.Data.Repositories;
 
-    public static class MoviesServiceCollectionExtencion
+    public static class MoviesServiceCollectionExtension
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
@@ -22,7 +24,15 @@
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<IEmailSender>(x => new SendGridEmailSender(configuration.GetSection("SendGrid:ApiKey").Value));
+
+          //  services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomUserClaimsPrincipalFactory>();
+
+            string smptServer = configuration["BrevoSmtpSettings:Server"];
+            string port = configuration["BrevoSmtpSettings:Port"];
+            string username = configuration["BrevoSmtpSettings:Username"];
+            string password = configuration["BrevoSmtpSettings:Password"];
+
+            services.AddScoped<IEmailSender>(x => new EmailSender(smptServer, int.Parse(port), username, password));
 
             services.AddSignalR();
             services.AddHostedService<ChatResetService>();

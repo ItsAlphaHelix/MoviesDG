@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Security.Claims;
     using System.Text;
     using System.Text.Encodings.Web;
     using System.Threading.Tasks;
@@ -14,21 +15,25 @@
     using MovieDG.Data.Data.Models;
     using MovieDG.Web.Areas.Identity.IdentityConstants;
     using MoviesDG.Core.Messaging;
+    using MoviesDG.Data.Repositories;
 
     public class EmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IEmailSender emailSender;
         private readonly INotyfService toastNotification;
+        private readonly IRepository<ApplicationUser> usersRepository;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
             IEmailSender emailSender,
-            INotyfService toastNotification)
+            INotyfService toastNotification,
+            IRepository<ApplicationUser> usersRepository)
         {
             this.userManager = userManager;
             this.emailSender = emailSender;
             this.toastNotification = toastNotification;
+            this.usersRepository = usersRepository;
         }
 
         public string Username { get; set; }
@@ -55,10 +60,6 @@
             var email = await this.userManager.GetEmailAsync(user);
             this.Email = email;
 
-            this.Input = new InputModel
-            {
-                NewEmail = email,
-            };
 
             this.IsEmailConfirmed = await this.userManager.IsEmailConfirmedAsync(user);
         }
@@ -83,6 +84,7 @@
                 return this.NotFound(String.Format(IdentityErrorMessagesConstants.UserNullErrorMessage, user.Id));
             }
 
+
             if (!this.ModelState.IsValid)
             {
                 await this.LoadAsync(user);
@@ -90,7 +92,9 @@
             }
 
             var email = await this.userManager.GetEmailAsync(user);
-            if (this.Input.NewEmail != email)
+            if (this.Input.NewEmail != email
+                &&
+               !this.usersRepository.AllAsNoTracking().Any(x => x.Email.ToLower() == this.Input.NewEmail.ToLower()))
             {
                 var userId = await this.userManager.GetUserIdAsync(user);
                 var code = await this.userManager.GenerateChangeEmailTokenAsync(user, this.Input.NewEmail);
@@ -100,7 +104,7 @@
                 var callbackUrl = this.Url.Page(
                     "/Account/ConfirmEmailChange",
                     pageHandler: null,
-                    values: new { userId = userId, email = this.Input.NewEmail, code = code },
+                    values: new { userId, email = this.Input.NewEmail, code },
                     protocol: this.Request.Scheme);
                 await this.emailSender.SendEmailAsync(
                     GlobalConstants.AppEmail,
@@ -109,13 +113,14 @@
                     "Confirm your email",
                     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                this.toastNotification.Success(IdentityMessageConstants.ConfirmLinkToChangeEmailSentMessage);
+                this.toastNotification.Information(IdentityMessageConstants.ConfirmLinkToChangeEmailSentMessage);
 
-                return this.RedirectToPage();
+                return this.Page();
             }
 
-            this.toastNotification.Error(IdentityErrorMessagesConstants.EmailUnchangeErrorMessage);
-            return this.RedirectToPage();
+
+            this.ModelState.AddModelError(string.Empty, IdentityErrorMessagesConstants.AlreadyTakenEmailErrorMessage);
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostSendVerificationEmailAsync()
@@ -148,8 +153,8 @@
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-            this.toastNotification.Success(IdentityMessageConstants.SuccessfullyVerificationEmailSentMessage);
-            return this.RedirectToPage();
+            this.toastNotification.Information(IdentityMessageConstants.VerificationEmailSentMessage);
+            return this.Page();
         }
     }
 }

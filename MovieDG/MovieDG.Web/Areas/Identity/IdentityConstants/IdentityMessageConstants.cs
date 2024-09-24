@@ -2,7 +2,9 @@
 {
     public static class IdentityMessageConstants
     {
-        public const string SuccessfullyConfirmEmailMessage = "Thank you for confirming your email.";
+        public const string SuccessfullyConfirmEmailMessage = "Thank you for confirming your email. Now you can log in to your account.";
+
+        public const string SuccessfullyChangedEmailMessage = "You have successfully changed your email address.";
 
         public const string ConfirmEmailMessage = "Thank you for confirming your email.";
 
@@ -42,7 +44,7 @@
 
         public const string ConfirmLinkToChangeEmailSentMessage = "Confirmation link to change email sent. Please check your email.";
 
-        public const string SuccessfullyVerificationEmailSentMessage = "Verification email sent. Please check your email.";
+        public const string VerificationEmailSentMessage = "To change your email, you should verify new email in your inbox";
 
         public const string Enable2FAWithAppLogMessage = "User with ID {0} has enabled 2FA with an authenticator app.";
 

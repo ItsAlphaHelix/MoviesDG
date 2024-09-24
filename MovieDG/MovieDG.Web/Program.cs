@@ -7,16 +7,11 @@ using MovieDG.Web.Providers;
 using MoviesDG.Data;
 using MoviesDG.Web.Extensions;
 using NToastNotify;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//var keyVaultUrl = new Uri(builder.Configuration.GetSection("KeyVaultURl").Value!);
-//var azureCredential = new DefaultAzureCredential();
-
-//builder.Configuration.AddAzureKeyVault(keyVaultUrl, azureCredential);
-
-//var connectionString = builder.Configuration.GetSection("DefaultConnection").Value;
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+string connectionString = builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
 
 builder.Services.AddDbContext<MovieDGDbContext>(options =>
     options.UseSqlServer(connectionString));

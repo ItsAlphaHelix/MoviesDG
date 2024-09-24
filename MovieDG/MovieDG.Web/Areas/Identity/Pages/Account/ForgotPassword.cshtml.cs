@@ -11,16 +11,22 @@
     using MovieDG.Data.Data.Models;
     using MoviesDG.Core.Messaging;
     using MovieDG.Common;
+    using AspNetCoreHero.ToastNotification.Abstractions;
 
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IEmailSender emailSender;
+        private readonly INotyfService toastNotification;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(
+            UserManager<ApplicationUser> userManager,
+            IEmailSender emailSender,
+            INotyfService toastNotification)
         {
             this.userManager = userManager;
             this.emailSender = emailSender;
+            this.toastNotification = toastNotification;
         }
 
         [BindProperty]
@@ -37,14 +43,15 @@
             if (this.ModelState.IsValid)
             {
                 var user = await this.userManager.FindByEmailAsync(this.Input.Email);
+                
                 if (user == null || !(await this.userManager.IsEmailConfirmedAsync(user)))
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return this.RedirectToPage("./ForgotPasswordConfirmation");
+                    this.toastNotification.Error("Invalid email address.");
+                    return this.Page();
                 }
 
-                // For more information on how to enable account confirmation and password reset please
-                // visit https://go.microsoft.com/fwlink/?LinkID=532713
+                this.Response.Cookies.Append("Username", user.UserName);
+
                 var code = await this.userManager.GeneratePasswordResetTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = this.Url.Page(
@@ -60,7 +67,8 @@
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                return this.RedirectToPage("./ForgotPasswordConfirmation");
+                this.toastNotification.Information("Go to your email to change your password.");
+                return this.Page();
             }
 
             return this.Page();

@@ -8,13 +8,11 @@
     public class ChatService : IChatService
     {
         private readonly IRepository<Chat> messageRepository;
-        private readonly IRepository<ApplicationUser> userRepository;
 
         public ChatService(
-            IRepository<Chat> messageRepository, IRepository<ApplicationUser> userRepository)
+            IRepository<Chat> messageRepository)
         {
             this.messageRepository = messageRepository;
-            this.userRepository = userRepository;
         }
         public async Task<IEnumerable<MessageViewModel>> GetAllMessagesAsync()
         {

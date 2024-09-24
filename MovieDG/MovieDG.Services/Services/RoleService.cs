@@ -11,7 +11,8 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<ApplicationRole> roleManager;
-        public RoleService(UserManager<ApplicationUser> userManager,
+        public RoleService(
+            UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager)
         {
             this.userManager = userManager;

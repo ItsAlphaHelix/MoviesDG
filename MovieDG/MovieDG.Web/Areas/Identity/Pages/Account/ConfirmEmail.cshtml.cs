@@ -47,12 +47,12 @@
             {
                 this.toastNotification.Success(IdentityMessageConstants.SuccessfullyConfirmEmailMessage);
 
-                return Page();
+                return RedirectToPage("./Login");
             }
             
             this.toastNotification.Error(IdentityErrorMessagesConstants.ConfirmEmailErrorMessage);
 
-            return Page();
+            return RedirectToPage("./Login");
         }
     }
 }

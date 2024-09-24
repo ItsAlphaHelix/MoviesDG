@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieDG.Data", "MovieDG.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieDG.Common", "MovieDG.Common\MovieDG.Common.csproj", "{B3A7146E-FB4B-45E5-8A36-A5AF1BB12669}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieDG.Tests", "MovieDG.Tests\MovieDG.Tests.csproj", "{623EECA5-20B4-4296-9718-C77E09782AFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieDG.Tests", "MovieDG.Tests\MovieDG.Tests.csproj", "{623EECA5-20B4-4296-9718-C77E09782AFE}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F3A9FC3E-D3F2-4B50-917A-C7AD5834DE60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{623EECA5-20B4-4296-9718-C77E09782AFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{623EECA5-20B4-4296-9718-C77E09782AFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{623EECA5-20B4-4296-9718-C77E09782AFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3A9FC3E-D3F2-4B50-917A-C7AD5834DE60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3A9FC3E-D3F2-4B50-917A-C7AD5834DE60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3A9FC3E-D3F2-4B50-917A-C7AD5834DE60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3A9FC3E-D3F2-4B50-917A-C7AD5834DE60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

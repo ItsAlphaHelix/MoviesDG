@@ -11,7 +11,6 @@
 
 @section scripts{
     <script>
-        $(document).ready(function () {
             $('#load-button').click(function () {
 
                 $('#load-button').hide();
@@ -30,18 +29,17 @@
                             $('#load-button').show();
                         }
 
-                        $.getScript('/js/main.js');
+                        // $.getScript('/js/main.js');
                     })
                     .fail(function (xhr, status, error) {
                         console.log('An error occurred while loading the next page of movies: ' + error);
                     });
             });
-        });
     </script>
     <script>
-        $(document).ready(function () {
             $('.tr-movie-menu-active button').click(function () {
                 var filterType = $(this).data('filter');
+            $(this).addClass('active');
                 $.ajax({
                     url: '@Url.Action("Filter")',
                     type: 'GET',
@@ -59,16 +57,15 @@
                         }
 
                         window.history.pushState(null, null, filterType);
-                        $.getScript('/js/main.js');
+                        // $.getScript('/js/main.js');
                     },
                     error: function () {
                         alert('An error occurred.');
                     }
                 });
-                $('.filter-buttons button').removeClass('active');
-                $(this).addClass('active');
+                // $('.filter-buttons button').removeClass('active');
+                
                 return false;
             });
-        });
     </script>
 }

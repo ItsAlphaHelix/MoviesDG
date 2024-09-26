@@ -1,6 +1,6 @@
 ﻿namespace MovieDG.Web.Areas.Administration.AdminMessageConstants
 {
-    public static class AdminMessageConstants
+    public static class MessageConstants
     {
         public const string SuccessSentAnswer = "Successfully sended answer to user.";
 

@@ -7,6 +7,6 @@
 
         Task<UserWithRolesViewModel> GetAllUsersRolesAsync();
 
-        Task RemoveRoleFromUser(string userName, string role);
+        Task RemoveRoleFromUser(string userName, string role, string loginUsername);
     }
 }

@@ -46,46 +46,61 @@
 
         public async Task<UserWithRolesViewModel> GetAllUsersRolesAsync()
         {
-            var memberRole = await roleManager.FindByNameAsync(GlobalConstants.MemberRoleName);
+            var moderatorRole = await roleManager.FindByNameAsync(GlobalConstants.ModeratorRoleName);
             var adminRole = await roleManager.FindByNameAsync(GlobalConstants.AdminRoleName);
+            var supportRole = await roleManager.FindByNameAsync(GlobalConstants.SuportRoleName);
 
-            if (memberRole == null)
+            if (moderatorRole == null)
             {
                 throw new ArgumentException(ErrorMessageConstants.MemberRoleCanNotBeNull);
             }
-
-            if (adminRole == null)
+            else if (adminRole == null)
             {
                 throw new ArgumentException(ErrorMessageConstants.AdminRoleCanNotBeNull);
+            }
+            else if (supportRole == null)
+            {
+                throw new ArgumentException(ErrorMessageConstants.SuportRoleCanNotBeNull);
             }
 
             var adminUsers = await userManager.GetUsersInRoleAsync(adminRole.Name);
 
             var admins = adminUsers
-                .Where(x => x.Email != GlobalConstants.AppEmail)
+                .Where(x => x.UserName != GlobalConstants.AdminRoleName)
                 .Select(x => new UserViewModel()
             {
+                Role = GlobalConstants.AdminRoleName,
                 UserName = x.UserName,
             });
 
-            var memberUsers = await userManager.GetUsersInRoleAsync(memberRole.Name);
+            var moderatorUsers = await userManager.GetUsersInRoleAsync(moderatorRole.Name);
 
-            var members = memberUsers.Select(x => new UserViewModel()
+            var moderators = moderatorUsers.Select(x => new UserViewModel()
             {
+                Role = GlobalConstants.ModeratorRoleName,
                 UserName = x.UserName,
+            });
+
+            var suportUsers = await userManager.GetUsersInRoleAsync(supportRole.Name);
+
+            var suports = suportUsers.Select(x => new UserViewModel()
+            {
+                Role = GlobalConstants.SuportRoleName,
+                UserName = x.UserName
             });
 
             var usersWithRoles = new UserWithRolesViewModel()
             {
                 Admins = admins,
-                Members = members
+                Moderators = moderators,
+                Suports = suports
             };
 
             return usersWithRoles;
         }
 
 
-        public async Task RemoveRoleFromUser(string userName, string role)
+        public async Task RemoveRoleFromUser(string userName, string role, string loginUsername)
         {
             var user = await userManager.FindByNameAsync(userName);
 
@@ -94,13 +109,17 @@
                 throw new ArgumentException(ErrorMessageConstants.UserNotFound);
             }
 
-            var isRoleExist = await roleManager.RoleExistsAsync(role);
+            bool isRoleExist = await roleManager.RoleExistsAsync(role);
+            bool isUserAdmin = await userManager.IsInRoleAsync(user, GlobalConstants.AdminRoleName);
 
             if (isRoleExist == false)
             {
                 throw new ArgumentException(ErrorMessageConstants.RoleDoesNotExist);
             }
-
+            else if (isUserAdmin &&  loginUsername != GlobalConstants.AdminRoleName)
+            {
+                throw new ArgumentException("You cant delete role admin");
+            }
             await userManager.RemoveFromRoleAsync(user, role);
         }
     }

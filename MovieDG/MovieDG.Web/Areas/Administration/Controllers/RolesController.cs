@@ -1,11 +1,15 @@
 ﻿namespace MovieDG.Web.Areas.Administration.Controllers
 {
     using AspNetCoreHero.ToastNotification.Abstractions;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using MovieDG.Common;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.ViewModels.Users;
     using MovieDG.Web.Areas.Administration.AdminMessageConstants;
-    public class RolesController : AdministrationController
+
+    [Area("Administration")]
+	public class RolesController : Controller
     {
         private readonly IRoleService roleService;
         private readonly INotyfService toastNotification;
@@ -18,13 +22,15 @@
         }
 
         [HttpGet]
-        public IActionResult Add()
+		[Authorize(Roles = "Admin")]
+		public IActionResult Add()
         {
             return View();
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllUsersInRoles()
+		[Authorize(Roles = "Admin, Moderator, Suport")]
+		public async Task<IActionResult> AllUsersInRoles()
         {
             var users = await this.roleService.GetAllUsersRolesAsync();
 
@@ -32,16 +38,19 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveUserFromRole(string username, string role)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> RemoveUserFromRole(string username, string role)
         {
-            await this.roleService.RemoveRoleFromUser(username, role);
+            string loginUsername = this.User.Identity.Name;
+            await this.roleService.RemoveRoleFromUser(username, role, loginUsername);
 
-            this.toastNotification.Success(String.Format(AdminMessageConstants.SuccessfullyDeletedUserFromRole, role));
+            this.toastNotification.Success(String.Format(MessageConstants.SuccessfullyDeletedUserFromRole, role));
             return RedirectToAction(nameof(AllUsersInRoles));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(UserViewModel user)
+		[Authorize(Roles = "Admin")]
+		public async Task<IActionResult> Add(UserViewModel user)
         {
             if (!ModelState.IsValid)
             {
@@ -51,7 +60,7 @@
             try
             {
                 await this.roleService.AddUserToRoleAsync(user.UserName, user.Role);
-                toastNotification.Success(String.Format(AdminMessageConstants.SuccessfullyUserIsAddedToRole, user.Role));
+                toastNotification.Success(String.Format(MessageConstants.SuccessfullyUserIsAddedToRole, user.Role));
             }
             catch (Exception ex)
             {

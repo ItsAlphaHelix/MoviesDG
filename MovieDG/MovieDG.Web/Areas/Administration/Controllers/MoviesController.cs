@@ -1,14 +1,19 @@
 ﻿namespace MovieDG.Web.Areas.Administration.Controllers
 {
     using AspNetCoreHero.ToastNotification.Abstractions;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using MovieDG.Common;
     using MovieDG.Core.ViewModels.Movies;
     using MoviesDG.Core.DataApi;
     using MoviesDG.Data.Models;
     using MoviesDG.Data.Repositories;
+    using NUnit.Framework;
+    using static MovieDG.Web.Areas.Administration.AdminMessageConstants.MessageConstants;
 
-    using static MovieDG.Web.Areas.Administration.AdminMessageConstants.AdminMessageConstants;
-    public class MoviesController : AdministrationController
+    [Area("Administration")]
+    [Authorize(Roles = "Admin, Moderator")]
+    public class MoviesController : Controller
     {
         private readonly ICollectService collectService;
         private readonly IRepository<Movie> moviesRepository;

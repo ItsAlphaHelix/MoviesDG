@@ -8,6 +8,8 @@
 
         public const string AdminRoleName = "Admin";
 
-        public const string MemberRoleName = "Member";
+        public const string ModeratorRoleName = "Moderator";
+
+        public const string SuportRoleName = "Suport";
     }
 }

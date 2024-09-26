@@ -1,9 +1,16 @@
-﻿<div class="navbar-wrap main-menu d-none d-lg-flex">
+﻿@using MovieDG.Common
+<div class="navbar-wrap main-menu d-none d-lg-flex">
 	<ul class="navigation">
 		<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-		<li><a asp-area="Administration" asp-controller="Roles" asp-action="Add">Add User To Role</a></li>
 		<li><a asp-area="Administration" asp-controller="Roles" asp-action="AllUsersInRoles">All Users In Roles</a></li>
-		<li><a asp-area="Administration" asp-controller="Movies" asp-action="Create">Create Movie</a></li>
-		<li><a asp-area="Administration" asp-controller="Contact" asp-action="Submisions">All submisions</a></li>
+		@if (this.User.IsInRole(GlobalConstants.AdminRoleName) || this.User.IsInRole(GlobalConstants.ModeratorRoleName))
+		{
+			<li><a asp-area="Administration" asp-controller="Movies" asp-action="Create">Create Movie</a></li>
+		}
+		@if (this.User.IsInRole(GlobalConstants.AdminRoleName))
+		{
+			<li><a asp-area="Administration" asp-controller="Roles" asp-action="Add">Add User To Role</a></li>
+			<li><a asp-area="Administration" asp-controller="Contact" asp-action="Submisions">All submisions</a></li>
+		}
 	</ul>
 </div>

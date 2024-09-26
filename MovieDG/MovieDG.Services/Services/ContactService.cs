@@ -79,7 +79,7 @@
         {
             await this.emailSender.SendEmailAsync
             (
-                replyModel.AdminEmail,
+                GlobalConstants.AppEmail,
                 replyModel.Name,
                 replyModel.ToUserEmail,
                 replyModel.Subject,

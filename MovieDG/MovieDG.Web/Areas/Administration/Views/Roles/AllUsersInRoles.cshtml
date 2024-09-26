@@ -11,14 +11,14 @@
 
 <div class="admin-container">
     <partial name="../Shared/_AdminNav.cshtml" />
-    @if (!Model.Admins.Any() && !Model.Members.Any())
+    @if (!Model.Admins.Any() && !Model.Moderators.Any() && !Model.Suports.Any())
     {
         <h2 style="text-align: center" class="title">No Users In Roles Yet!</h2>
     }
     <br />
     <br />
     <br />
-
+  
     @if (Model.Admins.Any())
     {
         <h2 style="text-align: center; margin-bottom: 25px" class="title">All Users In Role Admin</h2>
@@ -34,7 +34,10 @@
                                 <form asp-action="RemoveUserFromRole">
                                     <input type="hidden" name="username" value="@user.UserName" />
                                     <input type="hidden" name="role" value="@GlobalConstants.AdminRoleName" />
-                                    <button class="btn">Remove From Role</button>
+                                    @if (this.User.Identity.Name == "Admin")
+                                    {
+                                        <button class="btn">Remove From Role</button>                    
+                                    }
                                 </form>
                             </div>
                         </div>
@@ -44,11 +47,11 @@
         }
     }
 
-    @if (Model.Members.Any())
+    @if (Model.Moderators.Any())
     {
-        <h2 style="text-align: center; margin-bottom: 25px; margin-top: 100px">All Users In Role Member</h2>
+        <h2 style="text-align: center; margin-bottom: 25px; margin-top: 100px">All Users In Role Moderator</h2>
 
-        @foreach (var user in Model.Members)
+        @foreach (var user in Model.Moderators)
         {
             <div class="col-xl-8 col-lg-7 ml-auto mr-auto">
                 <div class="contact-form-wrap">
@@ -58,8 +61,39 @@
                                 <input asp-for="@user.UserName" type="text" disabled>
                                 <form asp-action="RemoveUserFromRole">
                                     <input type="hidden" name="username" value="@user.UserName" />
-                                    <input type="hidden" name="role" value="@GlobalConstants.MemberRoleName" />
-                                    <button class="btn">Remove From Role</button>
+                                    <input type="hidden" name="role" value="@GlobalConstants.ModeratorRoleName" />
+                                    @if(this.User.IsInRole(GlobalConstants.AdminRoleName))
+                                    {
+                                        <button class="btn">Remove From Role</button>
+                                    }
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    
+    @if (Model.Suports.Any())
+    {
+        <h2 style="text-align: center; margin-bottom: 25px; margin-top: 100px">All Users In Role Suporter</h2>
+
+        @foreach (var user in Model.Suports)
+        {
+            <div class="col-xl-8 col-lg-7 ml-auto mr-auto">
+                <div class="contact-form-wrap">
+                    <div class="contact-form">
+                        <div class="row">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <input asp-for="@user.UserName" type="text" disabled>
+                                <form asp-action="RemoveUserFromRole">
+                                    <input type="hidden" name="username" value="@user.UserName" />
+                                    <input type="hidden" name="role" value="@GlobalConstants.SuportRoleName" />
+                                    @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
+                                    {
+                                        <button class="btn">Remove From Role</button>
+                                    }
                                 </form>
                             </div>
                         </div>

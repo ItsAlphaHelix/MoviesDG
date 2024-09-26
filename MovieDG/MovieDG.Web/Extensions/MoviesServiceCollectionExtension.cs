@@ -25,8 +25,6 @@
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IRoleService, RoleService>();
 
-          //  services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomUserClaimsPrincipalFactory>();
-
             string smptServer = configuration["BrevoSmtpSettings:Server"];
             string port = configuration["BrevoSmtpSettings:Port"];
             string username = configuration["BrevoSmtpSettings:Username"];

@@ -143,14 +143,14 @@
 
             Assert.NotNull(result);
             Assert.NotNull(result.Admins);
-            Assert.NotNull(result.Members);
+            Assert.NotNull(result.Moderators);
             Assert.AreEqual(2, result.Admins.Count());
-            Assert.AreEqual(2, result.Members.Count());
+            Assert.AreEqual(2, result.Moderators.Count());
 
             Assert.Contains(adminUser1.UserName, result.Admins.Select(a => a.UserName).ToList());
             Assert.Contains(adminUser2.UserName, result.Admins.Select(a => a.UserName).ToList());
-            Assert.Contains(memberUser1.UserName, result.Members.Select(m => m.UserName).ToList());
-            Assert.Contains(memberUser2.UserName, result.Members.Select(m => m.UserName).ToList());
+            Assert.Contains(memberUser1.UserName, result.Moderators.Select(m => m.UserName).ToList());
+            Assert.Contains(memberUser2.UserName, result.Moderators.Select(m => m.UserName).ToList());
 
         }
 

@@ -1,15 +1,18 @@
 ﻿namespace MovieDG.Web.Areas.Administration.Controllers
 {
     using AspNetCoreHero.ToastNotification.Abstractions;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MovieDG.Common;
     using MovieDG.Core.Contracts;
     using MovieDG.Core.ViewModels.Contact;
     using MovieDG.Data.Data.Models;
-    using static MovieDG.Web.Areas.Administration.AdminMessageConstants.AdminMessageConstants;
+    using static MovieDG.Web.Areas.Administration.AdminMessageConstants.MessageConstants;
 
-    public class ContactController : AdministrationController
+    [Area("Administration")]
+    [Authorize(Roles = "Admin, Suporter")]
+    public class ContactController : Controller
     {
         private readonly IContactService contactService;
         private readonly UserManager<ApplicationUser> userManager;

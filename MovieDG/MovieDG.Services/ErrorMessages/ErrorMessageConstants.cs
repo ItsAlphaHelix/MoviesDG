@@ -51,5 +51,7 @@
         public const string MemberRoleCanNotBeNull = "The member role can not be null.";
 
         public const string AdminRoleCanNotBeNull = "The admin role can not be null.";
+
+        public const string SuportRoleCanNotBeNull = "The suport role can not be null.";
     }
 }

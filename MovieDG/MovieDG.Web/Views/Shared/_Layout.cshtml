@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" asp-append-version="true" />
     <link rel="shortcut icon" href="~/favicon.png" type="favicon/png" asp-append-version="true" />
 
+    <script src="~/js/jquery-3.6.0.min.js" asp-append-version="true"></script>
+
 </head>
 <body>
     <!-- preloader -->
@@ -68,9 +70,9 @@
             const currentUrl = window.location.href;
             const elementsLi = document.querySelectorAll('.navigation > li');
             const activeElement = document.querySelector('li.active');
-
-            const urlMapping = {
-                "All": 1,
+                    console.log(currentUrl);
+            const navUrlMapping = {
+                "Movies": 1,
                 "Mine": 5,
                 "Genres": 2,
                 "Countries": 3,
@@ -78,7 +80,7 @@
                 "Contact": 6
             };
 
-            for (const [keyword, index] of Object.entries(urlMapping)) {
+            for (const [keyword, index] of Object.entries(navUrlMapping)) {
                 if (currentUrl.includes(keyword)) {
                     if (activeElement) {
                         activeElement.classList.remove('active');
@@ -87,9 +89,23 @@
                     break;  
                 }
             }
+            const trActiveElements = document.querySelectorAll('.tr-movie-menu-active > button');
+            console.log(trActiveElements)
+                const filterUrlMapping = {
+                        "TopRatedMovies": 0,
+                        "PopularityMovies": 1,
+                        "RecentMovies": 2
+                    }
+
+              for (const [keyword, index] of Object.entries(filterUrlMapping)) {
+                if (currentUrl.includes(keyword)) {
+                    trActiveElements[index].classList.add('active');
+                    break;  
+                }
+            }
         });
     </script>
-    <script src="~/js/jquery-3.6.0.min.js" asp-append-version="true"></script>
+    
     <script src="~/js/popper.min.js" asp-append-version="true"></script>
     <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/js/isotope.pkgd.min.js" asp-append-version="true"></script>

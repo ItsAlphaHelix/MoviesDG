@@ -82,26 +82,9 @@
     </div>
 }
 
-<script src="~/js/jquery-3.6.0.min.js" asp-append-version="true"></script>
-<script src="~/js/popper.min.js" asp-append-version="true"></script>
-<script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
-<script src="~/js/isotope.pkgd.min.js" asp-append-version="true"></script>
-<script src="~/js/imagesloaded.pkgd.min.js" asp-append-version="true"></script>
-<script src="~/js/jquery.magnific-popup.min.js" asp-append-version="true"></script>
-<script src="~/js/owl.carousel.min.js" asp-append-version="true"></script>
-<script src="~/js/jquery.odometer.min.js" asp-append-version="true"></script>
-<script src="~/js/jquery.appear.js" asp-append-version="true"></script>
-<script src="~/js/slick.min.js" asp-append-version="true"></script>
-<script src="~/js/ajax-form.js" asp-append-version="true"></script>
-<script src="~/js/wow.min.js" asp-append-version="true"></script>
-<script src="~/js/aos.js" asp-append-version="true"></script>
-<script src="~/js/plugins.js" asp-append-version="true"></script>
-<script src="~/js/main.js" asp-append-version="true"></script>
-<script src="~/js/qrcode.js" asp-append-version="true"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" asp-append-version="true"></script>
 <script>    
         $('#load-button').click(function () {
-            $('#load-button').hide();
+             $('#load-button').prop('disabled', true);
             var nextPageNumber = $(this).data('pageNumber');
             var documentTitle = document.title;
             var filterType = "";
@@ -121,12 +104,10 @@
                     $('#load-button').data('pageNumber', nextPageNumber + 1);
 
                     if ($.trim(data).length === 0) {
-                        $('#load-button').hide();
+                         $('#load-button').prop('disabled', true);
                     } else {
-                        $('#load-button').show();
+                         $('#load-button').prop('disabled', false);
                     }
-
-                    // $.getScript('/js/main.js');
                 })
                 .fail(function (xhr, status, error) {
                     console.log('An error occurred while loading the next page of movies: ' + error);
@@ -144,14 +125,16 @@
                 success: function (data) {
 
                 $('#movies-list').html(data);
-                let test = document.querySelectorAll('button')[3];
-                    $(test).addClass('active');
+                 let buttons = document.querySelectorAll('button');
                     if (filterType == "top-rated") {
+                        $(buttons[3]).addClass('active');
                         filterType = "TopRatedMovies";
                     } else if (filterType == "recent") {
+                        $(buttons[5]).addClass('active');
                         filterType = "RecentMovies";
 
                     } else if (filterType = "popularity") {
+                        $(buttons[4]).addClass('active');
                         filterType = "PopularityMovies";
                     }
 

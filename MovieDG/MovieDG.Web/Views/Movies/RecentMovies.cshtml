@@ -13,7 +13,7 @@
     <script>
             $('#load-button').click(function () {
 
-                $('#load-button').hide();
+            $('#load-button').prop('disabled', true);
                 var nextPageNumber = $(this).data('pageNumber');
 
                 $.get('/Movies/RecentMovies', {pageNumber: nextPageNumber },)
@@ -24,9 +24,9 @@
                         $('#load-button').data('pageNumber', nextPageNumber + 1);
 
                         if ($.trim(data).length === 0) {
-                            $('#load-button').hide();
+                        $('#load-button').prop('disabled', true);
                         } else {
-                            $('#load-button').show();
+                        $('#load-button').prop('disabled', false);
                         }
 
                         // $.getScript('/js/main.js');
@@ -39,20 +39,22 @@
     <script>
             $('.tr-movie-menu-active button').click(function () {
                 var filterType = $(this).data('filter');
-            $(this).addClass('active');
                 $.ajax({
                     url: '@Url.Action("Filter")',
                     type: 'GET',
                     data: { filterType: filterType },
                     success: function (data) {
                         $('#movies-list').html(data);
-
+                    let buttons = document.querySelectorAll('button');
                         if (filterType == "top-rated") {
+                            $(buttons[3]).addClass('active');
                             filterType = "TopRatedMovies";
                         } else if (filterType == "recent") {
+                            $(buttons[5]).addClass('active');
                             filterType = "RecentMovies";
 
                         } else if (filterType = "popularity") {
+                            $(buttons[4]).addClass('active');
                             filterType = "PopularityMovies";
                         }
 

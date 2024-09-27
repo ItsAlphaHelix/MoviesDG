@@ -25,7 +25,7 @@
                             <div class="navbar-wrap main-menu d-none d-lg-flex">
                                 <ul class="navigation">
                                     <li class="active">
-                                        <a asp-controller="Home" asp-action="Index">Home</a>
+                                        <a onfocus="" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <li>
                                         <a asp-controller="Movies" asp-action="All">Movies</a>
@@ -66,7 +66,7 @@
                                     this.User.IsInRole(SuportRoleName) || 
                                     this.User.IsInRole(ModeratorRoleName))
                                     {
-                                        <li><a asp-area="Administration" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                                    <li><a asp-area="Administration" asp-controller="Roles" asp-action="AllUsersInRoles">Dashboard</a></li>
                                     }    
                                 </ul>
                             </div>

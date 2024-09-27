@@ -67,45 +67,66 @@
     }
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const currentUrl = window.location.href;
-            const elementsLi = document.querySelectorAll('.navigation > li');
-            const activeElement = document.querySelector('li.active');
-                    console.log(currentUrl);
-            const navUrlMapping = {
-                "Movies": 1,
-                "Mine": 5,
-                "Genres": 2,
-                "Countries": 3,
-                "Years": 4,
-                "Contact": 6
-            };
+            let currentUrl = window.location.href;
+            if (!currentUrl.includes('Administration')) {
+                const elementsLi = document.querySelectorAll('.navigation > li');
+                const activeElement = document.querySelector('li.active');
+                console.log(currentUrl);
+                const navUrlMapping = {
+                    "Mine": 5,
+                    "Movies": 1,
+                    "Genres": 2,
+                    "Countries": 3,
+                    "Years": 4,
+                    "Contact": 6
+                };
 
-            for (const [keyword, index] of Object.entries(navUrlMapping)) {
-                if (currentUrl.includes(keyword)) {
-                    if (activeElement) {
-                        activeElement.classList.remove('active');
+                for (const [keyword, index] of Object.entries(navUrlMapping)) {
+                    if (currentUrl.includes(keyword)) {
+                        if (activeElement) {
+                            activeElement.classList.remove('active');
+                        }
+                        elementsLi[index].classList.add('active');
+                        break;
                     }
-                    elementsLi[index].classList.add('active');
-                    break;  
                 }
-            }
-            const trActiveElements = document.querySelectorAll('.tr-movie-menu-active > button');
-            console.log(trActiveElements)
+                const trActiveElements = document.querySelectorAll('.tr-movie-menu-active > button');
                 const filterUrlMapping = {
-                        "TopRatedMovies": 0,
-                        "PopularityMovies": 1,
-                        "RecentMovies": 2
-                    }
+                    "TopRatedMovies": 0,
+                    "PopularityMovies": 1,
+                    "RecentMovies": 2
+                }
 
-              for (const [keyword, index] of Object.entries(filterUrlMapping)) {
-                if (currentUrl.includes(keyword)) {
-                    trActiveElements[index].classList.add('active');
-                    break;  
+                for (const [keyword, index] of Object.entries(filterUrlMapping)) {
+                    if (currentUrl.includes(keyword)) {
+                        trActiveElements[index].classList.add('active');
+                        break;
+                    }
+                }
+            } else {
+                const adminAreaNavUrlMapping = {
+                    "AllUsersInRoles": 1,
+                    "Create": 2,
+                    "Add": 3,
+                    "Submisions": 4
+                };
+
+                const liElements = document.querySelectorAll('.navigation>li');
+                const activeLiElement = document.querySelector('.navigation > li.active')
+                const action = currentUrl.split('/')[5];
+                for (const [keyword, index] of Object.entries(adminAreaNavUrlMapping)) {
+                    if (action === keyword) {
+                        if (activeLiElement) {
+                            activeLiElement.classList.remove('active');
+                        }
+                        liElements[index].classList.add('active');
+                        break;
+                    }
                 }
             }
         });
     </script>
-    
+
     <script src="~/js/popper.min.js" asp-append-version="true"></script>
     <script src="~/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/js/isotope.pkgd.min.js" asp-append-version="true"></script>

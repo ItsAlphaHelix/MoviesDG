@@ -19,3 +19,30 @@
         <li><a class="@ManageNavPages.PersonalDataNavClass(ViewContext)" asp-page="./PersonalData">Personal data</a></li>
     </ul>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let currentUrl = window.location.href;
+        const liElements = document.querySelectorAll('.navigation>li');
+        const activeLiElement = document.querySelector('.navigation > li.active')
+        let action = currentUrl.split('/');
+        action = action[action.length - 1];
+        const identityManageUrlMapping = {
+            "Manage": 1,
+            "Email": 2,
+            "ChangePassword": 3,
+            "TwoFactorAuthentication": 4,
+            "PersonalData": 5
+        };
+
+        for (const [keyword, index] of Object.entries(identityManageUrlMapping)) {
+            if (action === keyword) {
+                if (activeLiElement) {
+                    activeLiElement.classList.remove('active');
+                }
+                liElements[index].classList.add('active');
+                break;
+            }
+        }
+    });
+</script>

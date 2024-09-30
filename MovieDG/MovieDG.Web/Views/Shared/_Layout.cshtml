@@ -113,7 +113,8 @@
 
                 const liElements = document.querySelectorAll('.navigation>li');
                 const activeLiElement = document.querySelector('.navigation > li.active')
-                const action = currentUrl.split('/')[5];
+                let action = currentUrl.split('/');
+                action = action[action.length - 1];
                 for (const [keyword, index] of Object.entries(adminAreaNavUrlMapping)) {
                     if (action === keyword) {
                         if (activeLiElement) {

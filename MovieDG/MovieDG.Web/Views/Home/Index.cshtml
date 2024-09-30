@@ -29,7 +29,7 @@
                             <li class="category">
                                 @foreach (var genre in Model.LatestMovie.Genres)
                                 {
-                                    <a href="#">&nbsp;@genre.Name</a>
+                                    <a asp-controller="Genres" asp-action="Type" asp-route-name="@genre.Name">&nbsp;@genre.Name</a>
                                 }
                             </li>
                             <li class="release-time">

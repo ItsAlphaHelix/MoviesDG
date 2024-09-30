@@ -35,6 +35,15 @@
             "PersonalData": 5
         };
 
+
+        if (action === 'EnableAuthenticator' || 
+            action === 'Disable2fa' ||
+            action === 'ResetAuthenticator' ||
+            action === 'GenerateRecoveryCodes' || 
+            action === 'ShowRecoveryCodes') {
+            liElements[4].classList.add('active');
+        }
+
         for (const [keyword, index] of Object.entries(identityManageUrlMapping)) {
             if (action === keyword) {
                 if (activeLiElement) {

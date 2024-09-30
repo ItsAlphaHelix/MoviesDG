@@ -6,22 +6,22 @@
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
-<h3>@ViewData["Title"]</h3>
 <div class="alert alert-warning" role="alert">
-    <p>
+    <p style="font-size: 15px; color: black">
         <span class="glyphicon glyphicon-warning-sign"></span>
         <strong>Put these codes in a safe place.</strong>
     </p>
-    <p>
+    <p style="font-size: 15px; color: black">
         If you lose your device and don't have the recovery codes you will lose access to your account.
     </p>
-    <p>
+    <p style="font-size: 15px; color: black">
         Generating new recovery codes does not change the keys used in authenticator apps. If you wish to change the key
         used in an authenticator app you should <a asp-page="./ResetAuthenticator">reset your authenticator keys.</a>
     </p>
 </div>
-<div>
-    <form method="post">
+
+<div style="display: block; text-align: center;">
+    <form style="all:unset;" method="post">
         <button class="btn" type="submit">Generate Codes</button>
     </form>
 </div>

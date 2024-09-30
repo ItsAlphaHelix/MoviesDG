@@ -8,6 +8,12 @@
 ## All Movies Page
 ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/All.png?raw=true)
 
+## New Releases Movies Page
+![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/New-Releases.png?raw=true)
+
+## My Movies Page
+![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/My-Movies.png?raw=true)
+
 ## 🔨 Built Using
 
 #### - ASP.NET Core 6.0

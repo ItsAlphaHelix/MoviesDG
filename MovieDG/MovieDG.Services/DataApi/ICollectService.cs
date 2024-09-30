@@ -2,6 +2,6 @@
 {
     public interface ICollectService
     {
-        Task<int> AddMoviesToDatabaseAsync(int startIndex, int endIndex);
+        Task<int> AddMoviesToDatabaseAsync(int moviesId);
     }
 }

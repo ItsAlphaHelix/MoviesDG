@@ -5,9 +5,6 @@
     public class MovieInputViewModel
     {
         [Range(0, int.MaxValue, ErrorMessage = MovieError)]
-        public int StartIndex { get; set; }
-
-        [Range(0, int.MaxValue, ErrorMessage = MovieError)]
-        public int EndIndex { get; set; }
+        public int MovieId { get; set; }
     }
 }

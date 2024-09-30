@@ -38,13 +38,11 @@
             this.countriesRepository = contriesRepository;
             this.actorsRepository = actorsRepository;
         }
-        public async Task<int> AddMoviesToDatabaseAsync(int startIndex, int endIndex)
+        public async Task<int> AddMoviesToDatabaseAsync(int movieId)
         {
             int addedMovies = 0;
 
-            for (int i = startIndex; i <= endIndex; i++)
-            {
-                var movieData = await this.dataService.GetMovieDataAsync(i);
+                var movieData = await this.dataService.GetMovieDataAsync(movieId);
 
                 if (movieData != null &&
                     movieData.Title != null &&
@@ -162,10 +160,6 @@
 
                     addedMovies++;
                 }
-            }
-
-
-
             return addedMovies;
         }
     }

@@ -38,22 +38,19 @@
         [HttpPost]
         public async Task<IActionResult> Create(MovieInputViewModel inputModel)
         {
-            if (inputModel.StartIndex > inputModel.EndIndex)
+            //if (inputModel.StartIndex > inputModel.EndIndex)
+            //{
+            //    this.toastNotification.Error(MovieStartIndexErrorMessage);
+            //    return this.View(inputModel);
+            //}
+
+            var currentMovie = this.moviesRepository.AllAsNoTracking().FirstOrDefault(x => x.TMDBId == inputModel.MovieId);
+
+            if (currentMovie is not null)
             {
-                this.toastNotification.Error(MovieStartIndexErrorMessage);
-                return this.View(inputModel);
-            }
+                this.toastNotification.Error(String.Format(MovieAlreadyExistMessage, inputModel.MovieId));
 
-            for (int i = inputModel.StartIndex; i <= inputModel.EndIndex; i++)
-            {
-                var currentMovie = this.moviesRepository.AllAsNoTracking().FirstOrDefault(x => x.TMDBId == i);
-
-                if (currentMovie is not null)
-                {
-                    this.toastNotification.Error(String.Format(MovieAlreadyExistMessage, i));
-
-                    return RedirectToAction(nameof(Create));
-                }
+                return RedirectToAction(nameof(Create));
             }
 
             if (!this.ModelState.IsValid)
@@ -61,7 +58,7 @@
                 return this.View(inputModel);
             }
 
-            var movies = await this.collectService.AddMoviesToDatabaseAsync(inputModel.StartIndex, inputModel.EndIndex);
+            var movies = await this.collectService.AddMoviesToDatabaseAsync(inputModel.MovieId);
 
             this.toastNotification.Success(SuccessfullyAddMovieMessage);
 

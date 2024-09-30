@@ -11,28 +11,20 @@
 <div class="admin-container">
     <partial name="../Shared/_AdminNav.cshtml" />
 
-    <h2 style="text-align: center">@this.ViewData["Title"]</h2>
+    <h2 style="text-align: center"><span style="color: #e4d804"></span> Create Movie</h2>
     <br />
     <div style="text-align: center" class="movie-details-content">
-        <h2 style="font-size: 20px">Chose a movie from &nbsp; <span><a href="https://www.themoviedb.org/" target="_blank">TMDb.org</a></span></h2>
+        <h2 style="font-size: 20px">Chose a movie ID from &nbsp; <span><a href="https://www.themoviedb.org/" target="_blank">TMDb.org</a></span></h2>
     </div>
     <br />
             <form style="text-align: center" method="post" asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group ">
                     <div class="col-md-3 ml-auto mr-auto">
-                         <input asp-for="StartIndex" type="text" class="form-control" placeholder="Start Index" />
-                    <span asp-validation-for="StartIndex" class="text-danger"></span>
+                    <input asp-for="MovieId" type="text" class="form-control" placeholder="Enter a movie ID" />
+                    <span asp-validation-for="MovieId" class="text-danger"></span>
                     </div>
                 </div>
-
-                <div class="form-group ">
-                    <div class="col-md-3 ml-auto mr-auto">
-                         <input asp-for="EndIndex" type="text" class="form-control" placeholder="End Index" />
-                    <span asp-validation-for="EndIndex" class="text-danger"></span>
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <button class="btn" type="submit">Create</button>
                 </div>

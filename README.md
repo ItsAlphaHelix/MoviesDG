@@ -15,7 +15,7 @@
 ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/My-Movie-Details.png?raw=true)
 
 ## My Movie Details Page
-![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Mine-Movies-Details.png?raw=true)
+![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Mine-Movie-Details.png?raw=true)
 
 ## Movie Details Page
 ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Movie-Details.png?raw=true)
@@ -24,13 +24,13 @@
 ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Contact-Form.png?raw=true)
 
 ## Here is Administration Area.
-  # All Users In Roles Page
+  ### All Users In Roles Page
   ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/All-Users-In-Roles.png?raw=true)
-  # Create Movie Page
+  ### Create Movie Page
   ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Create-Movie.png?raw=true)
-  # Add User To Role Page
+  ### Add User To Role Page
   ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Add-User-To-Role.png?raw=true)
-  # All Submisions Page
+  ### All Submisions Page
   ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/All-Submisions.png?raw=true)
 
 ## 🔨 Built Using

@@ -5,25 +5,26 @@
 
 ### This is an application built using the Asp.Net Core technology and the MVC pattern. To use the application, each user must create their own profile. Once they log into the system, they will be able to watch trailers for their favorite movies and search for movies by genre, country, year, and actors. Each user will be able to create their own movie collection, add or remove movies from it. Additionally, the user of the application has a chat feature through which they can communicate with other users. The application also has a "Contacts" option that serves as a direct link to the support team. Each user has profile settings, including the ability to change their username, location, email, password, and enable two-factor authentication. The user can delete their profile if they decide to do so.
 
-## All Movies Page
-![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/All.png?raw=true)
+##Main Pages
+  ### All Movies Page
+  ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/All.png?raw=true)
 
-## New Releases Movies Page
-![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/New-Releases.png?raw=true)
+  ### New Releases Movies Page
+  ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/New-Releases.png?raw=true)
 
-## My Movies Page
-![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/My-Movie-Details.png?raw=true)
+  ### My Movies Page
+  ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/My-Movies.png?raw=true)
 
-## My Movie Details Page
-![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Mine-Movie-Details.png?raw=true)
+  ### My Movie Details Page
+  ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Mine-Movie-Details.png?raw=true)
 
-## Movie Details Page
-![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Movie-Details.png?raw=true)
+  ### Movie Details Page
+  ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Movie-Details.png?raw=true)
 
-## Contact Form Page
-![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Contact-Form.png?raw=true)
-
-## Here is Administration Area.
+  ### Contact Form Page
+  ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Contact-Form.png?raw=true)
+##
+  ## Administration Pages.
   ### All Users In Roles Page
   ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/All-Users-In-Roles.png?raw=true)
   ### Create Movie Page

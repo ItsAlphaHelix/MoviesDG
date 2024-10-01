@@ -14,6 +14,15 @@
 ## My Movies Page
 ![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/My-Movies.png?raw=true)
 
+## My Movie Details Page
+![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Mine-Movies-Details.png?raw=true)
+
+## Movie Details Page
+![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Movies-Details.png?raw=true)
+
+## Contact Form Page
+![image](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Contact-Form.png?raw=true)
+
 ## 🔨 Built Using
 
 #### - ASP.NET Core 6.0

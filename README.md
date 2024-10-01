@@ -40,19 +40,19 @@
 ### 📝 **All Submissions**
 ![All Submissions](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/All-Submisions.png?raw=true)
 
-##  **Profile Settings Pages
+## 🛠️ **Profile Settings Pages**
 
-### Change Profile
+### 🔄 **Change Profile**
 ![Change Profile](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Change-Profile.png?raw=true)
 
-### Change Email
+### 📧 **Change Email**
 ![Change Email](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Change-Email.png?raw=true)
 
-### Change Password
-![Change Email](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Change-Password.png?raw=true)
+### 🔑 **Change Password**
+![Change Password](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Change-Password.png?raw=true)
 
-### Better Security(enabling two factor authentication)
-![Change Email](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Better-Security.png?raw=true)
+### 🔐 **Better Security (Enable Two-Factor Authentication)**
+![Better Security](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Better-Security.png?raw=true)
 
 
 ## 🛠️ **Built Using**

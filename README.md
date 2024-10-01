@@ -4,13 +4,7 @@
 
 ## 📃 **Project Description**
 
-**MoviesDG** is an ASP.NET Core MVC application that allows users to explore and enjoy movie trailers, build personal movie collections, and interact with others. Each user must create a profile to access the following features:
-- **Movie Search**: Browse by genre, country, year, or actor.
-- **Collections**: Add or remove movies from personal collections.
-- **Chat**: Communicate with other users.
-- **Profile Management**: Customize settings like username, location, email, password, and two-factor authentication.
-- **Support**: Contact the support team via a built-in form.
-- **Account Management**: Users can delete their profiles if desired.
+### This is an application built using the Asp.Net Core technology and the MVC pattern. To use the application, each user must create their own profile. Once they log into the system, they will be able to watch trailers for their favorite movies and search for movies by genre, country, year, and actors. Each user will be able to create their own movie collection, add or remove movies from it. Additionally, the user of the application has a chat feature through which they can communicate with other users. The application also has a "Contacts" option that serves as a direct link to the support team. Each user has profile settings, including the ability to change their username, location, email, password, and enable two-factor authentication. The user can delete their profile if they decide to do so.
 
 ## 🌟 **Main Pages**
 

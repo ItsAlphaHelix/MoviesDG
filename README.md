@@ -54,6 +54,16 @@
 ### 🔐 **Better Security (Enable Two-Factor Authentication)**
 ![Better Security](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Better-Security.png?raw=true)
 
+## **Identitiy**
+
+### **Register** 
+![Register](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Register.png?raw=true)
+
+### **Login** 
+![Login](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Login.png?raw=true)
+
+### **Forgot Password** 
+![Forgot Password](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Forgot-Password.png?raw=true)
 
 ## 🛠️ **Built Using**
 

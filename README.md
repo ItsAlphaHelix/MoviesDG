@@ -40,11 +40,14 @@
 ### 📝 **All Submissions**
 ![All Submissions](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/All-Submisions.png?raw=true)
 
-### **Submision Details**
-![Submision Details](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Submision-Details.png?raw=true)
+### 📝 **Submission Details**
+![Submission Details](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Submision-Details.png?raw=true)
 
-### **Replay Message**
+### ✉️ **Reply Message**
 ![Reply Message](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Reply-Message.png?raw=true)
+
+### 🗑️ **Delete Account**
+![Delete Account](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Images/Delete-Personal-Data.png?raw=true)
 
 
 ## 🛠️ **Profile Settings Pages**

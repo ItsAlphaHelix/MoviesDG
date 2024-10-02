@@ -149,21 +149,24 @@ After completing these steps, the application should run properly.
 
 2. **Set the database connection string:**
 
-   - **Here how should looks json with all creds**
-     ```json
-      {
-      "ConnectionStrings": {
-       "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database={databaseName};Trusted_Connection=True;MultipleActiveResultSets=true"
-     },
-     "TMDB:ApiKey": "apiKey",
-      "BrevoSmtpSettings": {
-         "Server": "brevoSmtpServer",
-         "Port": port,
-         "Username": "username",
-        "Password": "password"
-     }
-     }
-     ```
+  - **Here’s how the JSON configuration should look with all credentials:**
+
+  ```json
+  {
+    "ConnectionStrings": {
+      "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database={databaseName};Trusted_Connection=True;MultipleActiveResultSets=true"
+    },
+    "TMDB": {
+      "ApiKey": "apiKey"
+    },
+    "BrevoSmtpSettings": {
+      "Server": "brevoSmtpServer",
+      "Port": 233,
+      "Username": "username",
+      "Password": "password"
+    }
+  }
+
 
 Both services are free to use.
 

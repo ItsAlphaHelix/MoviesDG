@@ -113,14 +113,14 @@ Follow these steps to set up and run the application successfully:
    - **For Server Authentication:**
      ```json
      "ConnectionStrings": {
-       "DefaultConnection": "Server=.;Database={name of database};User Id={server name};Password={server password};"
+       "DefaultConnection": "Server=.;Database={databaseName};User Id={serverName};Password={serverPassword};"
      }
      ```
 
    - **For Windows Authentication:**
      ```json
      "ConnectionStrings": {
-       "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database={name of database};Trusted_Connection=True;MultipleActiveResultSets=true"
+       "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database={databaseName};Trusted_Connection=True;MultipleActiveResultSets=true"
      }
      ```
 

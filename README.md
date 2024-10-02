@@ -100,6 +100,55 @@
 
 ![Database Diagram](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/Database-Diagram.png?raw=true)
 
+
+# Running the Application
+
+Follow these steps to set up and run the application successfully:
+
+## Step 1: Configure the Database Connection
+
+1. **Open `appsettings.json` or `usersecrets.json`.**
+2. **Set the database connection string:**
+
+   - **For Server Authentication:**
+     ```json
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=.;Database={name of database};User Id={server name};Password={server password};"
+     }
+     ```
+
+   - **For Windows Authentication:**
+     ```json
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database={name of database};Trusted_Connection=True;MultipleActiveResultSets=true"
+     }
+     ```
+
+## Step 2: Import the Database
+
+1. **Open SQL Server Management Studio.**
+2. **Right-click on `Databases` and choose `Import Data-Tier Application...`** to import the provided `MoviesDGDatabase.bacpac` file.
+
+## Step 3: Run the Application
+
+1. **Start the application.**
+2. **Log in using the following credentials:**
+
+   - **Username:** Admin
+   - **Password:** `admin23moviesdg@`
+
+After completing these steps, the application should run properly.
+
+## Additional Features
+
+- **Email Functionality:**  
+  To enable email sending capabilities, create an account in **Brevo** and obtain your SMTP credentials.
+
+- **Adding New Movies:**  
+  To add new movies to your database, create an account on **TMDB** and acquire your API key.
+
+Both services are free to use.
+
 ## 👤 **Author**
 
 - **Dimitar Georgiev**  

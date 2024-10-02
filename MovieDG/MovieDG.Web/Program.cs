@@ -7,11 +7,10 @@ using MovieDG.Web.Providers;
 using MoviesDG.Data;
 using MoviesDG.Web.Extensions;
 using NToastNotify;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string connectionString = builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
+string connectionString = builder.Configuration.GetSection("ConnectionStrings:MoviesDGConnectionString").Value;
 
 builder.Services.AddDbContext<MovieDGDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -49,6 +48,7 @@ else
 }
 
 app.Seed();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

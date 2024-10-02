@@ -1,15 +1,19 @@
 ﻿namespace MovieDG.Core.Seeding
 {
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using MovieDG.Common;
     using MovieDG.Data.Data.Models;
     using MoviesDG.Data;
+    using MoviesDG.Data.Models;
+    using Newtonsoft.Json;
     using static MovieDG.Common.GlobalConstants;
-    internal class RolesSeeder : ISeeder
+    internal class Seeder : ISeeder
     {
         public async Task SeedAsync(MovieDGDbContext dbContext, IServiceProvider serviceProvider)
         {
+            
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 

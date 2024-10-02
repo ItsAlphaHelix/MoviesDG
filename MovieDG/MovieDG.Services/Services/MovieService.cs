@@ -166,10 +166,10 @@
                  })
                  .FirstOrDefaultAsync();
 
-            if (homepageMovie == null)
-            {
-                throw new ArgumentException(MovieNullErrorMessage);
-            }
+            //if (homepageMovie == null)
+            //{
+            //    throw new ArgumentException(MovieNullErrorMessage);
+            //}
 
             return homepageMovie;
         }

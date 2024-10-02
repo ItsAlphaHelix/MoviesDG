@@ -127,7 +127,7 @@ Follow these steps to set up and run the application successfully:
 ## Step 2: Import the Database
 
 1. **Open SQL Server Management Studio.**
-2. **Right-click on `Databases` and choose `Import Data-Tier Application...`** to import the provided `MoviesDGDatabase.bacpac` file.
+2. **Right-click on `Databases` and choose `Import Data-Tier Application...`** to import the provided [MoviesDGDatabase.bacpac](https://github.com/ItsAlphaHelix/MoviesDG/blob/main/MoviesDGDatabase.bacpac) file.
 
 ## Step 3: Run the Application
 

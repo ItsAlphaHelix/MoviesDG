@@ -53,8 +53,8 @@
             {
                 Id = question.Id,
                 Name = $"From: {GlobalConstants.SystemName} - {user.UserName}",
-                AdminEmail = user.Email,
-                ToUserEmail = question.Email,
+                AdminEmail = $"From: {GlobalConstants.AppEmail}",
+                ToUserEmail = $"To: {question.Email}",
                 Subject = $"Subject: {question.Subject}"
             };
 

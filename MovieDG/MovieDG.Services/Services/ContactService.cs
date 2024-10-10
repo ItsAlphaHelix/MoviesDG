@@ -77,11 +77,14 @@
 
         public async Task ReplyMessageToUserAsync(ReplyMessageViewModel replyModel)
         {
+            string emailFrom = replyModel.AdminEmail.Split(" ")[1];
+            string emailTo = replyModel.ToUserEmail.Split(" ")[1];
+
             await this.emailSender.SendEmailAsync
             (
-                GlobalConstants.AppEmail,
+                emailFrom,
                 replyModel.Name,
-                replyModel.ToUserEmail,
+                emailTo,
                 replyModel.Subject,
                 replyModel.Message
             );

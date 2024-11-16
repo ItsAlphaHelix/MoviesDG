@@ -86,13 +86,13 @@
         $('#load-button').click(function () {
              $('#load-button').prop('disabled', true);
             var nextPageNumber = $(this).data('pageNumber');
-            var documentTitle = document.title;
+            var currentUrl = window.location.href;
             var filterType = "";
-            if (documentTitle == "Top Rated Movies - MoviesDG") {
+            if (currentUrl.includes('TopRatedMovies')) {
                 filterType = "top-rated"
-            } else if (documentTitle == "Popularity MoviesTop Rated Movies - MoviesDG") {
+            } else if (currentUrl.includes('PopularityMovies')) {
                 filterType = "popularity";
-            } else if (documentTitle == "Recent MoviesTop Rated Movies - MoviesDG") {
+            } else if (currentUrl.includes('RecentMovies')) {
                 filterType = "recent";
             }
 
@@ -125,18 +125,21 @@
                 success: function (data) {
 
                 $('#movies-list').html(data);
-                 let buttons = document.querySelectorAll('button');
-                    if (filterType == "top-rated") {
-                        $(buttons[2]).addClass('active');
-                        filterType = "TopRatedMovies";
-                    } else if (filterType == "recent") {
-                        $(buttons[4]).addClass('active');
-                        filterType = "RecentMovies";
+                let element = document.querySelector('.tr-movie-menu-active').children;
+                let topRatingButton = element.item(0);
+                let popularityButton = element.item(1);
+                let recentButton = element.item(2);
+                if (filterType == "top-rated") {
+                    topRatingButton.classList.add('active');
+                    filterType = "TopRatedMovies";
+                } else if (filterType == "recent") {
+                    recentButton.classList.add('active');
+                    filterType = "RecentMovies";
 
-                    } else if (filterType = "popularity") {
-                        $(buttons[3]).addClass('active');
-                        filterType = "PopularityMovies";
-                    }
+                } else if (filterType = "popularity") {
+                    popularityButton.classList.add('active');
+                    filterType = "PopularityMovies";
+                }
 
                     window.history.pushState(null, null, filterType);
 
@@ -148,13 +151,10 @@
                         filterType = "Popularity Movies"
                     }
                     document.title = filterType + " - MoviesDG";
-                    // $.getScript('/js/main.js');
                 },
                 error: function () {
                     alert('An error occurred.');
                 }
             });
-            // $('.filter-buttons button').removeClass('active');
-            
         });
 </script>

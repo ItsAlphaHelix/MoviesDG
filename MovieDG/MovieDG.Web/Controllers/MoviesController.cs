@@ -94,7 +94,7 @@
                     ViewData["Title"] = "Top Rated Movies";
 
                     return PartialView("_LoadMoreMovies", topRatedMovies);
-                default:
+                case "popularity":
 
                     var popularityMovies = await this.moviesService.GetPopularityMoviesAsync(pageNumber, pageSize);
 
@@ -106,7 +106,11 @@
                     ViewData["Title"] = "Popularity Movies";
 
                     return PartialView("_LoadMoreMovies", popularityMovies);
+                  
             }
+
+            var movies = await this.moviesService.GetAllMoviesAsync(pageNumber, pageSize);
+            return PartialView("_LoadMoreMovies", movies);
         }
 
         [AllowAnonymous]

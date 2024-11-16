@@ -28,6 +28,7 @@
         {
             var movies = await moviesRepository
                 .AllAsNoTracking()
+                .OrderByDescending(x => x.ReleaseDate.Year)
                 .Select(x => new MovieViewModel()
                 {
                     Id = x.Id,
@@ -151,7 +152,7 @@
         {
             var homepageMovie = await this.moviesRepository
                  .AllAsNoTracking()
-                 .Where(x => x.Id == 128) //46
+                 .Where(x => x.Id == 128)
                  .Select(x => new BannerHomeMovieViewModel()
                  {                    
                      Title = x.Title,

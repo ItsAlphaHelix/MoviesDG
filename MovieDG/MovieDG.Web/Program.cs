@@ -50,7 +50,7 @@ else
 
 app.Seed();
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

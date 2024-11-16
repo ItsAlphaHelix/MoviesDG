@@ -151,7 +151,7 @@
         {
             var homepageMovie = await this.moviesRepository
                  .AllAsNoTracking()
-                 .Where(x => x.Id == 46)
+                 .Where(x => x.Id == 128) //46
                  .Select(x => new BannerHomeMovieViewModel()
                  {                    
                      Title = x.Title,

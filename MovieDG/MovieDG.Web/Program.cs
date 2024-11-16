@@ -20,6 +20,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.Get
     .AddRoles<ApplicationRole>()
     .AddEntityFrameworkStores<MovieDGDbContext>();
 
+
 builder.Services.AddRazorPages().AddNToastNotifyToastr(new ToastrOptions
 {
     ProgressBar = true,
@@ -49,7 +50,7 @@ else
 
 app.Seed();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

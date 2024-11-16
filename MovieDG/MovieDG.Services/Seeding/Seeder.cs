@@ -7,7 +7,7 @@
     using MovieDG.Data.Data.Models;
     using MoviesDG.Data;
     using MoviesDG.Data.Models;
-    using Newtonsoft.Json;
+
     using static MovieDG.Common.GlobalConstants;
     internal class Seeder : ISeeder
     {

@@ -1,6 +1,5 @@
 ﻿namespace MoviesDG.Core.Messaging
 {
-    using SendGrid.Helpers.Mail;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 

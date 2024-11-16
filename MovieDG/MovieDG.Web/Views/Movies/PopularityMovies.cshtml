@@ -47,14 +47,14 @@
                         $('#movies-list').html(data);
                         let buttons = document.querySelectorAll('button');
                         if (filterType == "top-rated") {
-                            $(buttons[3]).addClass('active');
+                            $(buttons[2]).addClass('active');
                             filterType = "TopRatedMovies";
                         } else if (filterType == "recent") {
-                            $(buttons[5]).addClass('active');
+                            $(buttons[4]).addClass('active');
                             filterType = "RecentMovies";
 
                         } else if (filterType = "popularity") {
-                            $(buttons[4]).addClass('active');
+                            $(buttons[3]).addClass('active');
                             filterType = "PopularityMovies";
                         }
 

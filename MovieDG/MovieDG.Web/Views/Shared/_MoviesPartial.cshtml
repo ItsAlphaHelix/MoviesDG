@@ -78,13 +78,65 @@
 @if (Model.Count() >= 10)
 {
     <div id="tr-button" class="tr-movie-btn text-center mt-25">
-        <button id="load-button" class="btn" data-page-number="2">LOAD MORE</button>
+        <button id="load-button" class="btn" data-page-number="2">
+            <span id="button-text">LOAD MORE</span>
+            <span id="spinner" class="spinner" style="display: none;"></span>
+        </button>
     </div>
 }
 
-<script>    
+
+
+<script>
+    $('#load-button').click(function () {
+        $('#load-button').prop('disabled', true);
+
+        // Show the spinner and hide the button text
+        $('#spinner').show();
+        $('#button-text').hide();
+
+        var nextPageNumber = $(this).data('pageNumber');
+        var currentUrl = window.location.href;
+        var filterType = "";
+        if (currentUrl.includes('TopRatedMovies')) {
+            filterType = "top-rated"
+        } else if (currentUrl.includes('PopularityMovies')) {
+            filterType = "popularity";
+        } else if (currentUrl.includes('RecentMovies')) {
+            filterType = "recent";
+        }
+
+        setTimeout(function() {
+            $.get('/Movies/LoadMoreByFilter', { filterType: filterType, pageNumber: nextPageNumber },)
+                .done(function (data) {
+
+                    $('#tr-button').append(data);
+                    $('#tr-button').append($('#load-button'))
+                    $('#load-button').data('pageNumber', nextPageNumber + 1);
+                    // $('#button-text').hide();
+                    $('#spinner').hide();
+                    $('#button-text').show();
+                    if ($.trim(data).length === 0) {
+                        $('#load-button').prop('disabled', true);
+                    } else {
+                        $('#load-button').prop('disabled', false);
+                    }
+                })
+                .fail(function (xhr, status, error) {
+                    console.log('An error occurred while loading the next page of movies: ' + error);
+                });
+        }, 1500);
+    });
+</script>
+
+@* <script>    
         $('#load-button').click(function () {
              $('#load-button').prop('disabled', true);
+
+        // Show the spinner and hide the button text
+        $('#spinner').show();
+        $('#button-text').hide();
+
             var nextPageNumber = $(this).data('pageNumber');
             var currentUrl = window.location.href;
             var filterType = "";
@@ -99,21 +151,30 @@
             $.get('/Movies/LoadMoreByFilter', { filterType: filterType, pageNumber: nextPageNumber },)
                 .done(function (data) {
 
+                    setTimeout(function() {
                     $('#tr-button').append(data);
                     $('#tr-button').append($('#load-button'))
                     $('#load-button').data('pageNumber', nextPageNumber + 1);
 
                     if ($.trim(data).length === 0) {
-                         $('#load-button').prop('disabled', true);
+                        $('#load-button').prop('disabled', true);
                     } else {
-                         $('#load-button').prop('disabled', false);
+                        $('#load-button').prop('disabled', false);
                     }
+                }, 2000)
                 })
                 .fail(function (xhr, status, error) {
                     console.log('An error occurred while loading the next page of movies: ' + error);
-                });
+                })
+                .always(function () {
+                     setTimeout(function() {
+                    // Hide spinner and show button text after request completion
+                    $('#spinner').hide();
+                    $('#button-text').show();
+                }, 2000)
+            });
         });
-</script>
+</script> *@
 
 <script>  
         $('.tr-movie-menu-active button').click(function () {

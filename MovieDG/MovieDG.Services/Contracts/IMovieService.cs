@@ -9,7 +9,7 @@
     public interface IMovieService
     {
         Task<IEnumerable<MovieViewModel>> GetAllMoviesAsync(int pageNumber, int pageSize);
-
+        Task<int> GetMoviesTotalPagesAsync(string? year, string? country, string? genre, string? filterType);
         Task<MovieDetailsViewModel> GetMovieDetailsAsync(int id);
 
         Task<IEnumerable<MovieViewModel>> GetTopRatedMoviesAsync(int pageNumber, int pageSize);

@@ -5,11 +5,10 @@
 
 @model IEnumerable<MovieViewModel>
 
-<div class="container">
     <div id="list-of-movies" class="row movie-item-row">
         @foreach (var movie in Model)
         {
-            <div class="custom-col- grid-item grid-sizer">
+            <div id="movie" class="custom-col- grid-item grid-sizer">
                 <div class="movie-item movie-item-two">
                     <div class="movie-poster">
                         <img src="@movie.Poster" alt="">
@@ -53,4 +52,3 @@
             </div>
         }
     </div>
-</div>

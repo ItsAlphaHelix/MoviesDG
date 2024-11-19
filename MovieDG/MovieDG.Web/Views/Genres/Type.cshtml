@@ -19,10 +19,11 @@
         @await Html.PartialAsync("_LoadMoreMovies", Model)
     </div>
 
-    @if (Model.Count() >= 10)
+    @if (ViewBag.TotalPages > 1)
     {
         <div id="tr-button" class="tr-movie-btn text-center mt-25">
             <button id="load-button" class="btn" data-page-number="2">LOAD MORE</button>
+            <div id="spinner" style="display: none"></div>
         </div>
     }
 </section>
@@ -30,30 +31,35 @@
 @section scripts{
     <script>
             $('#load-button').click(function () {
+                let $button = $('#load-button');
+                let $spinner = $('#spinner');
 
-                $('#load-button').hide();
-                var nextPageNumber = $(this).data('pageNumber');
-                var currentUrl = window.location.href;
-                var genreName = currentUrl.split('=')[1];
+                // Disable the button and show the spinner
+                $button.hide();
+                $spinner.show();
 
-                $.get('/Genres/Type', { name: genreName, pageNumber: nextPageNumber })
-                    .done(function (data) {
+                let nextPageNumber = $(this).data('pageNumber');
+                let currentUrl = window.location.href;
+                let genreName = currentUrl.split('=')[1];
+                let totalPages = '@ViewBag.TotalPages';
 
-                        $('#tr-button').append(data);
-                        $('#tr-button').append($('#load-button'))
-                        $('#load-button').data('pageNumber', nextPageNumber + 1);
-
-                        if ($.trim(data).length === 0) {
-                            $('#load-button').hide();
-                        } else {
-                            $('#load-button').show();
-                        }
-
-                        $.getScript('/js/main.js');
-                    })
-                    .fail(function (xhr, status, error) {
-                        console.log('An error occurred while loading the next page of movies: ' + error);
-                    });
+                setTimeout(function () {
+                    $.get('/Genres/Type', { name: genreName, pageNumber: nextPageNumber })
+                        .done(function (data) {
+                           $.getScript('/js/main.js');
+                            $('.top-rated-movie .container').append(data);
+                            // Check if there are more pages to load
+                            if (nextPageNumber === parseInt(totalPages)) {
+                                $button.hide();  // Hide the button if we're on the last page
+                            } else {
+                                $button.data('pageNumber', nextPageNumber + 1).show();
+                            }
+                            $spinner.hide();
+                        })
+                        .fail(function (xhr, status, error) {
+                            console.log('An error occurred while loading the next page of movies: ' + error);
+                        });
+            }, 1000);
             });
     </script>
 }

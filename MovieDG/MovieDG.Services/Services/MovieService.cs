@@ -41,11 +41,35 @@
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-
-
+            
             return movies;
         }
 
+        public async Task<int> GetMoviesTotalPagesAsync(string? year, string? country, string? genre, string? filterType)
+        {
+            var totalMoviesCount = await this.moviesRepository
+                .AllAsNoTracking()
+                .Where(x =>
+                    (year == null || x.ReleaseDate.Year.ToString() == year.ToString()) &&
+                    (country == null || x.MovieCountries.Any(mc => mc.Country.Name == country)) &&
+                    (genre == null || x.MovieGenres.Any(x => x.Genre.Type == genre)))
+                .CountAsync();
+                
+            if (filterType == "recent")
+            {
+                totalMoviesCount = await this.moviesRepository
+                    .AllAsNoTracking()
+                    .OrderByDescending(x => x.ReleaseDate)
+                    .CountAsync();
+            }
+                
+            // Calculate the total number of pages (each page shows 10 movies)
+            int pageSize = 10;
+
+            int totalPages = (int)Math.Ceiling((double)totalMoviesCount / pageSize);
+
+            return totalPages;
+        }
         public async Task<MovieDetailsViewModel> GetMovieDetailsAsync(int id)
         {
             var movie = await moviesRepository

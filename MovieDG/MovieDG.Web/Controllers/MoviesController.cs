@@ -18,14 +18,12 @@
         [AllowAnonymous]
         public async Task<IActionResult> All(int pageNumber, int pageSize = 10)
         {
+            var totalPages = await this.moviesService.GetMoviesTotalPagesAsync(null, null, null, null);
+            ViewBag.TotalPages = totalPages;
+
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 var movies = await this.moviesService.GetAllMoviesAsync(pageNumber, pageSize);
-
-                if (pageSize > movies.Count())
-                {
-                    return View();
-                }
 
                 return PartialView("_LoadMoreMovies", movies);
             }
@@ -40,6 +38,8 @@
         [AllowAnonymous]
         public async Task<IActionResult> Filter(string filterType)
         {
+            var totalPages = await this.moviesService.GetMoviesTotalPagesAsync(null, null, null, filterType);
+            ViewBag.TotalPages = totalPages;
 
             switch (filterType)
             {
@@ -65,19 +65,13 @@
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> LoadMoreByFilter(string filterType, int pageNumber, int pageSize = 10)
+        public async Task<IActionResult> LoadMore(string filterType, int pageNumber, int pageSize = 10)
         {
 
             switch (filterType)
             {
                 case "recent":
-
                     var recentMovies = await this.moviesService.GetRecentMoviesAsync(pageNumber, pageSize);
-
-                    if (pageSize > recentMovies.Count())
-                    {
-                        return View();
-                    }
 
                     ViewData["Title"] = "Recent Movies";
 
@@ -86,22 +80,12 @@
 
                     var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync(pageNumber, pageSize);
 
-                    if (pageSize > topRatedMovies.Count())
-                    {
-                        return View();
-                    }
-
                     ViewData["Title"] = "Top Rated Movies";
 
                     return PartialView("_LoadMoreMovies", topRatedMovies);
                 case "popularity":
 
                     var popularityMovies = await this.moviesService.GetPopularityMoviesAsync(pageNumber, pageSize);
-
-                    if (pageSize > popularityMovies.Count())
-                    {
-                        return View();
-                    }
 
                     ViewData["Title"] = "Popularity Movies";
 
@@ -116,14 +100,12 @@
         [AllowAnonymous]
         public async Task<IActionResult> TopRatedMovies(int pageNumber, int pageSize = 10)
         {
+            var totalPages = await this.moviesService.GetMoviesTotalPagesAsync(null, null, null, "top-rated");
+            ViewBag.TotalPages = totalPages;
+
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 var topRatedMovies = await this.moviesService.GetTopRatedMoviesAsync(pageNumber, pageSize);
-
-                if (pageSize > topRatedMovies.Count())
-                {
-                    return View();
-                }
 
                 return PartialView("_LoadMoreMovies", topRatedMovies);
             }
@@ -137,14 +119,11 @@
         [AllowAnonymous]
         public async Task<IActionResult> PopularityMovies(int pageNumber, int pageSize = 10)
         {
+            var totalPages = await this.moviesService.GetMoviesTotalPagesAsync(null, null, null, "popularity");
+            ViewBag.TotalPages = totalPages;
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 var popularityMovies = await this.moviesService.GetPopularityMoviesAsync(pageNumber, pageSize);
-
-                if (pageSize > popularityMovies.Count())
-                {
-                    return View();
-                }
 
                 return PartialView("_LoadMoreMovies", popularityMovies);
             }
@@ -158,14 +137,11 @@
         [AllowAnonymous]
         public async Task<IActionResult> RecentMovies(int pageNumber, int pageSize = 10)
         {
+            var totalPages = await this.moviesService.GetMoviesTotalPagesAsync(null, null, null, "recent");
+            ViewBag.TotalPages = totalPages;
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
                 var recentMovies = await this.moviesService.GetRecentMoviesAsync(pageNumber, pageSize);
-
-                if (pageSize > recentMovies.Count())
-                {
-                    return View();
-                }
 
                 return PartialView("_LoadMoreMovies", recentMovies);
             }

@@ -3472,18 +3472,19 @@ b {
     color: #e4d804;
 }
 
-.spinner {
-    border: 2px solid rgba(0, 0, 0, 0.2); /* Light gray border */
-    border-top: 2px solid #fff; /* White spinner */
+/* Loadding spinner */
+
+#spinner {
+    border: 8px solid #e4d804;
+    border-top: 8px solid #fff;
     border-radius: 50%;
-    width: 15px;
-    height: 15px;
-    animation: spin 0.8s linear infinite;
-    margin-left: 10px; /* Space between text and spinner */
+    width: 50px;
+    height: 50px;
+    animation: spin 1.5s linear infinite;
+    margin-top: 10px; /* Space between button and spinner */
     display: inline-block;
 }
 
-/* Spinner animation */
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -3493,4 +3494,3 @@ b {
         transform: rotate(360deg);
     }
 }
-

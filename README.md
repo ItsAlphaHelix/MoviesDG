@@ -115,14 +115,14 @@ Follow these steps to set up and run the application successfully:
    - **For Server Authentication:**
      ```json
      "ConnectionStrings": {
-       "DefaultConnection": "Server=.;Database={databaseName};User Id={serverName};Password={serverPassword};"
+       "MoviesDGConnectionString": "Server=.;Database={databaseName};User Id={serverName};Password={serverPassword};TrustServerCertificate=True"
      }
      ```
 
    - **For Windows Authentication:**
      ```json
      "ConnectionStrings": {
-       "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database={databaseName};Trusted_Connection=True;MultipleActiveResultSets=true"
+       "MoviesDGConnectionString": "Server=(localdb)\\mssqllocaldb;Database={databaseName};Trusted_Connection=True;MultipleActiveResultSets=true"
      }
      ```
 
@@ -156,16 +156,10 @@ After completing these steps, the application should run properly.
      ```json
      {
        "ConnectionStrings": {
-         "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database={databaseName};Trusted_Connection=True;MultipleActiveResultSets=true"
+         "MoviesDGConnectionString": "Server=.;Database={databaseName};User Id={serverName};Password={serverPassword};TrustServerCertificate=True"
        },
        "TMDB": {
          "ApiKey": "apiKey"
-       },
-       "BrevoSmtpSettings": {
-         "Server": "brevoSmtpServer",
-         "Port": 233,
-         "Username": "username",
-         "Password": "password"
        }
      }
 

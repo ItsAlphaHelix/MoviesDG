@@ -85,7 +85,7 @@
 - ASP.NET Core WebAPI
 - Entity Framework Core 6.0
 - Visual Studio 2022
-- SendGrid
+- Brevo(sending emails)
 - Newtonsoft.Json
 - TMDB API
 - Repository Pattern

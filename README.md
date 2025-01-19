@@ -81,7 +81,7 @@
 
 - ASP.NET Core 6.0
 - Microsoft.AspNetCore.Identity
-- MS SQL Server
+- MSSQL Server
 - ASP.NET Core WebAPI
 - Entity Framework Core 6.0
 - Visual Studio 2022
